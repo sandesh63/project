@@ -4,6 +4,7 @@ import '@fontsource/poppins/700.css';
 import '@fontsource/poppins/800.css';
 import {FPS, WIDTH, HEIGHT, TOTAL_FRAMES, SCENES} from './timeline';
 import {Video, SceneOnly} from './Video';
+import {TestStreet, TestHero, TestShop, TestHeritage} from './v2/StyleTest';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -19,6 +20,9 @@ export const RemotionRoot: React.FC = () => (
         width={WIDTH}
         height={HEIGHT}
       />
+    ))}
+    {([['v2-street', TestStreet], ['v2-hero', TestHero], ['v2-shop', TestShop], ['v2-heritage', TestHeritage]] as const).map(([id, C]) => (
+      <Composition key={id} id={id} component={C} durationInFrames={60} fps={FPS} width={WIDTH} height={HEIGHT} />
     ))}
   </>
 );
