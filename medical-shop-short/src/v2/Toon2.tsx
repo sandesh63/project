@@ -89,9 +89,9 @@ const headGeo = new THREE.SphereGeometry(HEAD_R, 40, 32);
 // pawn body: narrow top hidden under the head, broad bell to the floor
 const bodyProfile = [
   [0.0, 0.0],
-  [0.4, 0.0],
-  [0.46, 0.05],
-  [0.47, 0.25],
+  [0.38, 0.0],
+  [0.45, 0.04],
+  [0.46, 0.25],
   [0.44, 0.6],
   [0.38, 0.88],
   [0.3, 1.02],
@@ -116,6 +116,7 @@ const limbGeo = new THREE.CapsuleGeometry(0.038, 1, 4, 8);
 const handGeo = new THREE.SphereGeometry(0.05, 12, 10);
 
 const HEAD_Y = 1.42;
+const LEG = 0.34;
 
 /** Put a flat decal on the head sphere at (x, y) offsets from the head centre. */
 const OnFace: React.FC<{x: number; y: number; lift?: number; children: React.ReactNode}> = ({x, y, lift = 0.004, children}) => {
@@ -181,7 +182,7 @@ const turbanTex = (cols: string[]) =>
   });
 
 // ---------- limbs ----------
-const Limb: React.FC<{a: V3; b: V3; color: string}> = ({a, b, color}) => {
+const Limb: React.FC<{a: V3; b: V3; color: string; r?: number}> = ({a, b, color, r = 1}) => {
   const va = new THREE.Vector3(...a);
   const vb = new THREE.Vector3(...b);
   const d = vb.clone().sub(va);
@@ -190,7 +191,7 @@ const Limb: React.FC<{a: V3; b: V3; color: string}> = ({a, b, color}) => {
   const mid = va.add(vb).multiplyScalar(0.5);
   return (
     <group position={mid.toArray() as V3} quaternion={q}>
-      <Part geo={limbGeo} color={color} ink={0.014} scale={[1, len / 1.076, 1]} />
+      <Part geo={limbGeo} color={color} ink={0.014} scale={[r, len / 1.076, r]} />
     </group>
   );
 };
@@ -223,6 +224,9 @@ export type ToonProps = {
   look?: [number, number];
   stethoscope?: boolean;
   chain?: boolean;
+  legs?: string;
+  shoes?: string;
+  walk?: boolean;
 };
 
 export const Toon: React.FC<ToonProps> = ({
@@ -251,6 +255,9 @@ export const Toon: React.FC<ToonProps> = ({
   look = [0, 0],
   stethoscope,
   chain = true,
+  legs = '#f3ede2',
+  shoes = '#7a3b1e',
+  walk = false,
 }) => {
   const f = useCurrentFrame();
   const band = useMemo(() => beadBand(trim), [trim]);
@@ -272,7 +279,20 @@ export const Toon: React.FC<ToonProps> = ({
 
   return (
     <group position={[position[0], position[1] + jump, position[2]]} rotation={[0, rotY, 0]} scale={scale}>
-      <group rotation={[lean, 0, 0]}>
+      {/* stick legs: pyjama + jutti shoes */}
+      {[-1, 1].map((sd) => {
+        const sw = walk ? Math.sin(f * 0.35 + (sd > 0 ? 0 : Math.PI)) * 0.12 : 0;
+        const lift = walk ? Math.max(0, Math.sin(f * 0.35 + (sd > 0 ? 0 : Math.PI))) * 0.05 : 0;
+        const hip: V3 = [0.16 * sd, LEG + 0.08, 0];
+        const ankle: V3 = [0.17 * sd, 0.07 + lift, sw];
+        return (
+          <group key={sd}>
+            <Limb a={hip} b={ankle} color={legs} r={1.5} />
+            <Part geo={handGeo} color={shoes} ink={0.014} position={[ankle[0], 0.045 + lift, ankle[2] + 0.06]} scale={[1.3, 0.75, 2.0]} />
+          </group>
+        );
+      })}
+      <group rotation={[lean, 0, 0]} position={[0, LEG + (walk ? Math.abs(Math.sin(f * 0.35)) * 0.03 : 0), 0]}>
         {/* body */}
         <Part geo={bodyGeo} color={cloth} ink={0.028} />
         {/* hem border */}
