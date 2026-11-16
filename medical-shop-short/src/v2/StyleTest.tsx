@@ -2,7 +2,7 @@ import React from 'react';
 import {AbsoluteFill} from 'remotion';
 import {Stage, Cam} from '../three/Stage';
 import {MarketStreet, HeritageCourt, ShopRoom, NightLights} from './sets';
-import {Pin, MASCOT, CHEMIST, DISTRIBUTOR} from './Pin';
+import {Toon as Pin, MASCOT, CHEMIST, DISTRIBUTOR} from './Toon2';
 import {TabletStrip} from '../three/props';
 import {Glow, Lantern} from './kit';
 
