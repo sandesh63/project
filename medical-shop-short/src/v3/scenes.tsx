@@ -412,7 +412,6 @@ export const Cta: React.FC<{t0: number}> = ({t0}) => {
       />
       <Toon {...CHEMIST} position={[1.0, 0, -1.7]} rotY={-0.3} mood="happy" handL={[0.55, 1.2 + Math.sin(f * 0.3) * 0.06, 0.3]} />
       <Sparkles at={cue(68.7, t0)} f={f} position={[0, 3.2, 2.4]} color="#ffe14d" n={18} spread={1.8} />
-      <Bulbs from={[-2.6, 4.2, 4]} to={[2.6, 4.2, 4]} sag={0.4} n={12} />
     </Stage>
   );
 };

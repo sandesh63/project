@@ -141,7 +141,6 @@ export const ShopRoom: React.FC<{dim?: boolean}> = ({dim}) => {
       </mesh>
       <Glow position={[0, SH - 0.1, -1.6]} color="#e9f7ff" size={1.4} opacity={0.3} />
       <pointLight position={[0, SH - 0.4, -1.4]} intensity={dim ? 2 : 5} distance={6} color="#fff1d6" castShadow={false} />
-      <Lantern position={[1.6, SH - 0.7, -0.5]} color="#ff7b3a" />
     </group>
   );
 };
@@ -243,22 +242,27 @@ export const MarketStreet: React.FC<{dim?: boolean}> = ({dim}) => {
         </group>
       ))}
 
-      <Bulbs from={[-9, 6.9, 0.7]} to={[-3.1, 6.3, 0.6]} sag={0.5} n={12} />
-      <Bulbs from={[-3.1, 6.3, 0.6]} to={[3.1, 6.3, 0.6]} sag={0.6} n={14} />
-      <Bulbs from={[3.1, 6.3, 0.6]} to={[9, 6.9, 0.7]} sag={0.5} n={12} />
-      <Bulbs from={[-6.5, 5.6, 0.8]} to={[-1.2, 5.0, 10]} sag={1} n={16} />
-      <Bulbs from={[6.5, 5.6, 0.8]} to={[1.2, 5.0, 10]} sag={1} n={16} />
-      <Lantern position={[-3.4, 3.4, 1.0]} color="#ff5e3a" />
-      <Lantern position={[3.4, 3.4, 1.0]} color="#ffb03a" />
-
-      <Rangoli position={[0, 0.02, 1.9]} r={0.85} />
-      {[-2.4, -1.9, -1.4, 1.4, 1.9, 2.4].map((x, i) => (
-        <Diya key={x} position={[x, 0.19, 0.6]} f={f} seed={i} />
+      {/* ordinary street lamps (no festive decorations) */}
+      {[-4.4, 4.4].map((x) => (
+        <group key={x} position={[x, 0, 2.4]}>
+          <mesh position={[0, 2.2, 0]} castShadow>
+            <cylinderGeometry args={[0.06, 0.09, 4.4, 10]} />
+            <Cel color="#2b2350" />
+            <Line />
+          </mesh>
+          <mesh position={[x > 0 ? -0.35 : 0.35, 4.35, 0]} rotation={[0, 0, Math.PI / 2]}>
+            <cylinderGeometry args={[0.04, 0.04, 0.7, 8]} />
+            <Cel color="#2b2350" />
+          </mesh>
+          <mesh position={[x > 0 ? -0.7 : 0.7, 4.25, 0]}>
+            <sphereGeometry args={[0.16, 14, 12]} />
+            <Lit color="#ffe6b8" />
+          </mesh>
+          <Glow position={[x > 0 ? -0.7 : 0.7, 4.25, 0]} color="#ffd59a" size={2.2} opacity={0.6} />
+          <pointLight position={[x > 0 ? -0.7 : 0.7, 4.0, 0.2]} intensity={5} distance={7} color="#ffd59a" />
+        </group>
       ))}
-      {[-0.95, -0.7, 0.7, 0.95].map((x, i) => (
-        <Diya key={x} position={[x, 0.02, 1.9]} f={f} seed={i + 9} />
-      ))}
-      <pointLight position={[0, 1.2, 1.6]} intensity={5} distance={5} color="#ffaf52" />
+      <pointLight position={[0, 1.2, 1.6]} intensity={3} distance={5} color="#ffd9a8" />
       <pointLight position={[0, 1.8, 0.4]} intensity={8} distance={6} color="#ffe2b0" />
 
       {/* floating embers / dust */}
