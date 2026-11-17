@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {useCurrentFrame, Easing} from 'remotion';
 import {Stage, Cam} from '../three/Stage';
 import {MarketStreet, ShopRoom, HeritageCourt, NightLights} from '../v2/sets';
-import {Toon, MASCOT, CHEMIST, DISTRIBUTOR} from '../v2/Toon2';
+import {Actor as Toon, MASCOT, CHEMIST, DISTRIBUTOR} from '../v5/Card';
 import {Glow, Cel, Line, Lit, plasterTex, StoneGround, Bulbs} from '../v2/kit';
 import {Coin, MedBox, TabletStrip, TextPlane, Shelf} from '../three/props';
 import {Carton, QuestionMark, Sparkles, Lock, Bill, LightCone} from '../three/sets/scenes3';

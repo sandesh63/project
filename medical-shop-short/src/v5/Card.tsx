@@ -82,3 +82,53 @@ export const DISTRIBUTOR: Outfit = {
   jacket: '#ff8a3d', pants: '#f3ede2', boots: '#7a3b1e', hat: 'turban',
   turban: ['#e63946', '#ffd23f', '#2a9d8f', '#f77f00'], moustache: '#2a1a14', collar: '#7b2cbf', skin: '#ecd0b6',
 };
+
+// ---------- drop-in replacement for the old 3D <Toon> (same props) ----------
+import {useCurrentFrame} from 'remotion';
+import type {Expr} from './toon';
+
+type ActorProps = Outfit & {
+  position?: [number, number, number];
+  rotY?: number;
+  scale?: number;
+  mood?: 'smile' | 'happy' | 'worried' | 'shock' | 'sly' | 'calm';
+  talk?: boolean;
+  handL?: [number, number, number];
+  handR?: [number, number, number];
+  holdR?: React.ReactNode;
+  jump?: number;
+  sweat?: boolean;
+  look?: [number, number];
+  lean?: number;
+  seed?: number;
+  walk?: boolean;
+  tint?: string;
+};
+
+const MOOD: Record<string, Expr> = {smile: 'smile', happy: 'grin', worried: 'nervous', shock: 'shock', sly: 'stern', calm: 'neutral'};
+
+export const Actor: React.FC<ActorProps> = (props) => {
+  const {position = [0, 0, 0], rotY = 0, scale = 1, mood = 'smile', talk, handL, handR, holdR, jump = 0, sweat, look = [0, 0], lean, seed = 1, walk, tint, ...outfit} = props;
+  void holdR;
+  void lean;
+  const f = useCurrentFrame();
+  let expr: Expr = MOOD[mood] ?? 'smile';
+  if (sweat && mood !== 'shock') expr = 'nervous';
+  if (talk && mood !== 'shock') expr = Math.floor((f + seed * 3) / 4) % 2 ? (mood === 'happy' ? 'laugh' : 'relief_open') : expr;
+  const raised = (h?: [number, number, number]) => !!h && h[1] > 0.85;
+  const wave = raised(handR) || raised(handL) ? 0.5 + 0.5 * Math.sin(f * 0.35) : undefined;
+  const facing: -1 | 0 | 1 = rotY > 0.2 ? 1 : rotY < -0.2 ? -1 : 0;
+  const opts = {
+    expr,
+    mode: walk ? ('stroll' as const) : ('stand' as const),
+    phase: walk ? (f / 24) % 1 : 0,
+    blink: (f + seed * 37) % 100 < 4,
+    wave,
+    facing,
+    look: look[0],
+    seed: seed + 1,
+  };
+  // old 3D characters were ~2.2 units tall; card characters fill ~0.78 of the card height
+  const h = 2.85 * scale;
+  return <Card outfit={outfit as Outfit} opts={opts} height={h} position={[position[0], position[1] + jump, position[2]]} tint={tint ?? '#fff3e6'} />;
+};
