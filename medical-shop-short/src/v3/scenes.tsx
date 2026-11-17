@@ -65,7 +65,7 @@ export const Hook: React.FC<{t0: number}> = ({t0}) => {
 // 3. SPLIT  (12.85 – 23.25)
 // =====================================================================
 const SHARES = [
-  {key: 'company', label: 'COMPANY (BAAKI)', share: 0.58, color: '#8ab4ff', at: 21.8},
+  {key: 'company', label: 'BAAKI: COMPANY', share: 0.58, color: '#8ab4ff', at: 21.8},
   {key: 'gst', label: 'GST 5–12%', share: 0.12, color: '#ffb84d', at: 15.2},
   {key: 'dist', label: 'DISTRIBUTOR ~10%', share: 0.1, color: '#ffd23f', at: 17.85},
   {key: 'chem', label: 'CHEMIST ~20%', share: 0.2, color: '#2ee59d', at: 19.9},
@@ -113,7 +113,7 @@ export const Split: React.FC<{t0: number}> = ({t0}) => {
       {/* one label at a time, under the note */}
       {activeS && (
         <group key={activeS.key} position={[0, 2.3, 0.9]} scale={pop(f, cue(activeS.at, t0) - 2, 12)}>
-          <TextPlane text={activeS.label} width={1.7} height={0.34} bg={activeS.color} color="#1d1238" font={0.55} border="#1d1238" />
+          <TextPlane text={activeS.label} width={1.8} height={0.34} bg={activeS.color} color="#1d1238" font={0.5} border="#1d1238" />
         </group>
       )}
       <Toon
