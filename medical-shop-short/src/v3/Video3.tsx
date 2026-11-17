@@ -7,16 +7,16 @@ import {JourneyScene} from '../three/sets/scenes2';
 const FONT = 'Poppins, sans-serif';
 
 // ---------- fixed screen zones (no text ever overlaps) ----------
-// callouts: top band 7%–15%   |   captions: 66%–78%   |   CTA arrow: 81%–93%
+// callouts: top band 7%–15%   |   captions: 74%–81%   |   CTA arrow: 84%–94%
 const CALLOUT_TOP = '7%';
-const CAPTION_TOP = '66%';
-const ARROW_TOP = '81%';
+const CAPTION_TOP = '74%';
+const ARROW_TOP = '84%';
 
 const FontGate: React.FC<{children: React.ReactNode}> = ({children}) => {
   const [h] = useState(() => delayRender('fonts'));
   const [ok, setOk] = useState(false);
   useEffect(() => {
-    Promise.all([document.fonts.load('800 64px Poppins', 'Aa₹1'), document.fonts.load('700 64px Poppins', 'Aa₹1')])
+    Promise.all([document.fonts.load('800 64px Poppins', 'Aa₹1'), document.fonts.load('700 64px Poppins', 'Aa₹1'), document.fonts.load('700 46px Poppins', 'भारतीय रिज़र्व बैंक १००'), document.fonts.load('600 22px Poppins', 'मैं धारक')])
       .catch(() => undefined)
       .then(() => {
         setOk(true);
@@ -51,7 +51,7 @@ const buildChunks = (): Chunk[] => {
     cur.push(w);
     const len = cur.reduce((a, b) => a + b.text.length, 0);
     const gap = next ? next.start - w.end : 1;
-    if (cur.length >= 3 || len >= 15 || /[.,!?…:]$/.test(w.text) || gap > 0.15) flush();
+    if (cur.length >= 2 || len >= 13 || /[.,!?…:]$/.test(w.text) || gap > 0.15) flush();
   });
   flush();
   // each chunk stays until the next starts (no two chunks on screen at once)
@@ -82,10 +82,10 @@ const Captions: React.FC = () => {
               style={{
                 fontFamily: FONT,
                 fontWeight: 800,
-                fontSize: 86,
+                fontSize: 88,
                 lineHeight: 1.08,
                 color: on ? (HOT.test(w.text) ? '#3dffb0' : '#ffe14d') : '#ffffff',
-                WebkitTextStroke: '13px #120a2a',
+                WebkitTextStroke: '9px #120a2a',
                 paintOrder: 'stroke fill',
                 textShadow: '0 7px 0 rgba(10,4,30,0.55)',
                 display: 'inline-block',
@@ -152,13 +152,19 @@ const Grade: React.FC = () => (
   <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 42%, rgba(0,0,0,0) 58%, rgba(10,4,30,0.5) 100%)', pointerEvents: 'none'}} />
 );
 
+const Flash: React.FC = () => {
+  const frame = useCurrentFrame();
+  const o = interpolate(frame, [0, 1, 4], [0.9, 0.9, 0], {extrapolateRight: 'clamp'});
+  return <AbsoluteFill style={{background: '#fffaf0', opacity: o}} />;
+};
+
 const CutIn: React.FC = () => {
   const frame = useCurrentFrame();
   const o = interpolate(frame, [0, 5], [1, 0], {extrapolateRight: 'clamp'});
   return o > 0 ? <AbsoluteFill style={{background: '#0b0620', opacity: o}} /> : null;
 };
 
-export const Video3: React.FC<{withAudio?: boolean}> = ({withAudio = true}) => {
+export const Video3: React.FC<{withAudio?: boolean}> = ({withAudio = false}) => {
   const end = FRAMES;
   return (
     <FontGate>
@@ -174,6 +180,9 @@ export const Video3: React.FC<{withAudio?: boolean}> = ({withAudio = true}) => {
             </Sequence>
           );
         })}
+        <Sequence from={Math.round(5.0 * FPS) - 1} durationInFrames={5}>
+          <Flash />
+        </Sequence>
         <Grade />
         <Callouts />
         <Captions />

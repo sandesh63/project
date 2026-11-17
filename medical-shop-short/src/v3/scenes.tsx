@@ -7,7 +7,7 @@ import {Toon, MASCOT, CHEMIST, DISTRIBUTOR} from '../v2/Toon2';
 import {Glow, Cel, Line, Lit, plasterTex, StoneGround, Bulbs} from '../v2/kit';
 import {Coin, MedBox, TabletStrip, TextPlane, Shelf} from '../three/props';
 import {Carton, QuestionMark, Sparkles, Lock, Bill, LightCone} from '../three/sets/scenes3';
-import {NoteSlab, noteTexture, NOTE_W, NOTE_H} from '../three/sets/scenes2';
+import {rupeeNoteTexture, NoteStrip, NOTE_W} from './Note';
 import {lerp, lerp3, pop, prog, rand} from '../three/util';
 import {FPS} from './timeline';
 
@@ -73,12 +73,17 @@ const SHARES = [
 
 export const Split: React.FC<{t0: number}> = ({t0}) => {
   const f = useCurrentFrame();
-  const tex = useMemo(noteTexture, []);
+  const tex = useMemo(rupeeNoteTexture, []);
   const appear = pop(f, 3, 20);
   const split = prog(f, cue(13.9, t0), cue(14.6, t0));
-  const active = [...SHARES].reverse().find((s) => f >= cue(s.at, t0))?.key;
+  const activeS = [...SHARES].sort((x, y) => y.at - x.at).find((s) => f >= cue(s.at, t0));
+  const active = activeS?.key;
   const happy = f >= cue(19.9, t0);
+  const GAP = 0.09;
+  // horizontal layout of strips after the split, centred
+  const totalW = NOTE_W + GAP * 3 * split;
   let acc = 0;
+  let xCursor = -totalW / 2;
   return (
     <Stage bg="#2a1f55">
       <Cam position={[0, 2.05, 4.9]} target={[0, 1.85, -1]} fov={52} />
@@ -86,24 +91,31 @@ export const Split: React.FC<{t0: number}> = ({t0}) => {
       <NightLights dir={[3, 6, 6]} keyColor="#ffe0bf" keyI={1.5} fill={1.0} />
       <ShopRoom />
       <ShopHeader />
-      {/* floating ₹100 note, splitting into shares */}
-      <group position={[-0.45, 2.5 + Math.sin(f * 0.06) * 0.04, 0.9]} scale={appear * 0.38}>
-        {SHARES.map((s, i) => {
-          const v0 = acc;
+      {/* real-looking ₹100 note, horizontal, splitting into shares */}
+      <group position={[0, 2.88 + Math.sin(f * 0.06) * 0.03, 0.9]} scale={appear * 0.72} rotation={[0, Math.sin(f * 0.04) * 0.12 * (1 - split), 0]}>
+        {SHARES.map((s) => {
+          const u0 = acc;
           acc += s.share;
-          const v1 = acc;
+          const u1 = acc;
+          const wStrip = NOTE_W * s.share;
+          const x = xCursor + wStrip / 2;
+          xCursor += wStrip + GAP * split;
           const on = active === s.key;
+          const lift = on ? 0.16 * pop(f, cue(s.at, t0), 12) : 0;
           return (
-            <group key={s.key} position={[on ? 0.15 * split : 0, ((v0 + v1) / 2 - 0.5) * NOTE_H + split * (i - 1.5) * 0.3, on ? 0.3 : 0]} scale={on ? 1 + 0.08 * pop(f, cue(s.at, t0), 12) : 1}>
-              <NoteSlab tex={tex} v0={v0} v1={v1} />
-              {on && <Glow color={s.color} size={2.6} opacity={0.45} position={[0, 0, -0.1]} />}
-              <group position={[NOTE_W / 2 + 1.25, 0, 0.05]} scale={pop(f, cue(s.at, t0) - 3, 12) * split}>
-                <TextPlane text={s.label} width={1.95} height={0.4} bg={s.color} color="#1d1238" font={0.5} border="#1d1238" />
-              </group>
+            <group key={s.key} position={[x, lift, on ? 0.12 : 0]}>
+              <NoteStrip tex={tex} u0={u0} u1={u1} />
+              {on && <Glow color={s.color} size={1.6} opacity={0.5} position={[0, 0, -0.05]} />}
             </group>
           );
         })}
       </group>
+      {/* one label at a time, under the note */}
+      {activeS && (
+        <group key={activeS.key} position={[0, 2.3, 0.9]} scale={pop(f, cue(activeS.at, t0) - 2, 12)}>
+          <TextPlane text={activeS.label} width={1.7} height={0.34} bg={activeS.color} color="#1d1238" font={0.55} border="#1d1238" />
+        </group>
+      )}
       <Toon
         {...MASCOT}
         position={[-0.6, 0, 0.45]}
