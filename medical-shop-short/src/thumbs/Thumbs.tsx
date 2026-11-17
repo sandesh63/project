@@ -45,8 +45,8 @@ export const ThumbLong: React.FC = () => (
     <AbsoluteFill style={{left: '50%', width: '48%', justifyContent: 'center', gap: 6}}>
       <div style={{fontFamily: F, fontWeight: 800, fontSize: 108, lineHeight: 1.0, color: '#ffffff', ...stroke(14)}}>MEDICAL SHOP</div>
       <div style={{fontFamily: F, fontWeight: 800, fontSize: 92, lineHeight: 1.05, color: '#ffe14d', ...stroke(14)}}>REAL PROFIT?</div>
-      <div style={{fontFamily: F, fontWeight: 800, fontSize: 150, lineHeight: 1.0, color: '#3dffb0', ...stroke(16)}}>₹40–60K</div>
-      <div style={{fontFamily: F, fontWeight: 800, fontSize: 64, lineHeight: 1.1, color: '#ffffff', ...stroke(10)}}>EVERY MONTH</div>
+      <div style={{fontFamily: F, fontWeight: 800, fontSize: 132, lineHeight: 1.0, color: '#3dffb0', ...stroke(16)}}>₹2,00,000?</div>
+      <div style={{fontFamily: F, fontWeight: 800, fontSize: 64, lineHeight: 1.1, color: '#ffffff', ...stroke(10)}}>EVERY MONTH?</div>
       <div
         style={{
           marginTop: 22,
@@ -82,8 +82,8 @@ export const ThumbShort: React.FC = () => (
     </Stage>
     <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(10,4,30,0.85) 0%, rgba(10,4,30,0.2) 34%, rgba(10,4,30,0) 55%, rgba(10,4,30,0.7) 100%)'}} />
     <AbsoluteFill style={{top: '5%', alignItems: 'center'}}>
-      <div style={{fontFamily: F, fontWeight: 800, fontSize: 120, lineHeight: 1.0, color: '#ffffff', textAlign: 'center', ...stroke(16)}}>₹100 MEDICINE</div>
-      <div style={{fontFamily: F, fontWeight: 800, fontSize: 92, lineHeight: 1.15, color: '#ffe14d', textAlign: 'center', ...stroke(14)}}>CHEMIST EARNS?</div>
+      <div style={{fontFamily: F, fontWeight: 800, fontSize: 120, lineHeight: 1.0, color: '#ffffff', textAlign: 'center', ...stroke(16)}}>MEDICAL SHOP</div>
+      <div style={{fontFamily: F, fontWeight: 800, fontSize: 92, lineHeight: 1.15, color: '#ffe14d', textAlign: 'center', ...stroke(14)}}>MONTHLY PROFIT?</div>
     </AbsoluteFill>
     <AbsoluteFill style={{top: '74%', alignItems: 'center'}}>
       <div
@@ -92,15 +92,15 @@ export const ThumbShort: React.FC = () => (
           color: '#140a2e',
           fontFamily: F,
           fontWeight: 800,
-          fontSize: 150,
-          padding: '6px 50px',
+          fontSize: 118,
+          padding: '6px 44px',
           borderRadius: 30,
           border: '10px solid #140a2e',
           transform: 'rotate(-4deg)',
           boxShadow: '0 16px 0 #140a2e',
         }}
       >
-        ₹ ??
+        ₹2,00,000?
       </div>
     </AbsoluteFill>
   </AbsoluteFill>
