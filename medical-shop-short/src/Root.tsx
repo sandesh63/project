@@ -5,7 +5,7 @@ import '@fontsource/poppins/800.css';
 import {FPS, WIDTH, HEIGHT, TOTAL_FRAMES, SCENES} from './timeline';
 import {Video, SceneOnly} from './Video';
 import {CharSheet} from './v2/CharSheet';
-import {CastSheet, CastInWorld} from './v5/CastTest';
+import {CastSheet, CastInWorld, ShopInside} from './v5/CastTest';
 import {Video3} from './v3/Video3';
 import {FRAMES as V3_FRAMES} from './v3/timeline';
 import {TestStreet, TestHero, TestShop, TestHeritage} from './v2/StyleTest';
@@ -26,7 +26,7 @@ export const RemotionRoot: React.FC = () => (
         height={HEIGHT}
       />
     ))}
-    {([['v5-sheet', CastSheet], ['v5-world', CastInWorld], ['v2-chars', CharSheet], ['v2-street', TestStreet], ['v2-hero', TestHero], ['v2-shop', TestShop], ['v2-heritage', TestHeritage]] as const).map(([id, C]) => (
+    {([['v5-sheet', CastSheet], ['v5-world', CastInWorld], ['v5-inside', ShopInside], ['v2-chars', CharSheet], ['v2-street', TestStreet], ['v2-hero', TestHero], ['v2-shop', TestShop], ['v2-heritage', TestHeritage]] as const).map(([id, C]) => (
       <Composition key={id} id={id} component={C} durationInFrames={60} fps={FPS} width={WIDTH} height={HEIGHT} />
     ))}
   </>

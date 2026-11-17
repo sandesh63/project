@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {Stage, Cam} from '../three/Stage';
-import {MarketStreet} from '../v2/sets';
+import {MarketStreet, ShopRoom, NightLights} from '../v2/sets';
 import {Card, MASCOT, CHEMIST, DISTRIBUTOR} from './Card';
 import {Pen, bodyFront} from './toon';
 
@@ -41,6 +41,20 @@ export const CastInWorld: React.FC = () => {
         <Card outfit={MASCOT} opts={{expr: 'smile', mode: 'stand', seed: 2, blink: (f % 90) < 4}} position={[-1.05, 0, 2.2]} height={2.7} tint="#fff1e4" />
         <Card outfit={DISTRIBUTOR} opts={{expr: 'grin', mode: 'stroll', phase: (f / 30) % 1, seed: 5}} position={[1.1, 0, 2.0]} height={2.75} tint="#fff1e4" />
         <Card outfit={CHEMIST} opts={{expr: 'neutral', mode: 'stand', seed: 3}} position={[0.2, 0, -1.6]} height={2.6} tint="#fff6ea" />
+      </Stage>
+    </AbsoluteFill>
+  );
+};
+
+/** inside the shop: chemist behind the counter, mascot at the counter */
+export const ShopInside: React.FC = () => {
+  const f = useCurrentFrame();
+  return (
+    <AbsoluteFill>
+      <Stage bg="#2a1f55">
+        <Cam position={[0.1, 1.75, 3.4]} target={[0, 1.6, -1.6]} fov={50} />
+        <MarketStreet />
+        <Card outfit={CHEMIST} opts={{expr: 'smile', mode: 'stand', seed: 3, blink: f % 80 < 4}} position={[0.1, 0, -1.75]} height={2.5} tint="#fff6ea" />
       </Stage>
     </AbsoluteFill>
   );

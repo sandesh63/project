@@ -24,6 +24,9 @@ import {
 } from './kit';
 import {Shelf, TextPlane, MedBox} from '../three/props';
 import {canvasTexture} from '../three/util';
+import {PharmacyInterior} from '../v5/pharmacy';
+/** detailed pharmacy interior (v5) */
+export const ShopRoom = PharmacyInterior;
 
 /** Standard night lighting: warm hard key + purple fill → orange/purple contrast. */
 export const NightLights: React.FC<{dir?: V3; keyColor?: string; keyI?: number; fill?: number}> = ({
@@ -57,7 +60,7 @@ const SW = 5.2;
 const SH = 2.66;
 const SD = 3.6;
 
-export const ShopRoom: React.FC<{dim?: boolean}> = ({dim}) => {
+export const ShopRoomOld: React.FC<{dim?: boolean}> = ({dim}) => {
   const wall = useMemo(() => plasterTex(dim ? '#5b4a96' : '#bfe6d8', 2, 1), [dim]);
   const floor = useMemo(
     () =>
