@@ -7,11 +7,14 @@ import {Video, SceneOnly} from './Video';
 import {CharSheet} from './v2/CharSheet';
 import {CastSheet, CastInWorld, ShopInside} from './v5/CastTest';
 import {Video3} from './v3/Video3';
+import {LongVideo} from './long/LongVideo';
+import {FRAMES as LONG_FRAMES} from './long/timeline';
 import {FRAMES as V3_FRAMES} from './v3/timeline';
 import {TestStreet, TestHero, TestShop, TestHeritage} from './v2/StyleTest';
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition id="Long" component={LongVideo} durationInFrames={LONG_FRAMES} fps={FPS} width={1920} height={1080} />
     <Composition id="Short" component={Video3} durationInFrames={V3_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} />
     <Composition id="MedicalShort" component={Video} durationInFrames={TOTAL_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} />
     {SCENES.map((s) => (

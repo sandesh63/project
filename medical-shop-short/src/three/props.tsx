@@ -179,7 +179,9 @@ export const TextPlane: React.FC<{
         roundRect(g, h * 0.05, h * 0.05, w - h * 0.1, h - h * 0.1, h * 0.16);
         g.stroke();
       }
-      g.font = `800 ${Math.round(h * font)}px ${FONT}`;
+      let fs = Math.round(h * font);
+      g.font = `800 ${fs}px ${FONT}`;
+      while (g.measureText(text).width > w * 0.92 && fs > 8) g.font = `800 ${--fs}px ${FONT}`;
       g.textAlign = 'center';
       g.textBaseline = 'middle';
       if (glow) {

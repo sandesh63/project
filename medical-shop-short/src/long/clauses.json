@@ -1,0 +1,386 @@
+[
+ {
+  "t0": 0.05,
+  "t1": 4.71,
+  "section": "intro",
+  "text": "Short mein humne dekha ki ₹100 ki dawai pe chemist ko lagbhag ₹20 milte hain."
+ },
+ {
+  "t0": 5.35,
+  "t1": 7.56,
+  "section": "intro",
+  "text": "Lekin maine aapse do secrets ka waada kiya tha."
+ },
+ {
+  "t0": 8.07,
+  "t1": 17.82,
+  "section": "intro",
+  "text": "Aaj hum poora hisaab nikaalenge… medical shop kholne mein kitna kharcha aata hai, mahine ki kamaai kitni hoti hai, kharche kitne hote hain… aur asli paisa kahan se aata hai."
+ },
+ {
+  "t0": 18.41,
+  "t1": 19.44,
+  "section": "intro",
+  "text": "Chaliye shuru karte hain."
+ },
+ {
+  "t0": 20.03,
+  "t1": 22.63,
+  "section": "chain",
+  "text": "Sabse pehle samjho ki dawai aati kahan se hai."
+ },
+ {
+  "t0": 23.22,
+  "t1": 32.01,
+  "section": "chain",
+  "text": "Company dawai banati hai, phir woh jaati hai C&F agent aur stockist ke paas, wahan se distributor, aur distributor se aapke mohalle ka chemist."
+ },
+ {
+  "t0": 32.48,
+  "t1": 34.46,
+  "section": "chain",
+  "text": "Har step pe sab apna margin rakhte hain."
+ },
+ {
+  "t0": 35.02,
+  "t1": 42.25,
+  "section": "chain",
+  "text": "Distributor ka margin lagbhag 8 se 10 percent hota hai, aur chemist ka branded dawaiyon pe lagbhag 16 se 20 percent."
+ },
+ {
+  "t0": 42.7,
+  "t1": 45.42,
+  "section": "chain",
+  "text": "Aur haan, MRP mein GST bhi shaamil hota hai."
+ },
+ {
+  "t0": 45.98,
+  "t1": 51.87,
+  "section": "chain",
+  "text": "Abhi ke niyamon mein zyaadatar dawaiyon pe 5 percent GST lagta hai, aur kuch zaroori dawaiyon pe toh zero."
+ },
+ {
+  "t0": 52.46,
+  "t1": 56.57,
+  "section": "costs",
+  "text": "Ab sabse bada sawaal… medical shop kholne mein kitna paisa lagta hai?"
+ },
+ {
+  "t0": 57.12,
+  "t1": 59.35,
+  "section": "costs",
+  "text": "Ek chhote ya medium shehar ka udaharan lete hain."
+ },
+ {
+  "t0": 59.83,
+  "t1": 63.06,
+  "section": "costs",
+  "text": "Dawaiyon ka stock, lagbhag ₹5 se 8 lakh."
+ },
+ {
+  "t0": 63.6,
+  "t1": 67.3,
+  "section": "costs",
+  "text": "Yeh sabse bada kharcha hai, kyunki hazaaron tarah ki dawaiyan rakhni padti hain."
+ },
+ {
+  "t0": 67.83,
+  "t1": 71.29,
+  "section": "costs",
+  "text": "Dukaan ka interior, yaani rack, counter aur lighting, milaakar ₹2 se 3 lakh."
+ },
+ {
+  "t0": 71.64,
+  "t1": 76.01,
+  "section": "costs",
+  "text": "Fridge, computer aur billing software, lagbhag ₹50 hazaar se 1 lakh."
+ },
+ {
+  "t0": 76.43,
+  "t1": 82.91,
+  "section": "costs",
+  "text": "Fridge zaroori hai, kyunki insulin aur kuch injection thande mein rakhne padte hain."
+ },
+ {
+  "t0": 83.44,
+  "t1": 88.82,
+  "section": "costs",
+  "text": "Aur dukaan ka deposit aur advance kiraya, location ke hisaab se ₹50 hazaar se 2 lakh."
+ },
+ {
+  "t0": 89.35,
+  "t1": 92.5,
+  "section": "costs",
+  "text": "Matlab kul milaakar lagbhag ₹8 se 15 lakh."
+ },
+ {
+  "t0": 93.01,
+  "t1": 95.9,
+  "section": "costs",
+  "text": "Bade shehar ya main market mein yeh aur zyaada ho sakta hai."
+ },
+ {
+  "t0": 96.47,
+  "t1": 98.3,
+  "section": "license",
+  "text": "Medical shop aise hi nahi khol sakte."
+ },
+ {
+  "t0": 98.79,
+  "t1": 103.09,
+  "section": "license",
+  "text": "Iske liye Drug License chahiye, jo rajya ke Drug Control Department se milta hai."
+ },
+ {
+  "t0": 103.59,
+  "t1": 106.99,
+  "section": "license",
+  "text": "Retail ke liye Form 20 aur Form 21 ka license hota hai."
+ },
+ {
+  "t0": 107.5,
+  "t1": 115.27,
+  "section": "license",
+  "text": "Sabse zaroori niyam… dukaan pe ek registered pharmacist hona chahiye, yaani jiske paas D.Pharm ya B.Pharm ki degree ho."
+ },
+ {
+  "t0": 115.77,
+  "t1": 120.09,
+  "section": "license",
+  "text": "Agar aap khud pharmacist nahi ho, toh aapko ek pharmacist ko naukri pe rakhna padega."
+ },
+ {
+  "t0": 120.61,
+  "t1": 128.58,
+  "section": "license",
+  "text": "Iske alawa dukaan kam se kam 10 square meter ki honi chahiye, fridge hona chahiye, aur GST registration aur shop registration bhi chahiye."
+ },
+ {
+  "t0": 129.1,
+  "t1": 135.23,
+  "section": "license",
+  "text": "License ki sarkari fees kuch hazaar rupaye hoti hai, aur process mein aam taur pe 1 se 2 mahine lag jaate hain."
+ },
+ {
+  "t0": 135.82,
+  "t1": 136.92,
+  "section": "income",
+  "text": "Ab aate hain kamaai pe."
+ },
+ {
+  "t0": 137.47,
+  "t1": 141.69,
+  "section": "income",
+  "text": "Maan lo ek achhi location ki dukaan roz ₹20,000 ki dawai bechti hai."
+ },
+ {
+  "t0": 142.18,
+  "t1": 144.59,
+  "section": "income",
+  "text": "Toh mahine ki sale hui lagbhag ₹6 lakh."
+ },
+ {
+  "t0": 145.12,
+  "t1": 149.61,
+  "section": "income",
+  "text": "Ab branded aur generic dawaiyon ko milaakar average margin maan lo 20 percent."
+ },
+ {
+  "t0": 150.06,
+  "t1": 153.76,
+  "section": "income",
+  "text": "Toh mahine ka gross profit hua lagbhag ₹1 lakh 20 hazaar."
+ },
+ {
+  "t0": 154.29,
+  "t1": 156.2,
+  "section": "income",
+  "text": "Sunne mein achha lag raha hai na?"
+ },
+ {
+  "t0": 156.74,
+  "t1": 157.76,
+  "section": "income",
+  "text": "Lekin ruko… abhi kharche baaki hain."
+ },
+ {
+  "t0": 158.28,
+  "t1": 159.12,
+  "section": "expenses",
+  "text": "Dukaan ka kiraya, ₹20 se 30 hazaar."
+ },
+ {
+  "t0": 159.44,
+  "t1": 162.91,
+  "section": "expenses",
+  "text": "Pharmacist aur helper ki salary, ₹25 se 30 hazaar."
+ },
+ {
+  "t0": 163.34,
+  "t1": 168.15,
+  "section": "expenses",
+  "text": "Bijli ka bill, kyunki fridge aur lights chalti rehti hain, ₹4 se 5 hazaar."
+ },
+ {
+  "t0": 168.53,
+  "t1": 172.67,
+  "section": "expenses",
+  "text": "Software, internet aur chhote-mote kharche, ₹3 se 5 hazaar."
+ },
+ {
+  "t0": 173.09,
+  "t1": 177.45,
+  "section": "expenses",
+  "text": "Aur expiry aur tooti-phooti dawaiyon ka loss, ₹5 se 6 hazaar."
+ },
+ {
+  "t0": 177.78,
+  "t1": 181.61,
+  "section": "expenses",
+  "text": "Aur ek bahut bada chhupa hua kharcha hai… discount."
+ },
+ {
+  "t0": 182.11,
+  "t1": 186.73,
+  "section": "expenses",
+  "text": "Aajkal online pharmacy waale 15 se 20 percent discount dete hain."
+ },
+ {
+  "t0": 187.19,
+  "t1": 193.69,
+  "section": "expenses",
+  "text": "Grahak ko rokne ke liye local chemist ko bhi 5 se 10 percent discount dena padta hai, aur woh seedha margin se katta hai."
+ },
+ {
+  "t0": 194.21,
+  "t1": 200.48,
+  "section": "expenses",
+  "text": "Sab ghataane ke baad, ek normal dukaan ka net profit bachta hai lagbhag ₹40 se 60 hazaar mahina."
+ },
+ {
+  "t0": 201.06,
+  "t1": 203.24,
+  "section": "generic",
+  "text": "Ab woh secret, jiska waada kiya tha… generic dawaiyan."
+ },
+ {
+  "t0": 203.75,
+  "t1": 213.52,
+  "section": "generic",
+  "text": "Branded dawai pe margin 20 percent ke aaspaas hota hai, lekin kai generic dawaiyon pe chemist ka margin 50 percent ya usse bhi zyaada ho sakta hai."
+ },
+ {
+  "t0": 214.0,
+  "t1": 216.81,
+  "section": "generic",
+  "text": "Isiliye kai chemist generic dawaiyan zyaada rakhte hain."
+ },
+ {
+  "t0": 217.32,
+  "t1": 221.78,
+  "section": "generic",
+  "text": "Aur sarkar ki Jan Aushadhi yojana bhi hai, jismein sasti generic dawaiyan milti hain."
+ },
+ {
+  "t0": 222.28,
+  "t1": 225.5,
+  "section": "generic",
+  "text": "Wahan chemist ko margin ke saath-saath kuch incentive bhi milta hai."
+ },
+ {
+  "t0": 226.04,
+  "t1": 239.63,
+  "section": "counter",
+  "text": "Doosra secret hai woh counter, jo dawai ke bagal mein hota hai… cosmetics, protein powder, baby products, sanitary items, sugar-free products, aur surgical saamaan, jaise BP machine, sugar test kit aur bandage."
+ },
+ {
+  "t0": 240.1,
+  "t1": 245.69,
+  "section": "counter",
+  "text": "In pe margin aksar 20 se 40 percent hota hai, aur inke daam pe sarkar ka control bhi nahi hota."
+ },
+ {
+  "t0": 246.22,
+  "t1": 253.86,
+  "section": "counter",
+  "text": "Kai smart chemist lab test ke liye sample collection, home delivery, aur regular grahakon ki mahine ki dawai ka fixed order bhi rakhte hain."
+ },
+ {
+  "t0": 254.4,
+  "t1": 259.86,
+  "section": "counter",
+  "text": "Yahi chhoti-chhoti cheezein milkar ek normal dukaan ko ek bahut kamaane waali dukaan bana deti hain."
+ },
+ {
+  "t0": 260.4,
+  "t1": 262.15,
+  "section": "risks",
+  "text": "Lekin yeh business aasaan bhi nahi hai."
+ },
+ {
+  "t0": 262.68,
+  "t1": 270.42,
+  "section": "risks",
+  "text": "Online pharmacy ka competition hai, dawaiyan expire hoti hain, grahak udhaar maangte hain, aur niyamon ka paalan sakhti se karna padta hai."
+ },
+ {
+  "t0": 270.89,
+  "t1": 276.56,
+  "section": "risks",
+  "text": "Bina prescription ke kuch dawaiyan bechna galat bhi hai aur gair-kaanooni bhi."
+ },
+ {
+  "t0": 276.79,
+  "t1": 281.35,
+  "section": "risks",
+  "text": "Isliye location, imaandari aur grahak ka bharosa… yahi is business ki asli poonji hai."
+ },
+ {
+  "t0": 281.95,
+  "t1": 284.75,
+  "section": "outro",
+  "text": "Toh yeh tha medical shop business ka poora hisaab-kitaab."
+ },
+ {
+  "t0": 285.27,
+  "t1": 288.62,
+  "section": "outro",
+  "text": "Agar aap medical shop kholna chahte ho, toh comment mein zaroor batao."
+ },
+ {
+  "t0": 289.16,
+  "t1": 292.92,
+  "section": "outro",
+  "text": "Dhyaan rahe, is video mein bataaye gaye saare numbers ek andaaza hain."
+ },
+ {
+  "t0": 293.45,
+  "t1": 300.45,
+  "section": "outro",
+  "text": "Asli kharcha aur kamaai aapke shehar, location, dukaan ke size aur sarkari niyamon ke hisaab se alag ho sakti hai."
+ },
+ {
+  "t0": 300.96,
+  "t1": 305.5,
+  "section": "outro",
+  "text": "Business shuru karne se pehle kisi anubhavi chemist ya expert se salaah zaroor lein."
+ },
+ {
+  "t0": 306.02,
+  "t1": 307.89,
+  "section": "outro",
+  "text": "Yeh video sirf jaankari ke liye hai."
+ },
+ {
+  "t0": 308.4,
+  "t1": 311.52,
+  "section": "outro",
+  "text": "Aisi hi business ki aur videos ke liye channel ko subscribe karo."
+ },
+ {
+  "t0": 311.97,
+  "t1": 313.18,
+  "section": "outro",
+  "text": "Agli video mein milte hain!"
+ }
+]

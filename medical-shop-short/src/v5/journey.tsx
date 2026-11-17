@@ -718,8 +718,8 @@ const Driveway: React.FC<{from: [number, number]; to: [number, number]}> = ({fro
 };
 
 // ---------------- the scene (timing matches the voiceover) ----------------
-export const JourneyScene2: React.FC = () => {
-  const f = useCurrentFrame();
+export const JourneyScene2: React.FC<{fs?: number; fov?: number}> = ({fs = 1, fov = 46}) => {
+  const f = useCurrentFrame() * fs;
   const curve = useMemo(() => new THREE.CatmullRomCurve3(ROAD.map((p) => new THREE.Vector3(...p))), []);
   // the visible road continues off both edges of the scene (a real road does not end in the grass)
   const longRoad = useMemo(() => new THREE.CatmullRomCurve3([[-14, 0, -2.8], ...ROAD, [14, 0, 1.9]].map((q) => new THREE.Vector3(...(q as V3)))), []);
@@ -743,7 +743,7 @@ export const JourneyScene2: React.FC = () => {
   const camP: V3 = [p.x + 0.6, 2.9, p.z + 8.4];
   return (
     <Stage bg="#2a1f55">
-      <Cam position={lerp3([-6, 7.5, 12], camP, intro)} target={lerp3([-5.5, 0.8, -1], camT, intro)} fov={46} />
+      <Cam position={lerp3([-6, 7.5, 12], camP, intro)} target={lerp3([-5.5, 0.8, -1], camT, intro)} fov={fov} />
       {/* sunset sky: lavender -> pink -> peach glow at the horizon (user's reference frame) */}
       <NightSky
         stops={[
