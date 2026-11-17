@@ -6,6 +6,7 @@ import {Stage, Cam} from '../three/Stage';
 import {Cel, Glow, Line, Lit, NightSky, plasterTex, Skyline} from '../v2/kit';
 import {TextPlane} from '../three/props';
 import {canvasTexture, lerp, lerp3, pop, prog, rand, roundRect, FONT} from '../three/util';
+import {Lawn, Veg, Hedge, VegKind} from './veg';
 
 type V3 = [number, number, number];
 
@@ -661,26 +662,40 @@ export const JourneyScene2: React.FC = () => {
       <directionalLight position={[8, 10, 6]} intensity={1.6} color="#ffd2a8" castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-12} shadow-camera-right={12} shadow-camera-top={8} shadow-camera-bottom={-8} />
       <Skyline z={-24} color="#4a3a80" />
 
-      {/* grass with a few flower dots */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <circleGeometry args={[18, 48]} />
-        <Cel color="#5aa36f" />
-      </mesh>
-      {Array.from({length: 50}).map((_, i) => (
-        <mesh key={i} position={[(rand(i * 3) - 0.5) * 24, 0.04, 1.6 + rand(i * 7) * 8]}>
-          <sphereGeometry args={[0.06, 6, 6]} />
-          <Cel color={['#ff8fab', '#ffd43b', '#ffffff', '#b197fc'][i % 4]} />
-        </mesh>
-      ))}
+      {/* painted lawn (reference grassHD recipe) */}
+      <Lawn radius={18} repeat={10} />
       <Road curve={curve} />
 
       <Factory position={[-6.6, 0, -3.6]} f={f} />
       <Godown position={[-0.6, 0, -1.6]} />
       <ChemistShop position={[6.3, 0, -2.0]} />
 
-      {[[-8.8, 0, 1.2], [-3.2, 0, -3.6], [2.4, 0, -3.2], [4.3, 0, 2.3], [-3.6, 0, 3.1], [9.0, 0, 1.8], [0.9, 0, 3.4], [-9.4, 0, -3.2]].map((q, i) => (
-        <Tree key={i} position={q as V3} s={0.9 + rand(i) * 0.5} seed={i} />
+      {/* storybook trees, bushes and hedges (reference addVeg recipe) */}
+      {(
+        [
+          ['round', -8.8, 1.2, 2.6],
+          ['fat', -3.3, -3.8, 2.4],
+          ['tall', 2.4, -3.4, 3.0],
+          ['round', 4.3, 2.4, 2.4],
+          ['fat', -3.7, 3.2, 2.2],
+          ['round', 9.0, 1.8, 2.8],
+          ['cone', 0.9, 3.6, 2.4],
+          ['tall', -9.4, -3.2, 3.2],
+          ['cone', -10.5, -6, 3.4],
+          ['round', -4.8, -6.5, 3.0],
+          ['cone', 3.4, -6.2, 3.2],
+          ['fat', 9.6, -4.4, 2.8],
+          ['tall', 11.0, -1.0, 3.2],
+          ['round', -12, 0.5, 2.8],
+        ] as [VegKind, number, number, number][]
+      ).map(([k, x, z, h], i) => (
+        <Veg key={i} kind={k} position={[x, 0, z]} h={h} seed={i + 1} />
       ))}
+      {[[-1.9, 0.1], [1.0, -0.4], [4.9, -1.1], [7.6, -0.8], [-5.2, -1.6], [-7.9, -1.5], [2.9, 1.9]].map(([x, z], i) => (
+        <Veg key={`b${i}`} kind="bush" position={[x, 0, z]} h={0.75 + rand(i + 5) * 0.3} seed={50 + i} />
+      ))}
+      <Hedge position={[6.3, 0, -0.75]} L={2.2} h={0.45} d={0.4} />
+      <Hedge position={[-0.6, 0, -0.35]} L={1.2} h={0.4} d={0.35} />
       {[[-4.6, 0, 1.6], [-1.4, 0, 2.2], [2.0, 0, 1.2], [4.8, 0, 0.5]].map((q, i) => (
         <StreetLight key={i} position={q as V3} />
       ))}
