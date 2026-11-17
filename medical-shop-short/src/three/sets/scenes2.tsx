@@ -286,17 +286,17 @@ export const JourneyScene: React.FC = () => {
   const f = useCurrentFrame();
   const curve = useMemo(() => new THREE.CatmullRomCurve3(ROAD.map((p) => new THREE.Vector3(...p))), []);
   // truck progress along the road: factory → godown (pause) → shop
-  const leg1 = prog(f, 40, 150);
-  const leg2 = prog(f, 190, 285);
+  const leg1 = prog(f, 55, 130);
+  const leg2 = prog(f, 148, 205);
   const u = lerp(0.04, 0.47, leg1) + (0.95 - 0.47) * leg2;
   const p = curve.getPointAt(u);
   const tan = curve.getTangentAt(u);
   const heading = Math.atan2(-tan.z, tan.x);
-  const moving = (f > 40 && f < 150) || (f > 190 && f < 285);
+  const moving = (f > 55 && f < 130) || (f > 148 && f < 205);
 
   const camT: V3 = [p.x, 1.5, p.z - 1];
   const camP: V3 = [p.x + 0.5, 3.0, p.z + 8.5];
-  const intro = prog(f, 0, 40);
+  const intro = prog(f, 0, 35);
   const camPos = lerp3([-6, 7.5, 12], camP, intro);
 
   return (
@@ -366,13 +366,13 @@ export const JourneyScene: React.FC = () => {
       <StringLights from={[4.5, 2.4, -1]} to={[8.2, 2.4, -1]} sag={0.3} count={8} />
 
       {/* labels */}
-      <group position={[-6.6, 4.2, -3]} scale={pop(f, 50)}>
+      <group position={[lerp(-6.6, p.x, 0.75), 3.4, lerp(-3, p.z, 0.5)]} scale={pop(f, 72) * (1 - prog(f, 132, 140))}>
         <TextPlane text="COMPANY" width={2.6} height={0.7} bg="#ffffff" color="#1d1238" font={0.55} border="#1d1238" />
       </group>
-      <group position={[-0.6, 3.1, -1]} scale={pop(f, 150)}>
-        <TextPlane text="STOCKIST / DISTRIBUTOR" width={3.6} height={0.62} bg="#ffd23f" color="#1d1238" font={0.46} border="#1d1238" />
+      <group position={[lerp(-0.6, p.x, 0.75), 3.1, lerp(-1, p.z, 0.5)]} scale={pop(f, 138) * (1 - prog(f, 196, 204))}>
+        <TextPlane text="DISTRIBUTOR" width={2.8} height={0.62} bg="#ffd23f" color="#1d1238" font={0.46} border="#1d1238" />
       </group>
-      <group position={[6.3, 3.3, -1.5]} scale={pop(f, 280)}>
+      <group position={[lerp(6.3, p.x, 0.75), 3.2, lerp(-1.5, p.z, 0.5)]} scale={pop(f, 202)}>
         <TextPlane text="CHEMIST" width={2.4} height={0.7} bg="#2ee59d" color="#1d1238" font={0.55} border="#1d1238" />
       </group>
 
@@ -388,8 +388,8 @@ export const JourneyScene: React.FC = () => {
 // Scene 3 – ₹100 split into shares
 // =====================================================================
 
-const NOTE_W = 1.5;
-const NOTE_H = 3.2;
+export const NOTE_W = 1.5;
+export const NOTE_H = 3.2;
 // bottom → top share of the note
 const SHARES = [
   {key: 'company', label: 'COMPANY (BAAKI)', share: 0.58, color: '#8ab4ff', at: 330},
@@ -398,7 +398,7 @@ const SHARES = [
   {key: 'chem', label: 'CHEMIST ~20%', share: 0.2, color: '#2ee59d', at: 275},
 ];
 
-const noteTexture = () =>
+export const noteTexture = () =>
   canvasTexture(384, 820, (g, w, h) => {
     const grd = g.createLinearGradient(0, 0, w, h);
     grd.addColorStop(0, '#c9b6f2');
@@ -434,7 +434,7 @@ const noteTexture = () =>
     g.fillText('100', w / 2, h * 0.9);
   });
 
-const NoteSlab: React.FC<{tex: THREE.Texture; v0: number; v1: number}> = ({tex, v0, v1}) => {
+export const NoteSlab: React.FC<{tex: THREE.Texture; v0: number; v1: number}> = ({tex, v0, v1}) => {
   const geo = useMemo(() => {
     const g = new THREE.PlaneGeometry(NOTE_W, NOTE_H * (v1 - v0));
     const uv = g.attributes.uv as THREE.BufferAttribute;

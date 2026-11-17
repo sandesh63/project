@@ -8,7 +8,7 @@ import {lerp, lerp3, pop, prog, rand} from '../util';
 import {ShopInterior, ShopStreet} from './Shop';
 
 // ---------- shared bits ----------
-const Carton: React.FC<{position?: V3; gift?: boolean; s?: number}> = ({position, gift, s = 0.5}) => (
+export const Carton: React.FC<{position?: V3; gift?: boolean; s?: number}> = ({position, gift, s = 0.5}) => (
   <group position={position}>
     <mesh castShadow receiveShadow>
       <boxGeometry args={[s, s, s]} />
@@ -52,7 +52,7 @@ const Carton: React.FC<{position?: V3; gift?: boolean; s?: number}> = ({position
   </group>
 );
 
-const QuestionMark: React.FC<{position: V3; color: string; f: number; s?: number}> = ({position, color, f, s = 1}) => (
+export const QuestionMark: React.FC<{position: V3; color: string; f: number; s?: number}> = ({position, color, f, s = 1}) => (
   <group position={[position[0], position[1] + Math.sin(f * 0.08) * 0.12, position[2]]} rotation={[0, Math.sin(f * 0.05) * 0.6, 0]} scale={s}>
     <mesh position={[0, 0.35, 0]} rotation={[0, 0, -0.6]}>
       <torusGeometry args={[0.28, 0.09, 12, 24, Math.PI * 1.3]} />
@@ -70,7 +70,7 @@ const QuestionMark: React.FC<{position: V3; color: string; f: number; s?: number
   </group>
 );
 
-const Sparkles: React.FC<{at: number; f: number; position: V3; color?: string; n?: number; spread?: number}> = ({
+export const Sparkles: React.FC<{at: number; f: number; position: V3; color?: string; n?: number; spread?: number}> = ({
   at,
   f,
   position,
@@ -204,7 +204,7 @@ export const SchemeScene: React.FC = () => {
 // =====================================================================
 // Scene 5 – Government price control
 // =====================================================================
-const Lock: React.FC<{position: V3; scale?: number}> = ({position, scale = 1}) => (
+export const Lock: React.FC<{position: V3; scale?: number}> = ({position, scale = 1}) => (
   <group position={position} scale={scale}>
     <mesh position={[0, 0.55, 0]}>
       <torusGeometry args={[0.38, 0.1, 12, 24, Math.PI]} />
@@ -401,7 +401,7 @@ export const GovtScene: React.FC = () => {
 // =====================================================================
 // Scene 6 – Expenses eat the margin
 // =====================================================================
-const Bill: React.FC<{label: string; color: string}> = ({label, color}) => (
+export const Bill: React.FC<{label: string; color: string}> = ({label, color}) => (
   <group>
     <mesh castShadow>
       <boxGeometry args={[0.9, 0.02, 0.62]} />
@@ -488,7 +488,7 @@ export const ExpensesScene: React.FC = () => {
 // =====================================================================
 // Scene 7 – Cliffhanger
 // =====================================================================
-const LightCone: React.FC<{position: V3; color: string; h?: number; r?: number; o?: number}> = ({position, color, h = 3.4, r = 1.3, o = 0.16}) => (
+export const LightCone: React.FC<{position: V3; color: string; h?: number; r?: number; o?: number}> = ({position, color, h = 3.4, r = 1.3, o = 0.16}) => (
   <mesh position={position}>
     <coneGeometry args={[r, h, 32, 1, true]} />
     <meshBasicMaterial color={color} transparent opacity={o} depthWrite={false} blending={THREE.AdditiveBlending} side={THREE.DoubleSide} toneMapped={false} />
