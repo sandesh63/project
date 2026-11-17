@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {AbsoluteFill, Audio, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {FPS, FRAMES, SCENES, SceneId, WORDS, CALLOUTS, SFX, Word} from './timeline';
 import {Hook, Split, Scheme, Govt, Expenses, Cliff, Cta} from './scenes';
-import {JourneyScene} from '../three/sets/scenes2';
+import {JourneyScene2} from '../v5/journey';
 
 const FONT = 'Poppins, sans-serif';
 
@@ -28,7 +28,7 @@ const FontGate: React.FC<{children: React.ReactNode}> = ({children}) => {
 
 const SCENE_COMP: Record<SceneId, React.FC<{t0: number}>> = {
   hook: Hook,
-  journey: () => <JourneyScene />,
+  journey: () => <JourneyScene2 />,
   split: Split,
   scheme: Scheme,
   govt: Govt,
