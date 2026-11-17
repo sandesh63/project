@@ -265,11 +265,24 @@ const Factory: React.FC<{position: V3; f: number}> = ({position, f}) => {
   return (
     <group position={position}>
       {/* boundary wall */}
-      <mesh position={[0, 0.25, 1.6]}>
-        <boxGeometry args={[4.4, 0.5, 0.12]} />
+      {/* boundary wall with a gate opening at the driveway (x = +1.2) */}
+      <mesh position={[-0.75, 0.25, 1.6]}>
+        <boxGeometry args={[2.9, 0.5, 0.12]} />
         <Cel color="#d9cbb3" />
         <Line />
       </mesh>
+      <mesh position={[2.0, 0.25, 1.6]}>
+        <boxGeometry args={[0.4, 0.5, 0.12]} />
+        <Cel color="#d9cbb3" />
+        <Line />
+      </mesh>
+      {[0.6, 1.8].map((x) => (
+        <mesh key={x} position={[x, 0.35, 1.6]}>
+          <boxGeometry args={[0.16, 0.7, 0.16]} />
+          <Cel color="#bfae94" />
+          <Line />
+        </mesh>
+      ))}
       <mesh position={[0, 1.0, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.6, 2, 2]} />
         <Cel color="#ffffff" map={wall} />
@@ -631,15 +644,98 @@ const Road: React.FC<{curve: THREE.CatmullRomCurve3}> = ({curve}) => {
   );
 };
 
+// ---------------- real-world layout helpers ----------------
+const BUILDINGS: {c: [number, number]; half: [number, number]; door: [number, number]}[] = [
+  {c: [-6.6, -3.6], half: [2.3, 1.7], door: [-5.4, -2.55]}, // factory loading bay
+  {c: [-0.6, -1.6], half: [1.6, 1.2], door: [-0.6, -0.55]}, // godown shutters
+  {c: [6.3, -2.0], half: [1.3, 0.9], door: [6.3, -1.15]}, // chemist shop front
+];
+
+const roadsideLayout = (road: THREE.CatmullRomCurve3, samples: THREE.Vector3[]) => {
+  const distToRoad = (x: number, z: number) => {
+    let m = Infinity;
+    for (const q of samples) m = Math.min(m, (q.x - x) ** 2 + (q.z - z) ** 2);
+    return Math.sqrt(m);
+  };
+  const inBuilding = (x: number, z: number, pad: number) =>
+    BUILDINGS.some((b) => Math.abs(x - b.c[0]) < b.half[0] + pad && Math.abs(z - b.c[1]) < b.half[1] + pad);
+  // driveways: from each door straight to the nearest point of the road
+  const driveways = BUILDINGS.map((b) => {
+    let best = samples[0];
+    for (const q of samples) if ((q.x - b.door[0]) ** 2 + (q.z - b.door[1]) ** 2 < (best.x - b.door[0]) ** 2 + (best.z - b.door[1]) ** 2) best = q;
+    return {from: b.door, to: [best.x, best.z] as [number, number]};
+  });
+  const nearDriveway = (x: number, z: number) =>
+    driveways.some((d) => {
+      const [ax, az] = d.from;
+      const [bx, bz] = d.to;
+      const dx = bx - ax;
+      const dz = bz - az;
+      const t = Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz)));
+      return Math.hypot(x - (ax + dx * t), z - (az + dz * t)) < 1.3;
+    });
+  const trees: {pos: [number, number, number]; palm: boolean}[] = [];
+  const lights: [number, number, number][] = [];
+  const N = 26;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const q = road.getPointAt(t);
+    const tg = road.getTangentAt(t);
+    let n = new THREE.Vector3(-tg.z, 0, tg.x);
+    if (n.z > 0) n = n.negate(); // far side = away from the camera
+    const x = q.x + n.x * 2.0;
+    const z = q.z + n.z * 2.0;
+    if (distToRoad(x, z) > 1.6 && !inBuilding(x, z, 0.5) && !nearDriveway(x, z)) trees.push({pos: [x, 0, z], palm: i % 2 === 0});
+    if (i % 4 === 2) {
+      const lx = q.x - n.x * 1.15;
+      const lz = q.z - n.z * 1.15;
+      if (distToRoad(lx, lz) > 1.0 && !nearDriveway(lx, lz)) lights.push([lx, 0, lz]);
+    }
+  }
+  return {trees, lights, driveways};
+};
+
+/** concrete driveway from a building door to the road */
+const Driveway: React.FC<{from: [number, number]; to: [number, number]}> = ({from, to}) => {
+  const dx = to[0] - from[0];
+  const dz = to[1] - from[1];
+  const len = Math.hypot(dx, dz) + 0.4;
+  const yaw = Math.atan2(dx, dz);
+  return (
+    <group position={[(from[0] + to[0]) / 2, 0.02, (from[1] + to[1]) / 2]} rotation={[0, -yaw + Math.PI, 0]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[1.1, len]} />
+        <meshToonMaterial color="#cfc3d6" />
+      </mesh>
+      {[-0.55, 0.55].map((x) => (
+        <mesh key={x} position={[x, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.04, len]} />
+          <meshBasicMaterial color="#2a1f38" />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
 // ---------------- the scene (timing matches the voiceover) ----------------
 export const JourneyScene2: React.FC = () => {
   const f = useCurrentFrame();
   const curve = useMemo(() => new THREE.CatmullRomCurve3(ROAD.map((p) => new THREE.Vector3(...p))), []);
+  // the visible road continues off both edges of the scene (a real road does not end in the grass)
+  const longRoad = useMemo(() => new THREE.CatmullRomCurve3([[-14, 0, -2.8], ...ROAD, [14, 0, 1.9]].map((q) => new THREE.Vector3(...(q as V3)))), []);
+  const samples = useMemo(() => longRoad.getSpacedPoints(600), [longRoad]);
+  const layout = useMemo(() => roadsideLayout(longRoad, samples), [longRoad, samples]);
   const leg1 = prog(f, 55, 130);
   const leg2 = prog(f, 148, 205);
   const u = lerp(0.04, 0.47, leg1) + (0.95 - 0.47) * leg2;
-  const p = curve.getPointAt(u);
-  const tan = curve.getTangentAt(u);
+  const pr = curve.getPointAt(u);
+  let best = 0;
+  samples.forEach((q, i) => {
+    if (q.distanceToSquared(pr) < samples[best].distanceToSquared(pr)) best = i;
+  });
+  const tl = best / 600;
+  const p = longRoad.getPointAt(tl);
+  const tan = longRoad.getTangentAt(tl);
   const heading = Math.atan2(-tan.z, tan.x);
   const moving = (f > 55 && f < 130) || (f > 148 && f < 205);
   const intro = prog(f, 0, 35);
@@ -672,45 +768,43 @@ export const JourneyScene2: React.FC = () => {
       <Skyline z={-26} color="#9a86c0" />
 
       {/* painted lawn (reference grassHD recipe) */}
-      <SunsetLawn radius={18} repeat={10} />
-      <Road curve={curve} />
+      <SunsetLawn radius={24} repeat={13} />
+      <Road curve={longRoad} />
+      {layout.driveways.map((d, i) => (
+        <Driveway key={i} from={d.from} to={d.to} />
+      ))}
 
       <Factory position={[-6.6, 0, -3.6]} f={f} />
       <Godown position={[-0.6, 0, -1.6]} />
       <ChemistShop position={[6.3, 0, -2.0]} />
 
-      {/* storybook trees, bushes and hedges (reference addVeg recipe) */}
+      {/* roadside avenue on the far side of the road: palms alternating with shade trees */}
+      {layout.trees.map((t, i) =>
+        t.palm ? (
+          <Palm key={`a${i}`} position={t.pos} h={4.2 + rand(i + 3) * 0.8} lean={0.12 + rand(i + 7) * 0.2} seed={i + 3} />
+        ) : (
+          <SunsetTree key={`a${i}`} kind="round" position={t.pos} h={2.3 + rand(i + 5) * 0.5} seed={i + 1} />
+        ),
+      )}
+      {/* back row behind the buildings for depth */}
       {(
         [
-          ['round', -8.8, 1.2, 2.6],
-          ['fat', -3.3, -3.8, 2.4],
-          ['tall', 2.4, -3.4, 3.0],
-          ['round', 4.3, 2.4, 2.4],
-          ['fat', -3.7, 3.2, 2.2],
-          ['round', 9.0, 1.8, 2.8],
-          ['cone', 0.9, 3.6, 2.4],
-          ['tall', -9.4, -3.2, 3.2],
-          ['cone', -10.5, -6, 3.4],
-          ['round', -4.8, -6.5, 3.0],
-          ['cone', 3.4, -6.2, 3.2],
-          ['fat', 9.6, -4.4, 2.8],
-          ['tall', 11.0, -1.0, 3.2],
-          ['round', -12, 0.5, 2.8],
+          ['cone', -10.5, -6.4, 3.4],
+          ['round', -4.0, -6.6, 3.0],
+          ['cone', 2.6, -6.4, 3.2],
+          ['round', 9.8, -5.6, 2.8],
+          ['cone', -13, -5, 3.2],
+          ['round', 13, -4.2, 3.0],
         ] as [VegKind, number, number, number][]
       ).map(([k, x, z, h], i) => (
-        <SunsetTree key={i} kind={k === 'tall' || k === 'fat' ? 'round' : k} position={[x, 0, z]} h={h} seed={i + 1} />
+        <SunsetTree key={`r${i}`} kind={k} position={[x, 0, z]} h={h} seed={i + 30} />
       ))}
-      {[[-1.9, 0.1], [1.0, -0.4], [4.9, -1.1], [7.6, -0.8], [-5.2, -1.6], [-7.9, -1.5], [2.9, 1.9]].map(([x, z], i) => (
-        <SunsetTree key={`b${i}`} kind="bush" position={[x, 0, z]} h={0.75 + rand(i + 5) * 0.3} seed={50 + i} />
+      {[[-8.4, -7.2, 5.2], [-1.2, -7.4, 5.6], [5.6, -7.0, 5.4], [11.6, -6.8, 5.0]].map(([x, z, h], i) => (
+        <Palm key={`bp${i}`} position={[x, 0, z]} h={h} seed={i + 40} />
       ))}
-      <Hedge position={[6.3, 0, -0.75]} L={2.2} h={0.45} d={0.4} />
-      {/* coconut palms along the road and in the background */}
-      {[[-8.6, -1.6, 4.6], [-4.4, -4.6, 5.2], [-2.0, -3.4, 4.4], [1.4, -4.4, 5.0], [3.9, -3.0, 4.6], [5.0, -5.6, 5.6], [8.6, -2.4, 4.8], [-11, -4, 5.2], [11.5, -3.5, 5.0], [-6.3, -6.6, 5.4], [9.6, -6.0, 5.2]].map(([x, z, h], i) => (
-        <Palm key={`p${i}`} position={[x, 0, z]} h={h} lean={0.15 + rand(i + 21) * 0.25} seed={i + 3} />
-      ))}
-      <Hedge position={[-0.6, 0, -0.35]} L={1.2} h={0.4} d={0.35} />
-      {[[-4.6, 0, 1.6], [-1.4, 0, 2.2], [2.0, 0, 1.2], [4.8, 0, 0.5]].map((q, i) => (
-        <StreetLight key={i} position={q as V3} />
+      {/* street lights on the near kerb (thin, never hide the truck) */}
+      {layout.lights.map((q, i) => (
+        <StreetLight key={`l${i}`} position={q} />
       ))}
 
       {/* labels follow the truck so they stay on screen */}
