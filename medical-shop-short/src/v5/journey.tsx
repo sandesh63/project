@@ -6,7 +6,7 @@ import {Stage, Cam} from '../three/Stage';
 import {Cel, Glow, Line, Lit, NightSky, plasterTex, Skyline} from '../v2/kit';
 import {TextPlane} from '../three/props';
 import {canvasTexture, lerp, lerp3, pop, prog, rand, roundRect, FONT} from '../three/util';
-import {Lawn, Veg, Hedge, VegKind} from './veg';
+import {Hedge, VegKind, SunsetTree, SunsetLawn, Palm} from './veg';
 
 type V3 = [number, number, number];
 
@@ -648,22 +648,31 @@ export const JourneyScene2: React.FC = () => {
   return (
     <Stage bg="#2a1f55">
       <Cam position={lerp3([-6, 7.5, 12], camP, intro)} target={lerp3([-5.5, 0.8, -1], camT, intro)} fov={46} />
+      {/* sunset sky: lavender -> pink -> peach glow at the horizon (user's reference frame) */}
       <NightSky
         stops={[
-          [0, '#1b1446'],
-          [0.4, '#4b2f86'],
-          [0.58, '#c4648e'],
-          [0.68, '#ffb36b'],
-          [1, '#3a2a6e'],
+          [0, '#5d4f9a'],
+          [0.38, '#9a7dbf'],
+          [0.52, '#d79ab8'],
+          [0.6, '#f6b49a'],
+          [0.66, '#ffd09a'],
+          [1, '#b48aa8'],
         ]}
       />
-      <fog attach="fog" args={['#6b4a8f', 18, 55]} />
-      <hemisphereLight args={['#ffcfae', '#4a3a80', 1.0]} />
-      <directionalLight position={[8, 10, 6]} intensity={1.6} color="#ffd2a8" castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-12} shadow-camera-right={12} shadow-camera-top={8} shadow-camera-bottom={-8} />
-      <Skyline z={-24} color="#4a3a80" />
+      <group position={[0, 5, -70]}>
+        <mesh>
+          <circleGeometry args={[4.5, 40]} />
+          <meshBasicMaterial color="#fff0c8" toneMapped={false} fog={false} />
+        </mesh>
+        <Glow color="#ffd2a0" size={46} opacity={0.55} />
+      </group>
+      <fog attach="fog" args={['#e8ad9e', 14, 46]} />
+      <hemisphereLight args={['#ffd6b8', '#6a5aa8', 1.2]} />
+      <directionalLight position={[9, 6, -5]} intensity={1.8} color="#ffc48a" castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-12} shadow-camera-right={12} shadow-camera-top={8} shadow-camera-bottom={-8} />
+      <Skyline z={-26} color="#9a86c0" />
 
       {/* painted lawn (reference grassHD recipe) */}
-      <Lawn radius={18} repeat={10} />
+      <SunsetLawn radius={18} repeat={10} />
       <Road curve={curve} />
 
       <Factory position={[-6.6, 0, -3.6]} f={f} />
@@ -689,12 +698,16 @@ export const JourneyScene2: React.FC = () => {
           ['round', -12, 0.5, 2.8],
         ] as [VegKind, number, number, number][]
       ).map(([k, x, z, h], i) => (
-        <Veg key={i} kind={k} position={[x, 0, z]} h={h} seed={i + 1} />
+        <SunsetTree key={i} kind={k === 'tall' || k === 'fat' ? 'round' : k} position={[x, 0, z]} h={h} seed={i + 1} />
       ))}
       {[[-1.9, 0.1], [1.0, -0.4], [4.9, -1.1], [7.6, -0.8], [-5.2, -1.6], [-7.9, -1.5], [2.9, 1.9]].map(([x, z], i) => (
-        <Veg key={`b${i}`} kind="bush" position={[x, 0, z]} h={0.75 + rand(i + 5) * 0.3} seed={50 + i} />
+        <SunsetTree key={`b${i}`} kind="bush" position={[x, 0, z]} h={0.75 + rand(i + 5) * 0.3} seed={50 + i} />
       ))}
       <Hedge position={[6.3, 0, -0.75]} L={2.2} h={0.45} d={0.4} />
+      {/* coconut palms along the road and in the background */}
+      {[[-8.6, -1.6, 4.6], [-4.4, -4.6, 5.2], [-2.0, -3.4, 4.4], [1.4, -4.4, 5.0], [3.9, -3.0, 4.6], [5.0, -5.6, 5.6], [8.6, -2.4, 4.8], [-11, -4, 5.2], [11.5, -3.5, 5.0], [-6.3, -6.6, 5.4], [9.6, -6.0, 5.2]].map(([x, z, h], i) => (
+        <Palm key={`p${i}`} position={[x, 0, z]} h={h} lean={0.15 + rand(i + 21) * 0.25} seed={i + 3} />
+      ))}
       <Hedge position={[-0.6, 0, -0.35]} L={1.2} h={0.4} d={0.35} />
       {[[-4.6, 0, 1.6], [-1.4, 0, 2.2], [2.0, 0, 1.2], [4.8, 0, 0.5]].map((q, i) => (
         <StreetLight key={i} position={q as V3} />
