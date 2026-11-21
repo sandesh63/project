@@ -622,4 +622,4 @@ function finish(w, h) {
     <rect width="${w}" height="${h}" filter="url(#grain)" opacity=".22" style="mix-blend-mode:overlay"/>`;
 }
 
-if (typeof module !== 'undefined') module.exports = { P, rng, defs, flame, nilavilakku, prabhavali, kirtimukha, lotus, petals, embers, mandalaGlow, face, jhumka, necklaces, vrinda, vishnu, tulasiKatte, shaligram, templeSilhouette, frameBorder, captionBand, finish };
+if (typeof module !== 'undefined') module.exports = { P, rng, defs, flame, nilavilakku, prabhavali, kirtimukha, lotus, petals, embers, mandalaGlow, face, jhumka, necklaces, vrinda, vishnu, tulasiKatte, shaligram, templeSilhouette, frameBorder, captionBand, finish, openPalm, holdingHand, crPath, arm, bandOn, armBand };
