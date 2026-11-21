@@ -12,6 +12,8 @@ Branch: `claude/tulasi-devi-video-y4yqmi` on `sandesh63/project`. Skill: `.claud
 | Rishi | `style-frames/rishi-indra.js` `rishi()` | approved |
 | Indra | `style-frames/rishi-indra.js` `indra()` | body +15%, plain blue silk tunic, vajra, clouds |
 | Narada | `style-frames/narada-parvati.js` `narada()` | awaiting approval: top-knot with flowers, veena, white dhoti, saffron sash |
+| Samudra Dev | `style-frames/samudra-baby.js` `samudra()` | awaiting approval: teal ocean god, shell crown, pearls, conch; pose 'hold' cradles the baby |
+| Baby Jalandhar | `style-frames/samudra-baby.js` `baby()` | awaiting approval: swaddled glowing newborn, flame mark; mood cry/calm |
 | Parvati | `style-frames/narada-parvati.js` `parvati()` | awaiting approval: Tulasi body recoloured (maroon saree, yellow blouse), own face + gold crown, lotus |
 
 Sheets: `style-frames/v2/*.png`. Logo sting: `brand/`.

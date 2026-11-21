@@ -81,7 +81,7 @@ function faceP(p) {
     ${sm ? `<path d="M${-lw - 2.5} ${my - 2} q 1.4 1.6 2.4 1.6 M${lw + 2.5} ${my - 2} q -1.4 1.6 -2.4 1.6" stroke="${shade}" stroke-width="1.2" fill="none"/>` : ''}`;
 
   return `<g>
-    <path d="M${-W - 1} 54 C ${-W - 11} 48 ${-W - 13} 74 ${-W - 2} 84Z M${W + 1} 54 C ${W + 11} 48 ${W + 13} 74 ${W + 2} 84Z" fill="${skin}" stroke="${INK}" stroke-width="2"/>
+    ${p.noEars ? "" : `<path d="M${-W - 1} 54 C ${-W - 11} 48 ${-W - 13} 74 ${-W - 2} 84Z M${W + 1} 54 C ${W + 11} 48 ${W + 13} 74 ${W + 2} 84Z" fill="${skin}" stroke="${INK}" stroke-width="2"/>`}
     <path d="${facePath}" fill="${skin}" stroke="${INK}" stroke-width="2.1"/>
     <path d="M${-W} 50 C ${-W} 70 ${-W * ck - 2} 84 ${-W * ck} 94 C ${-W * ck + 3} 106 ${-W * jk - 8} 116 ${-W * jk} ${chin - 10} C ${-W * .7} ${chin - 30} ${-W * .9} 80 ${-W * .9} 50Z" fill="${shade}" opacity=".25"/>
     ${p.cheekbone ? `<path d="M${-W * .92} 78 C ${-W * .7} 86 ${-W * .5} 90 ${-W * .35} 92" stroke="${shade}" stroke-width="5" opacity=".18" fill="none" filter="url(#sBlur)"/>` : ''}
