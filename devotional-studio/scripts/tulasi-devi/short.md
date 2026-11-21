@@ -38,3 +38,48 @@ Pace: ~2.6 words/sec, short sentences, pauses at "…". Visual notes reuse the p
 | 40–47 s | चमक → विष्णु, आँखें बंद | *"जैसे तुमने मेरा हृदय पत्थर कर दिया… वैसे ही तुम भी **पत्थर** बन जाओगे!"* |
 | 47–51 s | शालिग्राम में परिवर्तन | और भगवान ने… वह श्राप चुपचाप स्वीकार कर लिया। |
 | 51–55 s | तुलसी का पौधा + शीर्षक | लेकिन क्यों? और वृंदा… **तुलसी** कैसे बनीं? पूरी कथा देखिए — लिंक नीचे है। 🙏 |
+
+---
+
+## ElevenLabs voice-over — HINDI
+
+### A) Eleven v3 (audio tags)
+Model: **Eleven v3** · Stability: **Natural** (use **Creative** if it sounds flat) · Remove emojis before pasting.
+
+```
+[softly][mysterious] क्या आप जानते हैं… [pause] भगवान विष्णु को पत्थर बनने का श्राप… किसने दिया था?
+[pause]
+न किसी ऋषि ने… न किसी देवता ने। [slowly] एक पतिव्रता स्त्री ने — [reverent] वृंदा ने।
+[pause]
+[proudly] वृंदा की भक्ति इतनी शक्तिशाली थी… कि उसके पति जलंधर को [emphasized] स्वयं महादेव भी… पराजित नहीं कर पा रहे थे।
+[pause]
+[whispers] फिर एक रात… वृंदा के द्वार पर उसका पति आया। [slowly] वही चेहरा… वही आवाज़…
+[short pause]
+[tense][whispers] लेकिन दीवार पर पड़ती उसकी परछाईं के… [dramatic pause] चार हाथ थे।
+[pause]
+[sad] जब वृंदा को सच पता चला… [sighs] आँखों में आँसू थे… और होंठों पर… एक श्राप।
+[angry][crying] "जैसे तुमने मेरा हृदय पत्थर कर दिया… वैसे ही तुम भी… पत्थर बन जाओगे!"
+[long pause]
+[softly][sad] और भगवान ने… वह श्राप चुपचाप स्वीकार कर लिया।
+[pause]
+[curious] लेकिन क्यों? [mysterious] और वृंदा… तुलसी कैसे बनीं?
+[warmly] पूरी कथा देखिए — लिंक नीचे है।
+```
+
+### B) Eleven Multilingual v2 (break tags)
+Stability **45** · Similarity **75** · Style **35** · Speaker boost **on** · Speed **0.95**
+
+```
+क्या आप जानते हैं… <break time="0.6s" /> भगवान विष्णु को पत्थर बनने का श्राप… किसने दिया था? <break time="0.8s" />
+न किसी ऋषि ने… न किसी देवता ने। <break time="0.4s" /> एक पतिव्रता स्त्री ने — वृंदा ने। <break time="0.8s" />
+वृंदा की भक्ति इतनी शक्तिशाली थी… कि उसके पति जलंधर को स्वयं महादेव भी… पराजित नहीं कर पा रहे थे। <break time="0.8s" />
+फिर एक रात… <break time="0.4s" /> वृंदा के द्वार पर उसका पति आया। वही चेहरा… वही आवाज़… <break time="0.6s" />
+लेकिन दीवार पर पड़ती उसकी परछाईं के… <break time="1.0s" /> चार हाथ थे। <break time="0.8s" />
+जब वृंदा को सच पता चला… आँखों में आँसू थे… और होंठों पर… एक श्राप। <break time="0.5s" />
+"जैसे तुमने मेरा हृदय पत्थर कर दिया… वैसे ही तुम भी… पत्थर बन जाओगे!" <break time="1.2s" />
+और भगवान ने… वह श्राप चुपचाप स्वीकार कर लिया। <break time="0.8s" />
+लेकिन क्यों? <break time="0.4s" /> और वृंदा… तुलसी कैसे बनीं? <break time="0.5s" />
+पूरी कथा देखिए — लिंक नीचे है।
+```
+
+**Tip:** for the curse line, generate it separately with a female voice (Vrinda) and drop it into the timeline, so the narrator voice and Vrinda's voice are different.
