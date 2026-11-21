@@ -97,9 +97,9 @@ function vajra(x, y, s) {
 
 function indra(x, y, s, o = {}) {
   const SK = 'url(#iSkinL)', SH = '#c48e5c';
-  const face = { ...INDRA_FACE, id: 'in' + (o.id || '') + (o.eyes || ''), skin: 'url(#iSkin)', shade: '#b47a4a', rim: '#fff4d8', blush: .14, eyes: o.eyes || 'open', mouth: o.mouth, smile: o.mouth ? o.mouth === 'smile' : true };
+  const face = { ...INDRA_FACE, ...(o.faceOverride || {}), id: (o.idPrefix || 'in') + (o.id || '') + (o.eyes || ''), skin: 'url(#iSkin)', shade: '#b47a4a', rim: '#fff4d8', blush: .14, eyes: o.eyes || 'open', mouth: o.mouth, smile: o.mouth ? o.mouth === 'smile' : true };
   const my = face.mouthY;
-  face.overlay = `<path d="M-2 ${my - 7} C -8 ${my - 10} -16 ${my - 9} -20 ${my - 4} C -15 ${my - 6} -8 ${my - 5} -2 ${my - 5}Z M2 ${my - 7} C 8 ${my - 10} 16 ${my - 9} 20 ${my - 4} C 15 ${my - 6} 8 ${my - 5} 2 ${my - 5}Z" fill="#2a1a10"/>`;
+  face.overlay = o.overlay ? o.overlay(face) : `<path d="M-2 ${my - 7} C -8 ${my - 10} -16 ${my - 9} -20 ${my - 4} C -15 ${my - 6} -8 ${my - 5} -2 ${my - 5}Z M2 ${my - 7} C 8 ${my - 10} 16 ${my - 9} 20 ${my - 4} C 15 ${my - 6} 8 ${my - 5} 2 ${my - 5}Z" fill="#2a1a10"/>`;
   const by = face.brow.y;
   const crown = `<g transform="translate(0,-14)">
     <path d="M-58 40 Q 0 22 58 40 L 56 14 Q 0 -2 -56 14Z" fill="url(#gold)" stroke="#7a4a10" stroke-width="1.6"/>
@@ -149,10 +149,10 @@ function indra(x, y, s, o = {}) {
     <path d="M-2 ${by - 4} L 0 ${by - 22} L 2 ${by - 4}Z" fill="#d1261c"/>
     ${crown}
     ${[-1, 1].map(sx => `<g transform="translate(${sx * 52},90)"><circle r="8" fill="url(#gold)" stroke="#7a4a10"/><circle cy="12" r="4" fill="#2a8ad8"/></g>`).join('')}
-    ${vajra(-143, 180, .95)}
+    ${o.weapon ?? vajra(-143, 180, .95)}
     <g transform="translate(-143,214) scale(.7)">${A.holdingHand(SK, SH, -1, false)}</g>
     <g transform="translate(110,414) rotate(176) scale(.7)">${A.openPalm(SK, SH, 1)}</g>
-    ${clouds}
+    ${o.base ?? clouds}
   </g>`;
 }
 

@@ -41,15 +41,15 @@ function mace(x, y, s) {
 }
 
 function upper(o = {}) {
-  const face = { ...F.JALANDHAR_FACE, id: 'ja' + (o.id || '') + (o.eyes || ''), skin: 'url(#jSkin)', shade: '#5a2e18', rim: '#ffb07a', blush: 0,
+  const face = { ...F.JALANDHAR_FACE, ...(o.faceOverride || {}), id: (o.idPrefix || 'ja') + (o.id || '') + (o.eyes || ''), skin: 'url(#jSkin)', shade: '#5a2e18', rim: '#ffb07a', blush: 0,
     eyes: o.eyes || 'angry', mouth: o.mouth, smile: o.mouth === 'smile', irisCol: '#b8200e' };
   const my = face.mouthY;
-  face.overlay = `${O.mustache('curl', my)}<g transform="translate(0,${my + 1}) scale(1.45) translate(0,${-my - 1})">${O.fangs(my)}</g>
+  face.overlay = `${o.overlayExtra ? o.overlayExtra(face) : ''}${O.mustache(o.mustache || 'curl', my, o.hairCol || '#1a100a')}<g transform="translate(0,${my + 1}) scale(1.45) translate(0,${-my - 1})">${O.fangs(my)}</g>
     <path d="M-28 ${face.noseY - 4} C -22 ${face.noseY + 4} -14 ${face.noseY + 6} -8 ${face.noseY + 2}" stroke="#3a1a0c" stroke-width="1.4" fill="none" opacity=".6"/>
     <path d="M28 ${face.noseY - 4} C 22 ${face.noseY + 4} 14 ${face.noseY + 6} 8 ${face.noseY + 2}" stroke="#3a1a0c" stroke-width="1.4" fill="none" opacity=".6"/>`;
   const tilak = [0, 1, 2].map(k => `<path d="M-22 ${face.brow.y - 20 + k * 5} Q 0 ${face.brow.y - 23 + k * 5} 22 ${face.brow.y - 20 + k * 5}" stroke="#efe6d6" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".9"/>`).join('') + `<circle cx="0" cy="${face.brow.y - 15}" r="3.4" fill="#d1261c"/>`;
-  const hair = `<path d="M0 -4 C -44 -4 -64 18 -64 56 C -64 96 -60 130 -66 168 C -40 176 40 176 66 168 C 60 130 64 96 64 56 C 64 18 44 -4 0 -4Z" fill="#100806"/>
-    ${[-1, 1].map(sx => [0, 1, 2, 3].map(k => `<path transform="scale(${sx},1)" d="M${52 + k * 2} ${92 + k * 20} q 18 4 14 20 q -12 5 -14 -4" fill="#100806"/>`).join('')).join('')}`;
+  const hair = `<path d="M0 -4 C -44 -4 -64 18 -64 56 C -64 96 -60 130 -66 168 C -40 176 40 176 66 168 C 60 130 64 96 64 56 C 64 18 44 -4 0 -4Z" fill="${o.hairCol || '#100806'}"/>
+    ${[-1, 1].map(sx => [0, 1, 2, 3].map(k => `<path transform="scale(${sx},1)" d="M${52 + k * 2} ${92 + k * 20} q 18 4 14 20 q -12 5 -14 -4" fill="${o.hairCol || '#100806'}"/>`).join('')).join('')}`;
   return `<g>
     ${hair}
     ${o.armsBack || ''}
@@ -81,9 +81,9 @@ function upper(o = {}) {
     ${[-12, 0, 12].map(x => `<path d="M${x} ${164 - Math.abs(x) * .2} l 4 9 -4 7 -4 -7z" fill="#efe6d6" stroke="#5a3a0a" stroke-width=".8"/>`).join('')}
     ${[-1, 1].map(sx => `<path transform="scale(${sx},1)" d="M-50 58 C -62 46 -70 30 -72 14 C -64 26 -58 36 -50 44Z" fill="url(#jSkin)" stroke="${INK}" stroke-width="1.8"/>`).join('')}
     ${F.faceP(face)}
-    <path d="M-50 30 C -46 18 -30 12 0 12 C 30 12 46 18 50 30 L 51 40 C 40 30 24 25 0 25 C -24 25 -40 30 -51 40Z" fill="#100806"/>
+    <path d="M-50 30 C -46 18 -30 12 0 12 C 30 12 46 18 50 30 L 51 40 C 40 30 24 25 0 25 C -24 25 -40 30 -51 40Z" fill="${o.hairCol || '#100806'}"/>
     ${tilak}
-    <g transform="translate(0,-14)">${O.jCrown('spikes')}</g>
+    <g transform="translate(0,-14)">${O.jCrown(o.crown || 'spikes')}</g>
     ${[-1, 1].map(sx => `<g transform="translate(${sx * 53},86)"><circle r="9" fill="none" stroke="url(#darkGold)" stroke-width="4"/><circle cy="9" r="3.4" fill="#d1261c"/></g>`).join('')}
   </g>`;
 }
