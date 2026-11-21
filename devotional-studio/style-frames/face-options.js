@@ -82,4 +82,38 @@ function faceOptions() {
     ${cards}</svg>`;
 }
 
-module.exports = { faceOptions, OPTIONS, bust };
+
+const B = OPTIONS.B;
+const B_VARIANTS = {
+  B1: { ...B, name: 'B · original' },
+  B2: { ...B, name: 'Big sparkle eyes', eye: { ex: 21, ey: 66, ew: 30, eh: 14, tilt: 1, irisK: .9, flick: 3 },
+    lips: { w: 8.5, up: 3.4, lo: 5.4, c1: '#c44a48', c2: '#df6a64' } },
+  B3: { ...B, name: 'Softer, slimmer chin', W: 44, chin: 131, cheek: .97, jaw: .47, mouthY: 109, noseY: 94,
+    eye: { ex: 20, ey: 66, ew: 27, eh: 12, tilt: 1.5, irisK: .86, flick: 3 }, lips: { w: 10, up: 4, lo: 6.2, c1: '#c44a48', c2: '#df6a64' } },
+  B4: { ...B, name: 'Sweet smile, rosy', cheek: 1.02, blush: .4, blushY: 92,
+    eye: { ex: 21, ey: 66, ew: 28, eh: 11, tilt: 0, irisK: .9, flick: 2.5 }, lips: { w: 10.5, up: 3.8, lo: 6.6, c1: '#cc4e4a', c2: '#e47068' } },
+  B5: { ...B, name: 'Elegant doe', W: 45, chin: 129, jaw: .5, nose: 'soft', liner: 2.8,
+    eye: { ex: 20.5, ey: 65, ew: 29, eh: 11.5, tilt: 3, irisK: .86, flick: 6.5 }, brow: { x0: 6, x1: 36, y: 48, arch: 5.5, t: 2.3 },
+    lips: { w: 10, up: 4.2, lo: 6, c1: '#b8463e', c2: '#d4645a' }, wavy: false },
+  B6: { ...B, name: 'Youthful, innocent', W: 47, chin: 124, cheek: 1.02, jaw: .6, noseY: 91, mouthY: 104, irisCol: '#8a4a20',
+    eye: { ex: 21.5, ey: 66, ew: 28, eh: 13.5, tilt: .5, irisK: .88, flick: 2 }, lips: { w: 8, up: 3.4, lo: 5.4, c1: '#cc4e4a', c2: '#e47068' }, blush: .34 },
+};
+
+function variantsB() {
+  const W = 1920, H = 1080;
+  let cards = '';
+  Object.keys(B_VARIANTS).forEach((k, i) => {
+    const cx = 170 + i * 316, cy = 250;
+    cards += `<clipPath id="vc${k}"><rect x="${cx - 150}" y="80" width="300" height="720" rx="18"/></clipPath>
+      <rect x="${cx - 150}" y="80" width="300" height="830" rx="18" fill="#fbf1dc" stroke="#d8c39a" stroke-width="2"/>
+      <g clip-path="url(#vc${k})"><g transform="translate(${cx},${cy}) scale(2.05)">${bust(B_VARIANTS[k], k)}</g></g>
+      <text x="${cx}" y="858" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="46" fill="#8a3a14">${k}</text>
+      <text x="${cx}" y="892" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="24" fill="#5a3a20">${B_VARIANTS[k].name}</text>`;
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${A.defs()}${C.defs2()}
+    <rect width="${W}" height="${H}" fill="#f1e2c2"/>
+    <text x="${W / 2}" y="54" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="34" fill="#6a2a10">TULASI DEVI · VARIANTS OF B</text>
+    ${cards}</svg>`;
+}
+
+module.exports = { faceOptions, variantsB, OPTIONS, B_VARIANTS, bust };
