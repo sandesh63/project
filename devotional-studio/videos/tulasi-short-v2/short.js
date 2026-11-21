@@ -72,14 +72,34 @@ const doorRoom = (t, doorOpen = 1) => { const fl = noise(t, 9);
 // ------------------------------------------------------------ 27 shots
 const T = (o) => C.tulasi(o.x ?? 960, o.y ?? 110, o.s ?? 3.2, o);
 const S = [
-  // 1  0.0–1.7  "Do you know…": diya lights in darkness
-  { a: 0, b: 1.75, f: (t) => { const l = prog(t, .1, .9, ease.out);
-    return cam(`${BG('#070305')}<ellipse cx="960" cy="560" rx="${600 * l}" ry="${520 * l}" fill="url(#lampGlow)" opacity="${.9 * l}"/>${lampDiya(960, 640, 2.4 * (.3 + .7 * l), t)}${N.embersAnim(2, 30, 1920, 1080, t, { op: l })}`, { s: 1 + t * .03, fy: 560 }); } },
-  // 2  1.7–3.8  Vishnu in the temple; flickers to stone on "पत्थर" (2.82)
-  { a: 1.7, b: 3.85, f: (t) => { const g = clamp(1 - Math.abs(t - 3.0) / .2);
-    return cam(`${templeSet(t)}<filter id="s2f"><feColorMatrix type="saturate" values="${1 - g}"/></filter>
-      <g filter="url(#s2f)">${breathe(C.vishnu(960, 120, .88, { id: 's2', eyes: blink(t, 'lowered', .3), mouth: 'smile' }), t, 960, 960)}</g>${N.embersAnim(7, 40, 1920, 1080, t)}`,
-      { s: 1.15, fx: 960, fy: lerp(820, 430, prog(t, 1.7, 3.6, ease.inOut)) }); } },
+  // 1  0.0–1.7  HOOK: Vishnu's face half turned to stone, glowing cracks spreading, dust falling (fully lit from frame 0)
+  { a: 0, b: 1.75, f: (t) => { const g = prog(t, 0, 1.6, ease.out), eyeCrack = prog(t, .45, .9, ease.out);
+    const crackEdge = 'M960 -300 L 948 20 L 972 140 L 952 250 L 980 330 L 958 420 L 986 520 L 962 640 L 990 780 L 970 1200';
+    const branches = [['M972 140 L 1040 120 L 1110 160 L 1190 130', .1], ['M980 330 L 1060 300 L 1030 360 L 1120 400', .25], ['M958 420 L 1050 470 L 1150 440 L 1240 500', .35],
+      ['M986 520 L 1080 560 L 1140 640', .5], ['M962 640 L 1060 700 L 1180 690', .6], ['M948 20 L 1010 60 L 1090 30 L 1160 70', .15]];
+    const dust = (() => { const r = A.rng(77); let o = ''; for (let i = 0; i < 70; i++) { const x = 970 + r() * 300, y0 = 100 + r() * 600, sp = 60 + r() * 120;
+      const y = y0 + ((t * sp + r() * 200) % 500); o += `<circle cx="${x + Math.sin(t * 2 + i) * 6}" cy="${y}" r="${1 + r() * 2.6}" fill="#c8c4d0" opacity="${(.3 + r() * .5) * clamp(t * 4)}"/>`; } return o; })();
+    const face = C.vishnu(960, 110, 3.0, { id: 's1', eyes: 'lowered', mouth: 'soft', sad: true });
+    return cam(`${BG('#05081e')}<ellipse cx="760" cy="380" rx="520" ry="600" fill="url(#blueGlow)" opacity=".8"/><ellipse cx="1180" cy="420" rx="460" ry="560" fill="#c2311d" opacity=".22" filter="url(#softGlow)"/>
+      <filter id="stone1"><feColorMatrix type="matrix" values=".26 .5 .1 0 .02  .26 .5 .1 0 .02  .28 .52 .12 0 .04  0 0 0 1 0"/><feComponentTransfer><feFuncR type="linear" slope=".85"/><feFuncG type="linear" slope=".85"/><feFuncB type="linear" slope=".9"/></feComponentTransfer></filter>
+      <pattern id="stoneTex" width="60" height="60" patternUnits="userSpaceOnUse"><rect width="60" height="60" fill="none"/><path d="M5 12 l 9 4 M30 40 l 12 -5 M44 10 l 6 9 M12 46 l 8 6" stroke="#2a2830" stroke-width="2" opacity=".5"/><circle cx="22" cy="24" r="2" fill="#2a2830" opacity=".4"/></pattern>
+      <clipPath id="stoneSide"><path d="${crackEdge} L 2600 1200 L 2600 -300Z"/></clipPath>
+      ${face}
+      <g clip-path="url(#stoneSide)"><g filter="url(#stone1)">${face}</g><rect x="900" y="-300" width="1700" height="1500" fill="url(#stoneTex)"/></g>
+      <path d="${crackEdge}" stroke="#ffd66b" stroke-width="7" fill="none" filter="url(#glow)"/><path d="${crackEdge}" stroke="#fff6d0" stroke-width="2" fill="none"/>
+      ${branches.map(([d, st]) => { const p = prog(t, st * 1.6, st * 1.6 + .6, ease.out); return `<path d="${d}" stroke="#ffd66b" stroke-width="4" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="${1 - p}" filter="url(#glow)"/>`; }).join('')}
+      <path d="M1000 300 L 1030 312 L 1050 296 L 1080 318" stroke="#ffd66b" stroke-width="4" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="${1 - eyeCrack}" filter="url(#glow)"/>
+      ${dust}`, { s: lerp(1.16, 1.06, prog(t, 0, .35, ease.out)) + t * .02, fy: 360, px: t < .3 ? noise(t * 20, 2) * 6 : 0 }); } },
+  // 2  1.7–3.85 "who cursed Lord Vishnu to turn into stone?": Vrinda mid-curse, palm raised, red energy, wind
+  { a: 1.7, b: 3.85, f: (t) => { const hy = 590, w = Math.sin(t * 7) * 1.5;
+    return cam(`${BG('url(#redEnergy)')}<g transform="rotate(${t * 30} 960 420)">${A.mandalaGlow(960, 420, 860, '#ffb04a', .45)}</g><g transform="rotate(${-t * 18} 960 420)">${A.mandalaGlow(960, 420, 600, '#ff6a2a', .3)}</g>
+      <g transform="rotate(${w} 960 900)">${T({ eyes: 'angry', mouth: 'open', tears: true, id: 's2' })}</g>
+      <path d="M${1080} ${hy + 14} C ${1074} ${hy + 160} ${1090} ${hy + 330} ${1114} ${hy + 520} L ${1206} ${hy + 520} C ${1190} ${hy + 330} ${1170} ${hy + 160} ${1164} ${hy + 14}Z" fill="url(#tSkin)" stroke="#3b1c0e" stroke-width="2.4"/>
+      ${[0, 1, 2, 3].map(k => `<path d="M${1078 + k * .5} ${hy + 34 + k * 14} Q ${1122} ${hy + 46 + k * 14} ${1166 - k * .2} ${hy + 34 + k * 14}" stroke="${k === 1 ? '#c8201a' : 'url(#gold)'}" stroke-width="9" fill="none" stroke-linecap="round"/>`).join('')}
+      <g transform="translate(1122,${hy}) scale(2.0)">${A.openPalm('url(#tSkin)', '#b9774a', -1)}</g>
+      <circle cx="1122" cy="${hy - 60}" r="${70 + 20 * Math.sin(t * 9)}" fill="url(#lampGlow)" opacity=".8"/>
+      ${N.embersAnim(17, 90, 1920, 1080, t, { color: '#ffcf6a', speed: 150 })}`,
+      { s: lerp(1.04, 1.12, prog(t, 1.7, 3.8)), fy: 440, rot: -2, px: noise(t * 6, 1) * 4 }); } },
   // 3  3.8–5.8  "…cursed? who gave it?": the Shaligram glows
   { a: 3.75, b: 5.95, f: (t) => cam(`${BG('#040820')}<g transform="rotate(${t * 12} 960 560)">${A.mandalaGlow(960, 560, 560, '#bcd6ff', .4 + .1 * Math.sin(t * 4))}</g>${A.shaligram(960, 600, 1.3, .9 + .1 * Math.sin(t * 5))}${N.embersAnim(21, 60, 1920, 1080, t, { color: '#cfe2ff', speed: 30 })}`,
     { s: lerp(1.05, 1.2, prog(t, 3.75, 5.9)), fy: 580 }) },
@@ -222,7 +242,7 @@ const S = [
 ];
 
 const CAPS = [
-  [0.0, 1.2, 'Do you know…'],
+  [-0.3, 1.2, 'Do you know…'],
   [1.72, 5.6, 'who cursed Lord Vishnu to turn into ★stone★?'],
   [6.08, 7.5, 'Not a sage…'],
   [7.58, 8.75, 'not a god.'],
@@ -298,9 +318,9 @@ function frame(t) {
     if (s.title && t >= s.title[0] && t <= s.title[1]) title = s.title;
     if (s.arrow && t >= s.arrow[0]) arrow = s.arrow;
   }
-  const flash = Math.max(clamp(1 - Math.abs(t - 43.88) / .22), .6 * clamp(1 - Math.abs(t - 48.6) / .3), .35 * clamp(1 - Math.abs(t - 31.33) / .15), .3 * clamp(1 - Math.abs(t - 19.9) / .12));
+  const flash = Math.max(.45 * clamp(1 - Math.abs(t - 2.86) / .14), clamp(1 - Math.abs(t - 43.88) / .22), .6 * clamp(1 - Math.abs(t - 48.6) / .3), .35 * clamp(1 - Math.abs(t - 31.33) / .15), .3 * clamp(1 - Math.abs(t - 19.9) / .12));
   if (flash > 0) body += `<rect width="${W}" height="${H}" fill="#fff8ea" opacity="${flash.toFixed(3)}"/>`;
-  const hook = fade(t, .25, 5.5, .3, .3);
+  const hook = t < 5.2 ? 1 : fade(t, 0, 5.5, .3, .3);
   let titleSvg = '';
   if (title) { const p = prog(t, title[0], title[0] + .6, ease.out), big = title[3] === 'big';
     titleSvg = `<g opacity="${p * fade(t, title[0], title[1], .1, .25)}" transform="translate(${W / 2},${SPEC.safeTop + 60}) scale(${lerp(1.15, 1, p)})">
