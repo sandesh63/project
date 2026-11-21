@@ -122,4 +122,12 @@ const VISHNU_FACE = { W: 48, chin: 132, cheek: 1.0, jaw: .55, noseY: 95, mouthY:
   eye: { ex: 21, ey: 66, ew: 28, eh: 11, tilt: 1.5, irisK: .9, flick: 4 }, crease: true, liner: 2.6,
   brow: { x0: 6, x1: 36, y: 51, arch: 4, t: 3 }, nose: 'soft', lips: { w: 11, up: 4, lo: 6, c1: '#a84452', c2: '#c25a66' }, smile: true };
 
-module.exports = { faceP, tulasiHair, TULASI_FACE, VISHNU_FACE };
+// LOCKED: Jalandhar = option J1 "Proud Asura King"; Mahadev face = option M5 "Compassionate" (chosen by the channel owner).
+const JALANDHAR_FACE = { W: 49, chin: 136, cheek: .98, jaw: .62, noseY: 97, mouthY: 114, eye: { ex: 21, ey: 66, ew: 27, eh: 9, tilt: 4, irisK: .82, flick: 4 },
+  liner: 3, crease: true, defaultEyes: 'angry', irisCol: '#7a2a10', brow: { x0: 5, x1: 38, y: 51, arch: 3, t: 4.2 }, nose: 'defined',
+  lips: { w: 11, up: 3.6, lo: 5.4, c1: '#7a2a24', c2: '#94403a' }, smile: false };
+const MAHADEV_FACE = { W: 48, chin: 132, cheek: 1.0, jaw: .55, noseY: 95, mouthY: 111, defaultEyes: 'lowered',
+  eye: { ex: 21, ey: 66, ew: 28, eh: 11, tilt: 1.5, irisK: .9, flick: 4 }, liner: 2.6, crease: true,
+  brow: { x0: 6, x1: 36, y: 51, arch: 4, t: 3 }, nose: 'soft', lips: { w: 11, up: 4, lo: 6, c1: '#8a4a5a', c2: '#a46070' }, smile: true };
+
+module.exports = { faceP, tulasiHair, TULASI_FACE, VISHNU_FACE, JALANDHAR_FACE, MAHADEV_FACE };
