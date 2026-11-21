@@ -129,6 +129,12 @@ function indra(x, y, s, o = {}) {
     <path d="${TORSO}" fill="${SK}" stroke="${INK}" stroke-width="2.2"/>
     <path d="M-44 232 Q -24 242 -6 238 M44 232 Q 24 242 6 238" stroke="${SH}" stroke-width="1.6" fill="none" opacity=".5"/>
     <path d="M0 356 Q 4 363 0 370" stroke="${SH}" stroke-width="2.2" fill="none"/>
+    <!-- plain royal silk tunic: collar to waist, gold borders -->
+    <defs><linearGradient id="iSilk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a78c8"/><stop offset=".5" stop-color="#2458a8"/><stop offset="1" stop-color="#143a78"/></linearGradient></defs>
+    <clipPath id="iBody"><path d="M-200 158 Q 0 178 200 158 L 200 500 L -200 500Z"/></clipPath>
+    <g clip-path="url(#iBody)"><path d="${TORSO}" fill="url(#iSilk)" stroke="#0e2a5a" stroke-width="2.2"/></g>
+    <path d="M-30 260 C -34 300 -36 340 -40 380 M30 260 C 34 300 36 340 40 380" stroke="#123a78" stroke-width="2" fill="none" opacity=".7"/>
+    <path d="M-72 380 Q 0 398 72 380" stroke="url(#gold)" stroke-width="6" fill="none"/>
     <!-- gold-bordered uttariya over both shoulders, jewelled collar, sacred thread, belt -->
     ${[-1, 1].map(sx => `<path transform="scale(${sx},1)" d="M-24 156 C -60 162 -92 172 -100 196 C -104 212 -102 228 -96 238 C -86 214 -60 196 -30 186Z" fill="#2a6ab8" stroke="#123a6a" stroke-width="1.6"/>
       <path transform="scale(${sx},1)" d="M-30 186 C -60 196 -86 214 -96 238" stroke="url(#gold)" stroke-width="5" fill="none"/>`).join('')}
