@@ -167,7 +167,12 @@ const S = [
   { a: 37.0, b: 39.85, f: (t) => { const r = prog(t, 37.2, 39.6);
     return cam(`${BG('url(#bgGrief)')}${BG('url(#redEnergy)', r)}<g transform="rotate(${t * 20} 960 420)">${A.mandalaGlow(960, 420, 700, '#ffb04a', .2 + r * .4)}</g>
       ${T({ eyes: t > 38.5 ? 'angry' : 'lowered', mouth: 'soft', tears: true, id: 's20' })}
-      <g transform="translate(1120,${lerp(1100, 590, prog(t, 37.6, 38.8, ease.out))}) scale(2.0)">${A.openPalm('url(#tSkin)', '#b9774a', -1)}</g>
+      ${(() => { const hy = lerp(1100, 590, prog(t, 37.6, 38.8, ease.out));
+        // forearm from below the frame up to the wrist, with bangles, then the palm
+        return `<path d="M${1120 - 40} ${hy + 14} C ${1120 - 46} ${hy + 160} ${1120 - 30} ${hy + 330} ${1120 - 6} ${hy + 520} L ${1120 + 86} ${hy + 520} C ${1120 + 70} ${hy + 330} ${1120 + 50} ${hy + 160} ${1120 + 44} ${hy + 14}Z" fill="url(#tSkin)" stroke="#3b1c0e" stroke-width="2.4"/>
+          <path d="M${1120 - 40} ${hy + 30} C ${1120 - 44} ${hy + 170} ${1120 - 28} ${hy + 330} ${1120 - 6} ${hy + 510}" stroke="#b9774a" stroke-width="10" fill="none" opacity=".35"/>
+          ${[0, 1, 2, 3].map(k => `<path d="M${1120 - 42 + k * .5} ${hy + 34 + k * 14} Q ${1120 + 2} ${hy + 46 + k * 14} ${1120 + 46 - k * .2} ${hy + 34 + k * 14}" stroke="${k === 1 ? '#c8201a' : 'url(#gold)'}" stroke-width="9" fill="none" stroke-linecap="round"/>`).join('')}
+          <g transform="translate(1122,${hy}) scale(2.0)">${A.openPalm('url(#tSkin)', '#b9774a', -1)}</g>`; })()}
       ${N.embersAnim(17, 60, 1920, 1080, t, { color: '#ffcf6a', speed: 40 + r * 120, op: r })}`, { s: 1.04 + r * .06, fy: 470 }); } },
   // 21 39.8–42.5 "As you turned my heart to stone…": two-shot, Vrinda speaks, Vishnu before her
   { a: 39.8, b: 42.55, f: (t) => cam(`${BG('url(#redEnergy)')}<g transform="rotate(${t * 15} 960 420)">${A.mandalaGlow(960, 420, 800, '#ffb04a', .35)}</g>
