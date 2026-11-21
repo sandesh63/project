@@ -40,3 +40,10 @@ Sheets: `style-frames/v2/*.png`. Logo sting: `brand/`.
 - Mobile preview (private Artifact): https://claude.ai/artifact/RSnPNWgFcAA8VL5xVSxJA9 — page source in `videos/tulasi-short-v2/preview/`.
   Rebuild: `node engine/bundle-preview.js videos/tulasi-short-v2/short.js <dir>/film.js`, mix voice+music to `<dir>/audio.mp3`, republish.
 - RENDERED (latest): `videos/tulasi-short-v2/tulasi_short_english_v3_voice_only.mp4` — stone-Vishnu hook, voice only, silent logo.
+
+## Long video status
+- Code: `videos/tulasi-long/part01.js … part12.js` (+ `common.js`), voice parts + Whisper timings in `voice/`, SFX cues in `sfx/`.
+- Render everything: `bash videos/tulasi-long/render_all.sh <workDir> [parts]` (~25 min full; one part ~2 min, then re-joins).
+- Final: `videos/tulasi-long/tulasi_devi_long_video.mp4` (7:40, voice + SFX, no music, silent logo after Part 1, −14 LUFS).
+  It is 172 MB, over GitHub's 100 MB limit, so it is gitignored — re-render from code if needed.
+- Brahma (proper design): `style-frames/brahma.js`, used in the Part 4 Tridev shot.
