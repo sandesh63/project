@@ -38,12 +38,12 @@ function cobra(x, y, s, flip) {
     <ellipse cx="0" cy="-34" rx="6" ry="5" fill="#245e2e" stroke="#0e3a1a"/>
     <circle cx="-2.6" cy="-35" r="1.2" fill="#f4d03a"/><circle cx="2.6" cy="-35" r="1.2" fill="#f4d03a"/></g>`;
 }
-function trishul(x, y, s, t = 0) {
-  const bolt = (dx, seed) => { const r = A.rng(seed + Math.floor(t * 12)); let d = `M${dx} -120`; let yy = -120; while (yy < 520) { yy += 30 + r() * 30; d += ` L ${dx + (r() - .5) * 26} ${yy}`; } return d; };
+function trishul(x, y, s, t = 0, len = 600) {
+  const bolt = (dx, seed) => { const r = A.rng(seed + Math.floor(t * 12)); let d = `M${dx} -120`; let yy = -120; while (yy < len - 80) { yy += 30 + r() * 30; d += ` L ${dx + (r() - .5) * 26} ${yy}`; } return d; };
   return `<g transform="translate(${x},${y}) scale(${s})">
     <path d="${bolt(-6, 3)}" stroke="#bfe6ff" stroke-width="2.4" fill="none" filter="url(#glow)" opacity=".85"/>
     <path d="${bolt(8, 9)}" stroke="#7fc8ff" stroke-width="1.6" fill="none" filter="url(#glow)" opacity=".7"/>
-    <rect x="-5" y="-60" width="10" height="600" rx="4" fill="#4a6aa8" stroke="#1a2a5a" stroke-width="1.4"/>
+    <rect x="-5" y="-60" width="10" height="${len}" rx="4" fill="#4a6aa8" stroke="#1a2a5a" stroke-width="1.4"/>
     <path d="M0 -60 L -8 -150 L 0 -200 L 8 -150Z" fill="#9ab8e8" stroke="#1a2a5a" stroke-width="1.6"/>
     <path d="M-6 -70 C -40 -76 -54 -110 -48 -160 L -40 -120 C -36 -96 -22 -88 -6 -86Z" fill="#9ab8e8" stroke="#1a2a5a" stroke-width="1.6"/>
     <path d="M6 -70 C 40 -76 54 -110 48 -160 L 40 -120 C 36 -96 22 -88 6 -86Z" fill="#9ab8e8" stroke="#1a2a5a" stroke-width="1.6"/>
@@ -106,9 +106,10 @@ function mahadevUpper(o = {}) {
 }
 
 function arms(o = {}) { // right arm raised holding the trishul; left arm across, open hand
-  const J1 = { sh: [-78, 190], el: [-134, 288], wr: [-144, 206] }, J2 = { sh: [78, 190], el: [104, 308], wr: [100, 414] };
-  return `${A.arm(J1.sh, J1.el, J1.wr, SK, SH, [46, 44, 33, 34, 26])}${rud(-142, 280, -122, 302)}${rud(-154, 218, -134, 220)}
-    ${A.arm(J2.sh, J2.el, J2.wr, SK, SH, [46, 44, 33, 34, 26])}${rud(80, 236, 104, 240)}${rud(88, 402, 112, 404)}
+  const J1 = { sh: [-72, 184], el: [-134, 288], wr: [-144, 206] }, J2 = { sh: [72, 184], el: [104, 308], wr: [100, 414] };
+  const cap = (sx) => `<path transform="scale(${sx},1)" d="M-40 166 C -62 166 -84 176 -92 196 C -98 212 -96 228 -90 238 C -78 222 -62 208 -40 200Z" fill="${SK}"/><path transform="scale(${sx},1)" d="M-50 166 C -66 168 -84 176 -92 196 C -98 212 -96 228 -90 238" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/><path transform="scale(${sx},1)" d="M-60 182 C -74 186 -84 196 -88 210" stroke="#c8d8ff" stroke-width="2" fill="none" opacity=".5"/>`;
+  return `${A.arm(J1.sh, J1.el, J1.wr, SK, SH, [46, 44, 33, 34, 26])}${cap(1)}${rud(-142, 280, -122, 302)}${rud(-154, 218, -134, 220)}
+    ${A.arm(J2.sh, J2.el, J2.wr, SK, SH, [46, 44, 33, 34, 26])}${cap(-1)}${rud(80, 236, 104, 240)}${rud(88, 402, 112, 404)}
     <g transform="translate(-144,206) scale(.68)">${A.holdingHand(SK, SH, -1, false)}</g>
     <g transform="translate(100,414) rotate(178) scale(.68)">${A.openPalm(SK, SH, 1)}</g>`;
 }
@@ -132,4 +133,42 @@ function mahadevSheet() {
     ${card(1530, 790, { eyes: 'lowered', mouth: 'soft', sad: true }, 5, 'sorrow')}
   </svg>`;
 }
-module.exports = { mahadevSheet, mahadevUpper, trishul, arms, tiger };
+
+function lowerBody(o = {}) {
+  const legL = A.arm([-34, 470], [-38, 700], [-32, 898], SK, SH, [72, 68, 48, 50, 30]);
+  const legR = A.arm([34, 470], [38, 700], [32, 898], SK, SH, [72, 68, 48, 50, 30]);
+  const foot = (sx) => `<g transform="scale(${sx},1)"><path d="M-50 898 C -60 914 -58 930 -40 934 L -12 934 C -4 928 -8 912 -16 898Z" fill="${SK}" stroke="${INK}" stroke-width="2"/>
+    <path d="M-46 900 Q -32 908 -18 900" stroke="url(#gold)" stroke-width="5" fill="none"/>${[-40, -33, -26, -19].map(x => `<circle cx="${x}" cy="929" r="2" fill="#2e4488" opacity=".5"/>`).join('')}</g>`;
+  const skirt = 'M-66 420 C -84 480 -96 560 -98 640 L -88 674 C -60 664 -40 690 -14 670 C 10 690 40 662 68 678 L 98 640 C 96 560 84 480 66 420Z';
+  return `${legL}${legR}${foot(1)}${foot(-1)}
+    ${[-1, 1].map(sx => `<path transform="scale(${sx},1)" d="M-50 880 Q -32 888 -14 880" stroke="#6a2e14" stroke-width="6" stroke-dasharray="1 6" stroke-linecap="round" fill="none"/>`).join('')}
+    <path d="${skirt}" fill="url(#tigerPat)" stroke="#4a2a0e" stroke-width="2"/>
+    <path d="M-88 674 C -60 664 -40 690 -14 670 C 10 690 40 662 68 678 L 98 640" fill="none" stroke="#fbf6ea" stroke-width="11" stroke-linecap="round" stroke-dasharray="9 3"/>
+    <path d="M-30 440 C -40 520 -46 600 -50 660 M24 440 C 30 520 36 600 40 660" stroke="#7a4a1a" stroke-width="2" fill="none" opacity=".5"/>
+    <path d="M58 430 C 92 470 110 520 116 580 L 98 586 C 92 530 76 486 50 452Z" fill="#d2561e" stroke="#7a2a0a" stroke-width="1.4"/>`;
+}
+
+function mahadevFull(x, y, s, o = {}) {
+  return `<g transform="translate(${x},${y}) scale(${s})">
+    ${trishul(-144, 40, 1, o.t || 0, 920)}
+    ${lowerBody(o)}
+    ${mahadevUpper(o)}
+    ${arms(o)}
+  </g>`;
+}
+
+function mahadevFullSheet() {
+  const W = 1920, H = 1080;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${A.defs()}${C.defs2()}
+    <defs>${O.skinDefs}${tiger}</defs>
+    <rect width="${W}" height="${H}" fill="#f4f7ff"/>
+    <ellipse cx="640" cy="560" rx="420" ry="540" fill="#5f9bff" opacity=".2" filter="url(#softGlow)"/>
+    <ellipse cx="660" cy="992" rx="150" ry="14" fill="#3a4a7a" opacity=".25" filter="url(#blur3)"/>
+    ${mahadevFull(660, 205, .84, { id: 'full' })}
+    <text x="1400" y="120" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="40" fill="#1f2f6a">MAHADEV</text>
+    <text x="1400" y="166" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="28" fill="#2a3a6a">full body · face M5</text>
+    ${[['trishul with damru', 260], ['crescent moon + Ganga', 320], ['one cobra, right shoulder', 380], ['tiger skin with fur trim', 440], ['orange sash', 500], ['rudraksha mala, bands, anklets', 560], ['tripundra + third eye', 620]].map(([t, yy]) => `<text x="1400" y="${yy}" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="30" fill="#2a3a6a">· ${t} ·</text>`).join('')}
+  </svg>`;
+}
+
+module.exports = { mahadevSheet, mahadevFullSheet, mahadevFull, mahadevUpper, lowerBody, trishul, arms, tiger };
