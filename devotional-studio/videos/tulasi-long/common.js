@@ -55,6 +55,19 @@ const doorRoom = (t) => { const fl = noise(t, 9);
   <path d="M330 910 L 330 320 Q 540 150 750 320 L 750 910 L 720 910 L 720 330 Q 540 190 360 330 L 360 910Z" fill="#4a2a16" stroke="#1e0e06" stroke-width="4"/>
   <rect x="-900" y="900" width="3720" height="1000" fill="#0e1024"/>`; };
 
+
+// ---- sets added for Parts 2+
+const kailash = (t, night = true) => `${BG(night ? 'url(#nightSky)' : 'url(#skyDay)')}${night ? stars(12) : ''}
+  <path d="M-900 820 L 300 300 L 520 420 L 760 160 L 960 60 L 1160 160 L 1400 420 L 1620 300 L 2800 820 L 2800 1900 L -900 1900Z" fill="#c8d4ec"/>
+  <path d="M760 160 L 960 60 L 1160 160 L 1080 230 L 1000 190 L 920 250 L 840 210Z" fill="#ffffff"/>
+  <path d="M300 300 L 380 360 L 330 380Z M1620 300 L 1540 360 L 1590 380Z" fill="#ffffff"/>
+  <path d="M960 60 L 1160 160 L 1400 420 L 1620 300 L 2800 820 L 2800 1900 L 960 1900Z" fill="#8a9ac8" opacity=".35"/>
+  <path d="M-900 900 Q 480 820 960 860 T 2800 880 L 2800 1900 L -900 1900Z" fill="#e8eef8"/>
+  ${[...Array(30)].map((_, i) => { const r = A.rng(i + 3); return `<circle cx="${r() * 1920}" cy="${((r() * 1080) + t * (30 + r() * 30)) % 1080}" r="${1 + r() * 2.4}" fill="#fff" opacity="${.5 + r() * .5}"/>`; }).join('')}`;
+const ocean = (t, sky = 'url(#nightSky)', y0 = 640) => `${BG(sky)}${sky === 'url(#nightSky)' ? stars(14, 120) : ''}
+  <g transform="translate(960,0)">${SB.waves(t, 1100, y0, 2)}</g>`;
+const shake = (t, a, amp) => ({ px: noise(t * 6, 1) * amp, py: noise(t * 6, 4) * amp });
+
 const defs = `<defs>
   <linearGradient id="bgTemple" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b0d24"/><stop offset=".55" stop-color="#4a1418"/><stop offset="1" stop-color="#1a0806"/></linearGradient>
   <linearGradient id="bgGrief" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1030"/><stop offset=".6" stop-color="#2a1430"/><stop offset="1" stop-color="#0a0610"/></linearGradient>
@@ -72,6 +85,8 @@ const defs = `<defs>
   <linearGradient id="topBand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".6"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
   <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".45" stop-color="#d89a2a"/><stop offset="1" stop-color="#7a4a10"/></linearGradient>
   <filter id="shadowify" x="-20%" y="-20%" width="140%" height="140%"><feColorMatrix type="matrix" values="0 0 0 0 .03  0 0 0 0 .03  0 0 0 0 .07  0 0 0 .92 0"/><feGaussianBlur stdDeviation="3.5"/></filter>
+  <filter id="silRim" x="-20%" y="-20%" width="140%" height="140%"><feMorphology operator="dilate" radius="3" in="SourceAlpha" result="d"/><feGaussianBlur in="d" stdDeviation="4" result="b"/><feFlood flood-color="#9fc0ff"/><feComposite in2="b" operator="in" result="rim"/><feMerge><feMergeNode in="rim"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <linearGradient id="battleSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0c24"/><stop offset=".6" stop-color="#2a1a3a"/><stop offset="1" stop-color="#4a1a1a"/></linearGradient>
   <pattern id="grainPat" width="512" height="512" patternUnits="userSpaceOnUse"><image href="${GRAIN}" width="512" height="512"/></pattern>
   ${O.skinDefs}${MV.tiger}
 </defs>`;
@@ -124,4 +139,4 @@ function makeFrame(S, CAPS, extra = () => '') {
   };
 }
 
-module.exports = { A, C, N, O, MV, JL, RI, NP, SB, KD, W, H, FPS, SPEC, cam, BG, breathe, sway, blink, lampDiya, burst, shieldDome, stars, clouds, courtyard, doorRoom, makeFrame, clamp, lerp, ease, prog, fade, noise };
+module.exports = { kailash, ocean, shake, A, C, N, O, MV, JL, RI, NP, SB, KD, W, H, FPS, SPEC, cam, BG, breathe, sway, blink, lampDiya, burst, shieldDome, stars, clouds, courtyard, doorRoom, makeFrame, clamp, lerp, ease, prog, fade, noise };

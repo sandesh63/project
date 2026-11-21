@@ -1,7 +1,7 @@
 // render one still per shot (mid-point) into argv[2]
 const path = require('path'), fs = require('fs'); const { chromium } = require('playwright');
 const m = require(require('path').resolve(process.argv[4] || 'videos/tulasi-short-v2/short.js'));
-const FONTS = `<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">`;
+const FONTS = `<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Serif+Devanagari:wght@600;800&display=swap" rel="stylesheet">`;
 (async () => { const out = process.argv[2]; fs.mkdirSync(out, { recursive: true });
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: m.W, height: m.H } });
   await p.setContent(`<!doctype html><html><head>${FONTS}<style>body{margin:0}</style></head><body><div id=s></div></body></html>`); await p.evaluate(() => document.fonts.ready);

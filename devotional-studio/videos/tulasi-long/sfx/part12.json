@@ -1,0 +1,1 @@
+[{"t": 0, "type": "bell", "f": 523.25, "gain": 0.35}, {"t": 10.1, "type": "shimmer", "gain": 0.35}, {"t": 17.3, "type": "bell", "f": 783.99, "gain": 0.45}, {"t": 23.7, "type": "bell", "f": 659.25, "dur": 5, "gain": 0.5}, {"t": 23.9, "type": "chime", "f": 1318, "gain": 0.3}]
