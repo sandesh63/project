@@ -272,7 +272,7 @@ function tulasi(x, y, s = 1, o = {}) {
     ${pose === 'anjali' ? anjaliHands : `${relaxedHand(-1)}${relaxedHand(1)}`}
     </g>
     <!-- head -->
-    ${tulasiHead(o)}
+    ${o.headSvg ?? tulasiHead(o)}
   </g>`;
 }
 

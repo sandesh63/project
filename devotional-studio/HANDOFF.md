@@ -11,6 +11,8 @@ Branch: `claude/tulasi-devi-video-y4yqmi` on `sandesh63/project`. Skill: `.claud
 | Jalandhar | `style-frames/jalandhar.js` `jalandharFull()` | face J1, asura: fangs, pointed ears, full gold cuirass, cape, mace |
 | Rishi | `style-frames/rishi-indra.js` `rishi()` | approved |
 | Indra | `style-frames/rishi-indra.js` `indra()` | body +15%, plain blue silk tunic, vajra, clouds |
+| Narada | `style-frames/narada-parvati.js` `narada()` | awaiting approval: top-knot with flowers, veena, white dhoti, saffron sash |
+| Parvati | `style-frames/narada-parvati.js` `parvati()` | awaiting approval: Tulasi body recoloured (maroon saree, yellow blouse), own face + gold crown, lotus |
 
 Sheets: `style-frames/v2/*.png`. Logo sting: `brand/`.
 
