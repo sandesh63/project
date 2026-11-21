@@ -92,6 +92,7 @@ function faceP(p) {
     ${noses[p.nose]}
     ${lips}
     ${tears}
+    ${p.overlay || ""}
   </g>`;
 }
 
