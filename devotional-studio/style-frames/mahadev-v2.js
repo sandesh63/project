@@ -89,9 +89,11 @@ function mahadevUpper(o = {}) {
     <path d="M-28 162 C -26 224 -10 254 0 262 C 10 254 26 224 28 162" fill="none" stroke="#6a2e14" stroke-width="7" stroke-dasharray="1 6.5" stroke-linecap="round"/>
     <path d="M -41.4 164 C -36.8 244 -16.1 288 0 298 C 16.1 288 36.8 244 41.4 164" fill="none" stroke="#6a2e14" stroke-width="6" stroke-dasharray="1 7" stroke-linecap="round"/>
     <!-- neck snake + twin cobras -->
-    <path d="M-24 146 C -40 160 -30 176 0 178 C 30 176 40 160 24 146" fill="none" stroke="#2e7a3a" stroke-width="11" stroke-linecap="round"/>
-    <path d="M-24 146 C -40 160 -30 176 0 178 C 30 176 40 160 24 146" fill="none" stroke="#9ad06a" stroke-width="2" stroke-dasharray="3 6"/>
-    <path d="M26 152 C 54 172 62 240 46 290 C 40 306 26 304 24 290" stroke="#2e7a3a" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M26 152 C 54 172 62 240 46 290" stroke="#9ad06a" stroke-width="1.6" fill="none" stroke-dasharray="3 6"/>${cobra(22, 238, .88, false)}
+    <!-- one snake: 3 coils around the neck, hood rising on his right shoulder (screen left) beside the jaw -->
+    ${[0, 1, 2].map(k => `<path d="M${-26 - k * 3} ${146 + k * 9} C ${-40 - k * 4} ${160 + k * 9} ${-30 - k * 3} ${176 + k * 9} 0 ${178 + k * 9} C ${30 + k * 3} ${176 + k * 9} ${40 + k * 4} ${160 + k * 9} ${26 + k * 3} ${146 + k * 9}" fill="none" stroke="#24603a" stroke-width="10" stroke-linecap="round"/>
+      <path d="M${-26 - k * 3} ${146 + k * 9} C ${-40 - k * 4} ${160 + k * 9} ${-30 - k * 3} ${176 + k * 9} 0 ${178 + k * 9} C ${30 + k * 3} ${176 + k * 9} ${40 + k * 4} ${160 + k * 9} ${26 + k * 3} ${146 + k * 9}" fill="none" stroke="#7fb86a" stroke-width="1.6" stroke-dasharray="3 5"/>`).join('')}
+    <path d="M-36 174 C -54 174 -68 170 -72 162" stroke="#24603a" stroke-width="10" fill="none" stroke-linecap="round"/>
+    ${cobra(-72, 126, .8, false)}
     ${F.faceP(face)}
     <path d="M-48 28 C -44 12 -28 4 0 4 C 28 4 44 12 48 28 L 49 40 C 40 24 24 18 0 18 C -24 18 -40 24 -49 40Z" fill="#16183a"/>
     <!-- top bun, rudraksha band, crescent, Ganga arc -->
