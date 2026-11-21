@@ -72,17 +72,17 @@ function mahadevUpper(o = {}) {
     ? `<ellipse cx="0" cy="${by - 17}" rx="4" ry="8.5" fill="#ff8a2a" filter="url(#glow)"/><ellipse cx="0" cy="${by - 17}" rx="2" ry="4.6" fill="#fff3c0"/>`
     : `<path d="M0 ${by - 25} C 3 ${by - 20} 3 ${by - 14} 0 ${by - 9} C -3 ${by - 14} -3 ${by - 20} 0 ${by - 25}Z" fill="#c8201a" stroke="${INK}" stroke-width=".8"/><circle cx="0" cy="${by - 17}" r="1.6" fill="#1a0a0a"/>`;
   const tripundra = [0, 1, 2].map(k => `<path d="M-28 ${by - 31 + k * 5} Q 0 ${by - 34 + k * 5} 28 ${by - 31 + k * 5}" stroke="#fbf8f0" stroke-width="2.6" fill="none" stroke-linecap="round"/>`).join('');
-  const torso = 'M-16 120 L -18 150 C -36 154 -54 160 -62 172 C -66 186 -62 208 -58 232 C -52 270 -44 316 -42 376 L -44 430 L 44 430 L 42 376 C 44 316 52 270 58 232 C 62 208 66 186 62 172 C 54 160 36 154 18 150 L 16 120Z';
+  const torso = 'M-16 120 L -18 150 C -36 154 -54 160 -62 172 C -66 186 -62 208 -58 232 C -54 270 -50 316 -50 376 L -52 430 L 52 430 L 50 376 C 50 316 54 270 58 232 C 62 208 66 186 62 172 C 54 160 36 154 18 150 L 16 120Z';
   return `<g>
     ${hairBack(o.wind || 0)}
     <path d="${torso}" fill="${SK}" stroke="${INK}" stroke-width="2.2"/>
-    <path d="M-62 172 C -66 186 -62 208 -58 232 C -52 270 -44 316 -42 376 C -50 330 -54 290 -56 244 C -56 218 -58 196 -56 180Z" fill="${SH}" opacity=".45"/>
+    <path d="M-62 172 C -66 186 -62 208 -58 232 C -54 270 -50 316 -50 376 C -56 330 -56 290 -56 244 C -56 218 -58 196 -56 180Z" fill="${SH}" opacity=".45"/>
     <path d="M-38 228 Q -20 238 -5 234 M38 228 Q 20 238 5 234" stroke="${SH}" stroke-width="1.8" fill="none" opacity=".4"/><path d="M0 372 Q 4 379 0 386" stroke="${SH}" stroke-width="2.4" fill="none"/>
     ${[0, 1, 2].map(k => `<path d="M-74 ${206 + k * 8} Q -64 ${202 + k * 8} -56 ${210 + k * 8}" stroke="#fbf8f0" stroke-width="2.4" fill="none" stroke-linecap="round"/>`).join('')}
     <!-- tiger skin over the left shoulder, fur trim, orange sash -->
-    <path d="M28 154 C 48 158 62 166 64 194 C 60 258 48 318 44 376 L 46 430 L -44 430 C -36 380 -6 320 18 270 C 28 230 30 190 36 158Z" fill="url(#tigerPat)" stroke="#4a2a0e" stroke-width="2"/>
+    <path d="M28 154 C 48 158 62 166 64 194 C 62 258 54 318 52 376 L 54 430 L -52 430 C -36 380 -6 320 18 270 C 28 230 30 190 36 158Z" fill="url(#tigerPat)" stroke="#4a2a0e" stroke-width="2"/>
     <path d="M36 158 C 30 190 28 230 18 270 C -6 320 -36 380 -56 430" fill="none" stroke="#fbf6ea" stroke-width="12" stroke-linecap="round" stroke-dasharray="10 3"/>
-    <path d="M-48 394 Q 0 410 48 394 L 52 430 Q 0 446 -52 430Z" fill="#d2561e" stroke="#7a2a0a" stroke-width="1.6"/>
+    <path d="M-56 394 Q 0 410 56 394 L 60 430 Q 0 446 -60 430Z" fill="#d2561e" stroke="#7a2a0a" stroke-width="1.6"/>
     <path d="M44 410 C 80 420 116 440 144 470 L 126 480 C 102 456 78 440 46 430Z" fill="#d2561e" stroke="#7a2a0a" stroke-width="1.4"/>
     <!-- rudraksha mala -->
     <path d="M-28 162 C -26 224 -10 254 0 262 C 10 254 26 224 28 162" fill="none" stroke="#6a2e14" stroke-width="7" stroke-dasharray="1 6.5" stroke-linecap="round"/>
@@ -90,7 +90,7 @@ function mahadevUpper(o = {}) {
     <!-- neck snake + twin cobras -->
     <path d="M-24 146 C -40 160 -30 176 0 178 C 30 176 40 160 24 146" fill="none" stroke="#2e7a3a" stroke-width="11" stroke-linecap="round"/>
     <path d="M-24 146 C -40 160 -30 176 0 178 C 30 176 40 160 24 146" fill="none" stroke="#9ad06a" stroke-width="2" stroke-dasharray="3 6"/>
-    ${cobra(-62, 150, .8, false)}${cobra(62, 150, .8, true)}
+    <path d="M24 146 C 40 154 56 160 62 198" stroke="#2e7a3a" stroke-width="9" fill="none" stroke-linecap="round"/>${cobra(62, 150, .8, true)}
     ${F.faceP(face)}
     <path d="M-48 28 C -44 12 -28 4 0 4 C 28 4 44 12 48 28 L 49 40 C 40 24 24 18 0 18 C -24 18 -40 24 -49 40Z" fill="#16183a"/>
     <!-- top bun, rudraksha band, crescent, Ganga arc -->
@@ -106,11 +106,11 @@ function mahadevUpper(o = {}) {
 }
 
 function arms(o = {}) { // right arm raised holding the trishul; left arm across, open hand
-  const J1 = { sh: [-62, 186], el: [-116, 284], wr: [-126, 202] }, J2 = { sh: [62, 186], el: [82, 304], wr: [74, 410] };
+  const J1 = { sh: [-62, 186], el: [-116, 284], wr: [-126, 202] }, J2 = { sh: [62, 186], el: [86, 304], wr: [82, 410] };
   return `${A.arm(J1.sh, J1.el, J1.wr, SK, SH, [38, 36, 27, 28, 22])}${rud(-124, 276, -106, 296)}${rud(-134, 214, -116, 216)}
-    ${A.arm(J2.sh, J2.el, J2.wr, SK, SH, [38, 36, 27, 28, 22])}${rud(64, 232, 86, 236)}${rud(64, 398, 86, 400)}
+    ${A.arm(J2.sh, J2.el, J2.wr, SK, SH, [38, 36, 27, 28, 22])}${rud(64, 232, 86, 236)}${rud(72, 398, 94, 400)}
     <g transform="translate(-126,202) scale(.6)">${A.holdingHand(SK, SH, -1, false)}</g>
-    <g transform="translate(74,410) rotate(178) scale(.6)">${A.openPalm(SK, SH, 1)}</g>`;
+    <g transform="translate(82,410) rotate(178) scale(.6)">${A.openPalm(SK, SH, 1)}</g>`;
 }
 
 function mahadevSheet() {
