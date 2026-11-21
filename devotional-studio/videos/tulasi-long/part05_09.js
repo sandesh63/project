@@ -1,5 +1,6 @@
 // Parts 5–9 of the long video.
 const K = require('./common.js');
+const RS = require('../../style-frames/ram-sita.js');
 const { A, C, MV, JL, RI, NP, SB, KD, cam, BG, breathe, sway, blink, lampDiya, burst, shieldDome, stars, kailash, ocean, doorRoom, clamp, lerp, ease, prog, noise, makeFrame } = K;
 const T = (o) => C.tulasi(o.x ?? 960, o.y ?? 110, o.s ?? 3.2, o);
 const film = (S, CAPS, DURATION, flashes = []) => {
@@ -133,11 +134,29 @@ const C7 = [
 ];
 
 // ================= PART 8 · the curse (55.9 s)
-const ramSita = (t) => `${BG('#0e2018')}<rect x="-900" y="0" width="3720" height="1100" fill="#1a3a22"/>
-  ${[300, 700, 1300, 1660].map((x, i) => `<g transform="translate(${x},1000) scale(${1 - i % 2 * .2})"><path d="M-30 0 L -20 -400 L 20 -400 L 30 0Z" fill="#0a140c"/><circle cx="0" cy="-460" r="180" fill="#0e2414"/></g>`).join('')}
-  <g transform="translate(860,1000)" fill="#05080a"><ellipse cx="0" cy="-420" rx="26" ry="30"/><path d="M-10 -470 L 0 -500 L 10 -470Z"/><path d="M-40 -390 L 40 -390 L 50 -200 L 30 0 L 10 0 L 0 -180 L -10 0 L -30 0 L -50 -200Z"/>
-    <path d="M60 -460 Q 110 -300 60 -140" stroke="#05080a" stroke-width="8" fill="none"/><path d="M60 -460 L 60 -140" stroke="#05080a" stroke-width="2"/></g>
-  <text x="1340" y="520" text-anchor="middle" font-family="Cinzel, serif" font-size="26" fill="#9fc0a0" opacity=".6" letter-spacing="6">TRETA YUGA</text>`;
+// Treta Yuga: dusk forest, Ram (rim-lit silhouette with bow) and Sita fading away
+const ramSita = (t, sitaFade = 0) => {
+  const r = A.rng(77);
+  const treeRow = (y, sc, col, n, seed) => { const q = A.rng(seed); let o = '';
+    for (let i = 0; i < n; i++) { const x = -200 + i * (2400 / n) + q() * 60, h = (300 + q() * 260) * sc;
+      o += `<g transform="translate(${x},${y})" fill="${col}"><path d="M-${14 * sc} 0 L -${8 * sc} -${h} L ${8 * sc} -${h} L ${14 * sc} 0Z"/>
+        ${[0, 1, 2].map(k => `<ellipse cx="${(q() - .5) * 120 * sc}" cy="${-h - 40 * sc + k * 60 * sc}" rx="${(110 + q() * 60) * sc}" ry="${(70 + q() * 30) * sc}"/>`).join('')}</g>`; } return o; };
+  const ff = [...Array(40)].map((_, i) => { const x = r() * 1920, y = 380 + r() * 600, ph = r() * 6; return `<circle cx="${x + Math.sin(t * .7 + ph) * 20}" cy="${y + Math.cos(t * .5 + ph) * 14}" r="${1.6 + r() * 2}" fill="#ffe08a" opacity="${.3 + .6 * Math.abs(Math.sin(t * 2 + ph))}" filter="url(#glow)"/>`; }).join('');
+  const person = (x, fill, dress) => `<g transform="translate(${x},1000)" fill="${fill}">
+    <ellipse cx="0" cy="-430" rx="24" ry="28"/>${dress ? `<path d="M-12 -470 C -6 -490 6 -490 12 -470Z"/><path d="M-34 -400 L 34 -400 L 70 0 L -70 0Z"/><path d="M24 -400 C 60 -380 70 -300 64 -200" stroke="${fill}" stroke-width="10" fill="none"/>`
+      : `<path d="M-14 -458 L 0 -500 L 14 -458Z"/><path d="M-42 -398 L 42 -398 L 50 -210 L 30 0 L 10 0 L 0 -190 L -10 0 L -30 0 L -50 -210Z"/><path d="M64 -470 Q 120 -300 64 -130" stroke="${fill}" stroke-width="9" fill="none"/><path d="M64 -470 L 64 -130" stroke="${fill}" stroke-width="2"/><path d="M-30 -420 L -60 -480" stroke="${fill}" stroke-width="12"/>`}</g>`;
+  return `${BG('url(#duskForest)')}<circle cx="1180" cy="620" r="170" fill="url(#sunDisc)"/>
+    <defs><linearGradient id="duskForest" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1840"/><stop offset=".45" stop-color="#8a3a6a"/><stop offset=".75" stop-color="#e2744a"/><stop offset="1" stop-color="#f6b45a"/></linearGradient>
+      <filter id="warmRim" x="-20%" y="-20%" width="140%" height="140%"><feMorphology operator="dilate" radius="3" in="SourceAlpha" result="d"/><feGaussianBlur in="d" stdDeviation="4" result="b"/><feFlood flood-color="#ffc06a"/><feComposite in2="b" operator="in" result="rim"/><feMerge><feMergeNode in="rim"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    ${treeRow(900, .8, '#6a2a4a', 12, 3)}${treeRow(960, 1.0, '#3a1430', 10, 5)}
+    <rect x="-900" y="960" width="3720" height="900" fill="#1a0a18"/>
+    ${RS.defs}
+    <g>${RS.ram(760, 400, .62, { id: 'p8r' + Math.round(sitaFade * 0), look: 'vanvas', eyes: sitaFade > .3 ? 'lowered' : 'open', mouth: 'soft', sad: sitaFade > .3, halo: false })}</g>
+    <g opacity="${1 - sitaFade}">${RS.sita(1260, 410, .64, { id: 'p8s', look: 'vanvas', eyes: 'lowered', mouth: 'soft', halo: false })}</g>
+    <rect x="-900" y="-900" width="3720" height="2880" fill="#ff8a3a" opacity=".12" style="mix-blend-mode:multiply"/>
+    ${sitaFade > 0 ? burst(1300, 700, sitaFade, 50, 9, '#ffe08a', 260) : ''}
+    ${[-1, 1].map(sx => `<g transform="translate(${960 + sx * 1010},1100) scale(${sx},1)" fill="#2a1030" opacity=".9"><path d="M-40 0 L -26 -760 L 26 -760 L 40 0Z"/><ellipse cx="-80" cy="-860" rx="220" ry="120"/><ellipse cx="80" cy="-760" rx="150" ry="90"/><path d="M10 -520 C 120 -560 200 -620 260 -700" stroke="#0a0408" stroke-width="22" fill="none"/></g>`).join('')}${ff}`;
+};
 const P8 = [
   { a: 0, b: 5.3, f: (t) => { const r = prog(t, 2.2, 4.4);
     return cam(`${BG('#050a22')}<ellipse cx="960" cy="480" rx="${300 + r * 500}" ry="${400 + r * 300}" fill="url(#blueGlow)" opacity="${.4 + r * .5}"/>
@@ -151,7 +170,7 @@ const P8 = [
   { a: 24.2, b: 30.0, f: (t) => cam(`${BG('url(#redEnergy)')}<g transform="rotate(${t * 15} 960 420)">${A.mandalaGlow(960, 420, 800, '#ffb04a', .35)}</g>
       ${C.vishnu(1130, 150, 1.45, { id: 'p8cv', eyes: 'lowered', mouth: 'soft', sad: true })}${C.tulasi(800, 160, 1.5, { eyes: 'angry', mouth: Math.floor(t * 9) % 2 ? 'open' : 'soft', tears: true, id: 'p8ct' })}
       ${K.N.embersAnim(19, 70, 1920, 1080, t, { color: '#ffcf6a', speed: 120 })}`, { s: .92, fx: lerp(900, 1010, prog(t, 24.2, 30)), fy: 520, ...K.shake(t, 0, prog(t, 27.6, 28.6) * 6) }) },
-  { a: 30.0, b: 36.5, f: (t) => cam(`${ramSita(t)}`, { s: lerp(1.0, 1.08, prog(t, 30.0, 36.5)), fy: 560 }) },
+  { a: 30.0, b: 36.5, f: (t) => cam(`${ramSita(t, prog(t, 33.5, 36.2))}`, { s: lerp(1.0, 1.08, prog(t, 30.0, 36.5)), fy: 560 }) },
   { a: 36.5, b: 39.7, f: (t) => cam(`${BG('#050a22')}<ellipse cx="960" cy="480" rx="800" ry="600" fill="url(#blueGlow)" opacity=".6"/>${C.vishnu(960, 60, 2.2, { id: 'p8e', eyes: t > 38 ? 'closed' : 'lowered', mouth: 'soft', sad: true })}`, { s: 1.0 + (t - 36.5) * .02, fy: 360 }) },
   { a: 39.7, b: 45.1, f: (t) => { const toStone = prog(t, 42.6, 44.0), vis = 1 - prog(t, 43.6, 44.6), stone = prog(t, 43.4, 44.8, ease.out);
     return cam(`${BG('#050a22')}<ellipse cx="960" cy="520" rx="${700 + stone * 200}" ry="${600 + stone * 150}" fill="url(#blueGlow)" opacity="${.7 + stone * .3}"/>
@@ -160,8 +179,7 @@ const P8 = [
       <g opacity="${stone}">${A.shaligram(960, 600, lerp(.4, 1.25, stone), 1)}</g>`, { s: 1.0, fy: 520 }); } },
   { a: 45.1, b: 49.0, f: (t) => cam(`${BG('url(#bgTemple)')}<g transform="rotate(${t * 6} 960 520)">${A.mandalaGlow(960, 520, 560, '#ffcf6a', .45)}</g>${A.shaligram(960, 600, 1.3, .9)}
       ${lampDiya(620, 900, 1.0, t, 2)}${lampDiya(1300, 900, 1.0, t, 5)}`, { s: lerp(1.0, 1.1, prog(t, 45.1, 49.0)), fy: 600 }), title: [46.4, 48.9, 'SHALIGRAM', 170, 100] },
-  { a: 49.0, b: 55.9, f: (t) => cam(`${ramSita(t)}<g opacity="${prog(t, 52.0, 53.0)}" transform="translate(1340,1000) scale(.9)" fill="#05080a"><ellipse cx="0" cy="-400" rx="22" ry="26"/><path d="M-36 -370 L 36 -370 L 60 0 L -60 0Z"/></g>
-      <path d="M1100 520 L 1240 520" stroke="#9fc0a0" stroke-width="2" stroke-dasharray="6 10" opacity="${prog(t, 52.5, 53.5)}"/>`, { s: lerp(1.08, 1.0, prog(t, 49.0, 55.9)), fy: 560 }) },
+  { a: 49.0, b: 55.9, f: (t) => cam(`${ramSita(t, prog(t, 52.2, 54.6))}`, { s: lerp(1.08, 1.0, prog(t, 49.0, 55.9)), fy: 600 }) },
 ];
 const C8 = [
   [-0.3, 2.2, 'Before Vrinda, the form changed…'], [3.6, 6.9, 'and there stood… Lord ★Vishnu★.'], [7.0, 11.5, 'The very Lord she had worshipped all her life.'],
