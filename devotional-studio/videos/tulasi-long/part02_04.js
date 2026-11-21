@@ -5,6 +5,12 @@ const { A, C, MV, JL, RI, SB, KD, cam, BG, breathe, sway, blink, lampDiya, burst
 // simple Brahma (Tridev shot only): rishi body recoloured golden, gold crown, Vedas, standing on a lotus
 function brahma(x, y, s, t) {
   let r = RI.rishi(x, y, s, { id: 'brahma', eyes: 'lowered', mouth: 'smile' });
+  // fuller build like Vishnu / Mahadev: torso+arms x1.24 (rishi base 0.9 -> 1.12), legs+dhoti x1.2; hands and staff follow the wider arms
+  r = r.replace('transform="scale(0.9,1)"', 'transform="scale(1.12,1)"');
+  r = r.replace('Z" fill="url(#wood)" stroke="#2a1606"/>', 'Z" fill="url(#wood)" stroke="#2a1606"/><g transform="scale(1.2,1)">');
+  r = r.replace(/(<path d="M-10 430 L 10 430 L 14 700 L -14 700Z"[^>]*>)/, '$1</g>');
+  r = r.replace('<rect x="-108" y="40"', '<rect x="-133" y="40"').replace('<path d="M-102 40 C -118 30 -122 10 -108 0 C -94 8 -90 28 -102 40Z"', '<path d="M-127 40 C -143 30 -147 10 -133 0 C -119 8 -115 28 -127 40Z"');
+  r = r.replace('translate(-100.8,214)', 'translate(-125.4,214)').replace('translate(67,400)', 'translate(82.4,400)').replace('translate(63,390)', 'translate(78.4,390)');
   r = r.replace(/url\(#rSkinL\)/g, 'url(#brSkinL)').replace(/url\(#rSkin\)/g, 'url(#brSkin)').replace(/url\(#saffron\)/g, 'url(#brCloth)');
   return `<defs><radialGradient id="brSkin" cx=".42" cy=".42" r=".72"><stop offset="0" stop-color="#ffd8a0"/><stop offset=".62" stop-color="#e8a860"/><stop offset="1" stop-color="#b47430"/></radialGradient>
     <linearGradient id="brSkinL" gradientUnits="userSpaceOnUse" x1="-140" y1="0" x2="140" y2="0"><stop offset="0" stop-color="#ffd8a0"/><stop offset=".45" stop-color="#e8a860"/><stop offset="1" stop-color="#b47430"/></linearGradient>
