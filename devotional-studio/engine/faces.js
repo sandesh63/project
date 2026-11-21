@@ -116,4 +116,9 @@ const TULASI_FACE = { W: 47, chin: 124, cheek: 1.02, jaw: .6, noseY: 91, mouthY:
   brow: { x0: 7, x1: 34, y: 48, arch: 4, t: 2.2 }, nose: 'button', blush: .34, blushY: 90,
   lips: { w: 8, up: 3.4, lo: 5.4, c1: '#cc4e4a', c2: '#e47068' }, smile: true, hairVol: 6, hairSide: 4, wavy: true };
 
-module.exports = { faceP, tulasiHair, TULASI_FACE };
+// LOCKED: Vishnu's face = option V2 "Animated (matches Tulasi B6)" (chosen by the channel owner).
+const VISHNU_FACE = { W: 49, chin: 128, cheek: 1.02, jaw: .6, noseY: 93, mouthY: 108, irisCol: '#6a3a1a',
+  eye: { ex: 22, ey: 67, ew: 28, eh: 12.5, tilt: .8, irisK: .88, flick: 2.5 }, crease: true, liner: 2.5, lashes: false,
+  brow: { x0: 7, x1: 36, y: 49, arch: 4, t: 3 }, nose: 'button', lips: { w: 9.5, up: 3.6, lo: 5.6, c1: '#a84452', c2: '#c25a66' }, smile: true };
+
+module.exports = { faceP, tulasiHair, TULASI_FACE, VISHNU_FACE };

@@ -29,13 +29,17 @@ function sheetTulasi() {
 }
 
 function sheetVishnu() {
-  const W = 1920, H = 1080, s = .82;
+  const W = 1920, H = 1080, s = .8;
+  const card = (x, y, opts, id, label) => `${headCard(x, y, 1.3, C.vishnu(0, 0, 1, opts), 'v' + id, 175, 380)}
+    <text x="${x}" y="${y + 232}" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="24" fill="#5a3a20">${label}</text>`;
   return svg(W, H, `${parchment(W, H)}
-    ${shadow(330, 870, 110)}${C.vishnu(330, 165, s, {})}
-    ${shadow(760, 870, 110)}${C.vishnu(760, 165, s, { pose: 'accept', eyes: 'closed' })}
-    ${headCard(1180, 260, 1.4, C.vishnu(0, 0, 1, {}), 1, 190, 420)}
-    ${headCard(1460, 260, 1.4, C.vishnu(0, 0, 1, { eyes: 'open', mouth: 'smile' }), 2, 190, 420)}
-    ${headCard(1740, 260, 1.4, C.vishnu(0, 0, 1, { eyes: 'closed' }), 3, 190, 420)}
+    ${shadow(300, 880, 110)}${C.vishnu(300, 140, s, { eyes: 'lowered', mouth: 'smile' })}
+    ${shadow(700, 880, 110)}${C.vishnu(700, 140, s, { pose: 'accept', eyes: 'closed', mouth: 'soft' })}
+    ${card(1060, 220, { eyes: 'lowered', mouth: 'smile' }, 1, 'compassionate · default')}
+    ${card(1340, 220, { eyes: 'open', mouth: 'smile' }, 2, 'blessing smile')}
+    ${card(1620, 220, { eyes: 'open', mouth: 'soft' }, 3, 'calm')}
+    ${card(1200, 660, { eyes: 'closed', mouth: 'soft' }, 4, 'meditation · accepts the curse')}
+    ${card(1480, 660, { eyes: 'lowered', mouth: 'soft', sad: true }, 5, 'sorrow')}
   `);
 }
 

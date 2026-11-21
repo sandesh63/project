@@ -425,7 +425,7 @@ function vishnu(x, y, s = 1, o = {}) {
          <g transform="translate(${J.fL.wr[0]},${J.fL.wr[1]}) rotate(${180 - 10}) scale(${handS + .04})">${A.openPalm(SK, SH, 1)}</g>`}
     </g>
     <!-- head -->
-    ${vishnuHead(o)}
+    ${vishnuHead({ face: F.VISHNU_FACE, ...o })}
   </g>`;
 }
 
