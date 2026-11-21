@@ -28,3 +28,9 @@ Sheets: `style-frames/v2/*.png`. Logo sting: `brand/`.
 - Always review renders against reference images before sending; no patch-work fixes.
 - Bodies: normal fit, not fat chests, not too lean. Asuras look like asuras; devas never have horns.
 - Discuss visual plans before implementing.
+
+## Short v2 status
+- Code: `videos/tulasi-short-v2/short.js` (27 shots, English captions). Stills: `node engine/shot-stills.js <outDir> [t1,t2,...]`.
+- Mobile preview (private Artifact): https://claude.ai/artifact/RSnPNWgFcAA8VL5xVSxJA9 — page source in `videos/tulasi-short-v2/preview/`.
+  Rebuild: `node engine/bundle-preview.js videos/tulasi-short-v2/short.js <dir>/film.js`, mix voice+music to `<dir>/audio.mp3`, republish.
+- Awaiting owner review; render only after approval.

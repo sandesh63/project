@@ -1,0 +1,126 @@
+<title>Tulasi Devi Short Preview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;600&display=swap">
+<style>
+  /* Layout: a lamp-lit screening room. Phone-first column: the 9:16 film, transport, then the shot list. */
+  :root {
+    --bg: #120a0e; --panel: #1e1218; --line: #3a2630; --fg: #f6ecdf; --muted: #b9a596; --gold: #f2c14e; --vermilion: #d2452c;
+    --display: "Cinzel", "Times New Roman", serif; --body: "Inter", system-ui, sans-serif;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); margin: 0; }
+  .wrap { max-width: 980px; margin: 0 auto; padding-block: 16px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid; gap: 20px; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); align-items: start; }
+  @media (max-width: 760px) { .wrap { grid-template-columns: minmax(0, 1fr); } }
+  header { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: 1.4rem; letter-spacing: .06em; margin: 0; color: var(--gold); text-wrap: balance; }
+  header p { margin: 0; color: var(--muted); font-size: .9rem; }
+  .film { display: grid; gap: 10px; }
+  .stage { position: relative; width: 100%; aspect-ratio: 9 / 16; max-height: 78vh; margin: 0 auto; background: #000; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+  .stage > div, .stage svg { width: 100%; height: 100%; display: block; }
+  .tap { position: absolute; inset: 0; display: grid; place-items: center; background: none; border: 0; cursor: pointer; }
+  .tap span { width: 84px; height: 84px; border-radius: 50%; background: rgb(0 0 0 / .55); border: 2px solid var(--gold); display: grid; place-items: center; }
+  .tap[hidden] { display: none !important; }
+  .status { position: absolute; left: 10px; top: 10px; font-size: .75rem; color: var(--muted); background: rgb(0 0 0 / .5); padding: 3px 8px; border-radius: 6px; }
+  .transport { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+  button.ctl { font: 600 .9rem var(--body); color: var(--bg); background: var(--gold); border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; min-width: 84px; }
+  button.ctl:focus-visible, .shot:focus-visible, input:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+  input[type=range] { width: 100%; accent-color: var(--gold); }
+  .time { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; min-width: 7.5ch; text-align: right; }
+  .now { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 8px; }
+  .now .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+  .now strong { font-family: var(--display); color: var(--gold); letter-spacing: .04em; }
+  .now em { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.1rem; color: var(--fg); }
+  button.copy { font: 600 .8rem var(--body); color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+  .side h2 { font-family: var(--display); font-size: 1rem; letter-spacing: .08em; margin: 0 0 10px; color: var(--muted); font-weight: 400; }
+  .shots { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .shot { width: 100%; text-align: left; display: grid; grid-template-columns: 2.4rem 4.6rem minmax(0, 1fr); gap: 8px; align-items: baseline; background: var(--panel); color: var(--fg);
+    border: 1px solid var(--line); border-left: 3px solid transparent; border-radius: 8px; padding: 8px 10px; cursor: pointer; font: .88rem/1.35 var(--body); }
+  .shot b { font-family: var(--display); color: var(--gold); font-variant-numeric: tabular-nums; }
+  .shot small { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .shot.on { border-left-color: var(--vermilion); background: #2a1820; }
+  .note { color: var(--muted); font-size: .85rem; line-height: 1.5; margin: 14px 0 0; max-width: 60ch; }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Tulasi Devi · Short v2</h1>
+    <p>Live preview from code · not rendered yet · 27 shots · 55.8 s</p>
+  </header>
+
+  <section class="film">
+    <div class="stage" id="stage-box">
+      <div id="stage"></div>
+      <div class="status" id="status">Loading fonts…</div>
+      <button class="tap" id="tap" aria-label="Play"><span><svg width="34" height="34" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="#f2c14e"/></svg></span></button>
+    </div>
+    <div class="transport">
+      <button class="ctl" id="play">Play</button>
+      <input type="range" id="seek" min="0" max="55.8" step="0.033" value="0" aria-label="Position">
+      <span class="time" id="time">0.0 s</span>
+    </div>
+    <div class="now">
+      <div class="row"><strong id="shot-label">Shot 1</strong><button class="copy" id="copy">Copy shot + time</button></div>
+      <em id="caption">—</em>
+    </div>
+  </section>
+
+  <aside class="side">
+    <h2>SHOT LIST</h2>
+    <ul class="shots" id="shots"></ul>
+    <p class="note">Tap a shot to jump to it. To ask for a change, tap “Copy shot + time”, paste it in the chat and say what to fix. The Divine Stories Studio logo is added at the end in the final render.</p>
+  </aside>
+</div>
+
+<audio id="audio" src="audio.mp3" preload="auto"></audio>
+<script src="film.js"></script>
+<script>
+  const F = window.FILM;
+  const DESCR = ['Diya lights in the dark', 'Vishnu in the temple, flickers to stone', 'The glowing Shaligram', 'Not a sage: rishi under a tree', 'Not a god: Indra on clouds',
+    'Vrinda prays in the temple', 'Her eyes open · VRINDA', 'Golden aura of devotion', 'Jalandhar inside the shield', 'Mahadev, third eye blazes',
+    'Trishul bounces off the shield', 'Moon over the palace', 'The door opens', '“Same face…” Jalandhar', '“…same voice” Vrinda smiles',
+    'Camera slides to the wall', 'Four-armed shadow', 'Smile turns to shock', 'Tears', 'Palm rises, red energy',
+    'The curse is spoken', 'Curse strikes Vishnu', 'Vishnu accepts', 'Vishnu becomes the Shaligram', '“But why?”',
+    'Vrinda becomes the Tulasi plant', 'Title · watch the full story'];
+  const $ = (id) => document.getElementById(id);
+  const audio = $('audio'), stage = $('stage'), seek = $('seek');
+  const list = $('shots');
+  F.SHOTS.forEach((s, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<button class="shot" id="shot-${s.n}"><b>${String(s.n).padStart(2, '0')}</b><small>${s.a.toFixed(1)}–${s.b.toFixed(1)} s</small><span>${DESCR[i]}</span></button>`;
+    li.firstChild.addEventListener('click', () => go(s.a + 0.05));
+    list.appendChild(li);
+  });
+  const shotAt = (t) => { let n = 1; for (const s of F.SHOTS) if (t >= s.a) n = s.n; return n; };
+  const capAt = (t) => { const c = F.CAPS.find(([a, b]) => t >= a - .05 && t <= b + .2); return c ? c[2].replace(/★/g, '') : '—'; };
+  let tShown = -1, busy = false, lastShot = 0;
+  function draw(t) {
+    if (busy) return; busy = true;
+    stage.innerHTML = F.frame(t); tShown = t;
+    $('time').textContent = t.toFixed(1) + ' s'; seek.value = t;
+    const n = shotAt(t);
+    if (n !== lastShot) { document.querySelector('.shot.on')?.classList.remove('on'); const el = $('shot-' + n); el?.classList.add('on'); lastShot = n; }
+    $('shot-label').textContent = 'Shot ' + n + ' · ' + DESCR[n - 1];
+    $('caption').textContent = capAt(t);
+    requestAnimationFrame(() => { busy = false; });
+  }
+  function loop() { if (!audio.paused) draw(audio.currentTime); if (audio.ended) stop(); requestAnimationFrame(loop); }
+  function play() { audio.play().then(() => { $('play').textContent = 'Pause'; $('tap').hidden = true; }).catch(() => { $('status').textContent = 'Tap Play to start sound'; }); }
+  function stop() { audio.pause(); $('play').textContent = 'Play'; $('tap').hidden = false; }
+  function go(t) { audio.currentTime = Math.max(0, Math.min(55.7, t)); draw(audio.currentTime); }
+  $('play').addEventListener('click', () => audio.paused ? play() : stop());
+  $('tap').addEventListener('click', play);
+  seek.addEventListener('input', () => go(+seek.value));
+  $('copy').addEventListener('click', () => {
+    const txt = `Shot ${shotAt(tShown)} (${DESCR[shotAt(tShown) - 1]}) at ${tShown.toFixed(1)} s: `;
+    const b = $('copy');
+    navigator.clipboard.writeText(txt).then(() => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy shot + time', 1500); })
+      .catch(() => { $('shot-label').textContent = txt; b.textContent = 'Select the text above'; });
+  });
+  document.fonts.ready.then(() => { $('status').hidden = true; draw(0.6); });
+  setTimeout(() => { $('status').hidden = true; if (tShown < 0) draw(0.6); }, 2500);
+  requestAnimationFrame(loop);
+</script>
