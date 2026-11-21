@@ -10,7 +10,7 @@ const outDir = path.resolve(args[1]);
 const opt = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? Number(args[i + 1]) : d; };
 const from = opt('from', 0), to = opt('to', mod.DURATION), workers = opt('workers', 4), step = opt('step', 1);
 
-const FONTS = `<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet">`;
+const FONTS = `<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Noto+Serif+Devanagari:wght@600;800&display=swap" rel="stylesheet">`;
 
 (async () => {
   fs.mkdirSync(outDir, { recursive: true });
