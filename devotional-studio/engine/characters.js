@@ -182,7 +182,7 @@ function tulasi(x, y, s = 1, o = {}) {
   const J = pose === 'anjali'
     ? { r: { sh: [-92, 184], el: [-104, 318], wr: [-20, 262] }, l: { sh: [92, 184], el: [104, 318], wr: [20, 262] } }
     : { r: { sh: [-94, 184], el: [-118, 320], wr: [-126, 442] }, l: { sh: [94, 184], el: [118, 320], wr: [126, 442] } };
-  const armW = [48, 45, 33, 33, 25];
+  const armW = [50, 47, 35, 35, 27];
   const relaxedHand = (sx) => `<g transform="translate(${sx * 126},442) rotate(${sx * -4}) scale(${sx},1)">
       <path d="M-12 -2 C -15 18 -15 40 -11 60 C -8 72 -1 82 6 83 C 12 81 14 70 14 57 C 15 38 14 18 12 -2Z" fill="${SK}" stroke="${INK}" stroke-width="${LW}"/>
       <path d="M-9 34 C -16 40 -16 52 -11 58 C -8 61 -5 58 -5 54" fill="${SK}" stroke="${INK}" stroke-width="1.8"/>
@@ -204,24 +204,25 @@ function tulasi(x, y, s = 1, o = {}) {
     </g>`;
 
   // ---- costume shapes
-  const skinBody = `M-16 116 L -18 150 C -34 160 -66 164 -90 172 C -100 178 -104 190 -100 204 L -78 268 C -72 292 -66 310 -66 330 L 66 330 C 66 310 72 292 78 268 L 100 204 C 104 190 100 178 90 172 C 66 164 34 160 18 150 L 16 116Z`;
-  const blouse = `M-34 158 C -22 194 22 194 34 158 C 54 160 76 163 92 172 C 102 180 106 196 104 212 C 100 236 90 252 80 262 L 78 272 Q 0 284 -78 272 L -80 262 C -90 252 -100 236 -104 212 C -106 196 -102 180 -92 172 C -76 163 -54 160 -34 158Z`;
+  const skinBody = `M-16 116 L -18 150 C -34 160 -66 164 -90 172 C -100 178 -104 190 -100 204 L -74 268 C -62 290 -54 310 -54 330 L 54 330 C 54 310 62 290 74 268 L 100 204 C 104 190 100 178 90 172 C 66 164 34 160 18 150 L 16 116Z`;
+  const blouse = `M-34 158 C -22 194 22 194 34 158 C 54 160 76 163 92 172 C 102 180 106 196 104 212 C 100 236 90 252 78 262 L 72 272 Q 0 284 -72 272 L -78 262 C -90 252 -100 236 -104 212 C -106 196 -102 180 -92 172 C -76 163 -54 160 -34 158Z`;
   const sleeveFill = (sx) => `<path transform="scale(${sx},1)" d="M-72 166 C -92 168 -110 180 -116 204 C -120 220 -120 236 -118 246 Q -100 254 -82 246 L -74 214 Z" fill="url(#tBlouse)"/>`;
   const sleeveLine = (sx) => `<g transform="scale(${sx},1)">
       <path d="M-92 172 C -106 180 -114 194 -116 210 C -118 224 -119 238 -118 246 Q -100 254 -82 246 L -78 232" fill="none" stroke="${INK}" stroke-width="${LW}"/>
       ${borderStroke('M-117 240 Q -100 248 -82 241', 6)}
       <path d="M-104 196 C -110 210 -112 224 -112 236" stroke="#0a4a2c" stroke-width="5" fill="none" opacity=".35"/></g>`;
-  const skirt = `M-64 322 C -90 356 -104 400 -104 444 C -104 520 -96 600 -86 680 C -80 740 -84 820 -92 862 L -98 886 Q 0 898 98 886 L 92 862 C 84 820 80 740 86 680 C 96 600 104 520 104 444 C 104 400 90 356 64 322 Q 0 332 -64 322Z`;
+  const skirt = `M-54 322 C -84 356 -104 400 -104 444 C -104 520 -96 600 -86 680 C -80 740 -84 820 -92 862 L -98 886 Q 0 898 98 886 L 92 862 C 84 820 80 740 86 680 C 96 600 104 520 104 444 C 104 400 84 356 54 322 Q 0 332 -54 322Z`;
   const pleats = [...Array(10)].map((_, i) => {
     const x0 = -4 + i * 4.2, x0b = x0 + 4.2, x1 = -62 + i * 12.6, x1b = x1 + 12.6;
     return `<path d="M${x0} 346 C ${x0 - 6} 520 ${x1 + 10} 700 ${x1} 880 L ${x1b} 880 C ${x1b + 10} 700 ${x0b - 6} 520 ${x0b} 346Z" fill="${i % 2 ? '#8e1210' : '#d63a2c'}" opacity="${i % 2 ? .45 : .28}"/>
       <path d="M${x0} 346 C ${x0 - 6} 520 ${x1 + 10} 700 ${x1} 880" stroke="#6a0b0a" stroke-width="1.3" fill="none" opacity=".6"/>`;
   }).join('') + [0, 1, 2].map(k => `<path d="M${100 - k * 4} ${452 + k * 30} C ${60 - k * 10} ${560 + k * 40} ${20 - k * 10} ${700 + k * 30} ${-6 - k * 8} ${860}" stroke="#6a0b0a" stroke-width="2.4" fill="none" opacity=".35"/><path d="M${96 - k * 4} ${462 + k * 30} C ${56 - k * 10} ${570 + k * 40} ${16 - k * 10} ${710 + k * 30} ${-10 - k * 8} ${864}" stroke="#ff6a50" stroke-width="1.4" fill="none" opacity=".25"/>`).join('');
   const pleatHem = [...Array(10)].map((_, i) => `<path d="M${-62 + i * 12.6} 870 l 6.3 14 l 6.3 -14" stroke="#0f6a3c" stroke-width="1.5" fill="none"/>`).join('');
-  const palluFront = `M-70 342 C -40 300 8 232 42 162 C 62 162 84 166 98 176 C 106 196 106 232 98 262 C 90 292 84 318 80 342 Q 6 352 -70 342Z`;
+  const palluFront = `M-62 342 C -36 300 8 232 42 162 C 62 162 84 166 98 176 C 106 196 104 232 94 262 C 82 292 72 318 66 342 Q 6 352 -62 342Z`;
   const palluHang = `M94 178 C 116 196 126 280 124 400 L 120 646 Q 106 654 92 650 C 98 520 100 400 98 290 C 97 240 96 200 94 178Z`;
 
   return `<g transform="translate(${x},${y}) scale(${s})">
+    <g transform="scale(${o.slim ?? .88},1)">
     <!-- back layer: pallu hanging behind the left arm -->
     <path d="${palluHang}" fill="url(#tSaree)" stroke="${INK}" stroke-width="${LW}"/>
     <path d="${palluHang}" fill="url(#tButta)"/>
@@ -249,7 +250,7 @@ function tulasi(x, y, s = 1, o = {}) {
     <!-- blouse body -->
     <path d="${blouse}" fill="url(#tBlouse)" stroke="${INK}" stroke-width="${LW}"/>
     ${borderStroke('M-34 158 C -22 194 22 194 34 158', 6)}
-    ${borderStroke('M-78 270 Q 0 282 78 270', 5)}
+    ${borderStroke('M-72 270 Q 0 282 72 270', 5)}
     <path d="M-60 200 C -54 226 -54 248 -62 266" stroke="#0a4a2c" stroke-width="1.6" fill="none" opacity=".7"/>
     <!-- arms -->
     ${pose === 'anjali' ? `${A.arm(J.r.sh, J.r.el, J.r.wr, SK, SH, armW)}${A.arm(J.l.sh, J.l.el, J.l.wr, SK, SH, armW)}`
@@ -259,11 +260,11 @@ function tulasi(x, y, s = 1, o = {}) {
     <!-- pallu across the chest over the left shoulder -->
     <path d="${palluFront}" fill="url(#tSaree)" stroke="${INK}" stroke-width="${LW}"/>
     <path d="${palluFront}" fill="url(#tButta)"/>
-    ${[18, 36, 54].map(d => `<path d="M${-70 + d} 344 C ${-40 + d} 304 ${8 + d * .7} 236 ${42 + d * .9} 166" stroke="#7a0d0c" stroke-width="1.8" fill="none" opacity=".55"/>`).join('')}
-    ${borderStroke('M-70 342 C -40 300 8 232 42 162', 11)}
+    ${[18, 36, 54].map(d => `<path d="M${-62 + d} 344 C ${-36 + d} 304 ${8 + d * .7} 236 ${42 + d * .9} 166" stroke="#7a0d0c" stroke-width="1.8" fill="none" opacity=".55"/>`).join('')}
+    ${borderStroke('M-62 342 C -36 300 8 232 42 162', 11)}
     <!-- waist belt -->
-    <path d="M-72 324 Q 0 338 72 324 L 74 342 Q 0 356 -74 342Z" fill="url(#gold)" stroke="#8a5a12" stroke-width="1.4"/>
-    <path d="M-72 333 Q 0 347 72 333" stroke="#8a5a12" stroke-width="1.2" stroke-dasharray="4 4" fill="none"/>
+    <path d="M-60 324 Q 0 338 60 324 L 64 342 Q 0 356 -64 342Z" fill="url(#gold)" stroke="#8a5a12" stroke-width="1.4"/>
+    <path d="M-60 333 Q 0 347 60 333" stroke="#8a5a12" stroke-width="1.2" stroke-dasharray="4 4" fill="none"/>
     <ellipse cx="0" cy="340" rx="14" ry="11" fill="url(#gold)" stroke="#8a5a12" stroke-width="1.4"/>
     <ellipse cx="0" cy="340" rx="6" ry="5" fill="#c8201a"/>
     <!-- necklaces -->
@@ -274,6 +275,7 @@ function tulasi(x, y, s = 1, o = {}) {
     <path d="M0 220 l 7 9 -7 11 -7 -11z" fill="url(#gold)" stroke="#8a5a12" stroke-width="1"/><circle cx="0" cy="230" r="2.6" fill="#c8201a"/>
     <!-- hands -->
     ${pose === 'anjali' ? anjaliHands : `${relaxedHand(-1)}${relaxedHand(1)}`}
+    </g>
     <!-- head -->
     ${tulasiHead(o)}
   </g>`;
@@ -336,9 +338,9 @@ function vishnu(x, y, s = 1, o = {}) {
   };
   const aw = [44, 42, 31, 32, 24];
   const curls = (sx) => [...Array(8)].map((_, i) => `<g transform="scale(${sx},1)"><path d="M${44 + i * 2.5} ${104 + i * 22} c 16 -4 30 6 28 20 c -2 10 -14 12 -20 6 c 6 -2 8 -8 4 -12 c -4 -4 -12 -2 -12 6 c -10 -2 -8 -16 0 -20z" fill="#140d0a" stroke="#000" stroke-width=".8"/><path d="M${50 + i * 2.5} ${110 + i * 22} c 8 -2 14 2 14 8" stroke="#4a3a30" stroke-width="1.2" fill="none"/></g>`).join('');
-  const torso = 'M-22 158 C -60 168 -98 176 -120 196 C -132 210 -132 240 -126 268 C -116 316 -96 356 -84 412 L 84 412 C 96 356 116 316 126 268 C 132 240 132 210 120 196 C 98 176 60 168 22 158Z';
-  const dhoti = 'M-88 402 C -118 440 -130 490 -130 540 C -130 620 -122 700 -106 760 C -96 800 -90 860 -88 900 L -94 936 Q -60 945 -22 936 L -16 900 C -12 840 -8 800 0 772 C 8 800 12 840 16 900 L 22 936 Q 60 945 94 936 L 88 900 C 90 860 96 800 106 760 C 122 700 130 620 130 540 C 130 490 118 440 88 402 Q 0 416 -88 402Z';
-  const drape = [480, 550, 620, 690].map((yy, i) => `<path d="M${-120 + i} ${yy} Q -60 ${yy + 54 - i * 4} -6 ${yy + 22}" stroke="#a8680a" stroke-width="3" fill="none" opacity=".55"/><path d="M${-118 + i} ${yy + 6} Q -60 ${yy + 58 - i * 4} -6 ${yy + 28}" stroke="#ffe27a" stroke-width="2" fill="none" opacity=".5"/><path d="M${120 - i} ${yy} Q 60 ${yy + 54 - i * 4} 6 ${yy + 22}" stroke="#a8680a" stroke-width="3" fill="none" opacity=".55"/><path d="M${118 - i} ${yy + 6} Q 60 ${yy + 58 - i * 4} 6 ${yy + 28}" stroke="#ffe27a" stroke-width="2" fill="none" opacity=".35"/>`).join('');
+  const torso = 'M-22 158 C -60 168 -98 176 -120 196 C -132 210 -132 240 -126 268 C -114 316 -88 356 -72 412 L 72 412 C 88 356 114 316 126 268 C 132 240 132 210 120 196 C 98 176 60 168 22 158Z';
+  const dhoti = 'M-76 402 C -104 440 -116 490 -116 540 C -116 620 -110 700 -96 760 C -88 800 -84 860 -84 900 L -90 936 Q -58 945 -22 936 L -16 900 C -12 840 -8 800 0 772 C 8 800 12 840 16 900 L 22 936 Q 58 945 90 936 L 84 900 C 84 860 88 800 96 760 C 110 700 116 620 116 540 C 116 490 104 440 76 402 Q 0 416 -76 402Z';
+  const drape = [480, 550, 620, 690].map((yy, i) => `<path d="M${-108 + i} ${yy} Q -60 ${yy + 54 - i * 4} -6 ${yy + 22}" stroke="#a8680a" stroke-width="3" fill="none" opacity=".55"/><path d="M${-118 + i} ${yy + 6} Q -60 ${yy + 58 - i * 4} -6 ${yy + 28}" stroke="#ffe27a" stroke-width="2" fill="none" opacity=".5"/><path d="M${120 - i} ${yy} Q 60 ${yy + 54 - i * 4} 6 ${yy + 22}" stroke="#a8680a" stroke-width="3" fill="none" opacity=".55"/><path d="M${118 - i} ${yy + 6} Q 60 ${yy + 58 - i * 4} 6 ${yy + 28}" stroke="#ffe27a" stroke-width="2" fill="none" opacity=".35"/>`).join('');
   const vert = [-80, -60, -40, 40, 60, 80].map(xx => `<path d="M${xx * 1.2} 760 C ${xx * 1.05} 820 ${xx * .95} 870 ${xx} 928" stroke="#a8680a" stroke-width="2.2" fill="none" opacity=".6"/>`).join('') + [-1, 1].map(sx => [0, 1, 2, 3].map(k => `<path transform="scale(${sx},1)" d="M${-92 + k * 2} ${880 + k * 12} Q -58 ${890 + k * 12} ${-20 - k} ${880 + k * 12}" stroke="#a8680a" stroke-width="1.8" fill="none" opacity=".6"/>`).join('')).join('');
   const panel = `M-24 420 L 24 420 L 36 690 L -36 690Z`;
   const garland = (sx) => {
@@ -366,6 +368,7 @@ function vishnu(x, y, s = 1, o = {}) {
     <path d="M-8 24 Q 0 34 8 24" fill="url(#gold)" stroke="#8a5a12"/></g>`;
   const handS = .62;
   return `<g transform="translate(${x},${y}) scale(${s})">
+    <g transform="scale(${o.slim ?? .88},1)">
     <!-- hair behind shoulders -->
     ${curls(1)}${curls(-1)}
     <!-- shawl ends hang behind -->
@@ -381,7 +384,7 @@ function vishnu(x, y, s = 1, o = {}) {
     <path d="M-20 120 L -22 162 L 22 162 L 20 120Z" fill="${SK}" stroke="${INK}" stroke-width="${LW}"/>
     <path d="M-20 138 Q 0 152 20 138 L 20 124 L -20 124Z" fill="${SH}" opacity=".35"/>
     <path d="${torso}" fill="url(#vTorso)" stroke="${INK}" stroke-width="${LW}"/>
-    <path d="M-120 196 C -132 210 -132 240 -126 268 C -116 316 -96 356 -84 412 C -98 360 -114 310 -118 262 C -120 236 -120 214 -112 202Z" fill="${SH}" opacity=".4"/>
+    <path d="M-120 196 C -132 210 -132 240 -126 268 C -114 316 -88 356 -72 412 C -90 360 -112 310 -118 262 C -120 236 -120 214 -112 202Z" fill="${SH}" opacity=".4"/>
     <path d="M-86 270 Q -48 288 -12 278 M86 270 Q 48 288 12 278" stroke="${SH}" stroke-width="1.8" fill="none" opacity=".5"/>
     <ellipse cx="-50" cy="236" rx="34" ry="20" fill="#c2cff8" opacity=".18"/>
     <path d="M0 372 Q 4 379 0 386" stroke="${SH}" stroke-width="2.4" fill="none"/>
@@ -396,8 +399,8 @@ function vishnu(x, y, s = 1, o = {}) {
     <path d="M-36 690 l 9 12 l 9 -12 l 9 12 l 9 -12 l 9 12 l 9 -12 l 9 12 l 9 -12" stroke="#c0281c" stroke-width="5" fill="none"/>
     ${borderStroke('M-92 924 Q -58 933 -22 924 M22 924 Q 58 933 92 924', 7, '#c0281c')}
     <!-- waist sash + belt -->
-    <path d="M-88 396 Q 0 412 88 396 L 90 424 Q 0 440 -90 424Z" fill="#c0281c" stroke="${INK}" stroke-width="1.6"/>
-    ${borderStroke('M-88 400 Q 0 416 88 400', 5, '#1f6a3c')}${borderStroke('M-90 420 Q 0 436 90 420', 5, '#1f6a3c')}
+    <path d="M-76 396 Q 0 412 76 396 L 80 424 Q 0 440 -80 424Z" fill="#c0281c" stroke="${INK}" stroke-width="1.6"/>
+    ${borderStroke('M-76 400 Q 0 416 76 400', 5, '#1f6a3c')}${borderStroke('M-80 420 Q 0 436 80 420', 5, '#1f6a3c')}
     <ellipse cx="0" cy="416" rx="16" ry="13" fill="url(#gold)" stroke="#8a5a12" stroke-width="1.4"/><ellipse cx="0" cy="416" rx="7" ry="6" fill="#d1261c"/>
     <!-- feet -->
     ${[-1, 1].map(sx => `<g transform="scale(${sx},1)">
@@ -423,6 +426,7 @@ function vishnu(x, y, s = 1, o = {}) {
       ? `<g transform="translate(0,300) scale(.9)"><path d="M0 -92 C 10 -86 17 -64 18 -38 C 19 -16 16 2 0 14 C -16 2 -19 -16 -18 -38 C -17 -64 -10 -86 0 -92Z" fill="${SK}" stroke="${INK}" stroke-width="${LW}"/><path d="M0 -90 L 0 12" stroke="${INK}" stroke-width="1.4"/><path d="M-20 10 Q 0 20 20 10" stroke="url(#gold)" stroke-width="6" fill="none"/></g>`
       : `<g transform="translate(${J.fR.wr[0]},${J.fR.wr[1]}) rotate(-6) scale(${handS + .04})">${A.openPalm(SK, SH, 1)}</g>
          <g transform="translate(${J.fL.wr[0]},${J.fL.wr[1]}) rotate(${180 - 10}) scale(${handS + .04})">${A.openPalm(SK, SH, 1)}</g>`}
+    </g>
     <!-- head -->
     ${vishnuHead(o)}
   </g>`;
