@@ -167,7 +167,7 @@ const S = [
   { a: 37.0, b: 39.85, f: (t) => { const r = prog(t, 37.2, 39.6);
     return cam(`${BG('url(#bgGrief)')}${BG('url(#redEnergy)', r)}<g transform="rotate(${t * 20} 960 420)">${A.mandalaGlow(960, 420, 700, '#ffb04a', .2 + r * .4)}</g>
       ${T({ eyes: t > 38.5 ? 'angry' : 'lowered', mouth: 'soft', tears: true, id: 's20' })}
-      <g transform="translate(700,${lerp(1260, 860, prog(t, 37.6, 38.8, ease.out))}) scale(3.4)">${A.openPalm('url(#tSkin)', '#b9774a', -1)}</g>
+      <g transform="translate(1120,${lerp(1100, 590, prog(t, 37.6, 38.8, ease.out))}) scale(2.0)">${A.openPalm('url(#tSkin)', '#b9774a', -1)}</g>
       ${N.embersAnim(17, 60, 1920, 1080, t, { color: '#ffcf6a', speed: 40 + r * 120, op: r })}`, { s: 1.04 + r * .06, fy: 470 }); } },
   // 21 39.8–42.5 "As you turned my heart to stone…": two-shot, Vrinda speaks, Vishnu before her
   { a: 39.8, b: 42.55, f: (t) => cam(`${BG('url(#redEnergy)')}<g transform="rotate(${t * 15} 960 420)">${A.mandalaGlow(960, 420, 800, '#ffb04a', .35)}</g>

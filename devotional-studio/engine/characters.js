@@ -374,7 +374,7 @@ function vishnu(x, y, s = 1, o = {}) {
     ${A.arm(J.bR.sh, J.bR.el, J.bR.wr, SK, SH, [40, 38, 28, 28, 22])}${A.bandOn(J.bR.sh, J.bR.el, .45, 40)}
     ${A.arm(J.bL.sh, J.bL.el, J.bL.wr, SK, SH, [40, 38, 28, 28, 22])}${A.bandOn(J.bL.sh, J.bL.el, .45, 40)}
     <g transform="translate(${J.bR.wr[0]},${J.bR.wr[1]}) scale(${handS})">${A.holdingHand(SK, SH, -1, true)}</g>
-    ${disc(J.bR.wr[0] - 11, J.bR.wr[1] - 94)}
+    ${disc(J.bR.wr[0] + 11.8, J.bR.wr[1] - 75)}
     ${conch(J.bL.wr[0] + 2, J.bL.wr[1] - 60)}
     <g transform="translate(${J.bL.wr[0]},${J.bL.wr[1]}) scale(${handS})">${A.holdingHand(SK, SH, 1, false)}</g>
     <!-- neck + torso -->
