@@ -13,14 +13,18 @@ const headCard = (x, y, sc, inner, id, top = 40, h = 270) => `<clipPath id="hc${
 
 function sheetTulasi() {
   const W = 1920, H = 1080, s = .9;
+  const card = (x, y, opts, id, label) => `${headCard(x, y, 1.75, C.tulasi(0, 0, 1, opts), id, 50, 300)}
+    <text x="${x}" y="${y + 275}" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="24" fill="#5a3a20">${label}</text>`;
   return svg(W, H, `${parchment(W, H)}
-    ${shadow(260, 896, 90)}${C.tulasi(260, 80, s, { eyes: 'open', mouth: 'smile' })}
-    ${shadow(560, 896, 90)}${C.tulasi(560, 80, s, { pose: 'anjali', eyes: 'lowered' })}
-    ${headCard(960, 120, 1.7, `<g transform="translate(0,0)">${C.tulasi(0, 0, 1, { eyes: 'closed', pose: 'anjali' })}</g>`, 1)}
-    ${headCard(1240, 120, 1.7, C.tulasi(0, 0, 1, { eyes: 'open', mouth: 'smile' }), 2)}
-    ${headCard(1520, 120, 1.7, C.tulasi(0, 0, 1, { eyes: 'wide', mouth: 'open' }), 3)}
-    ${headCard(1240, 520, 1.7, C.tulasi(0, 0, 1, { eyes: 'angry', mouth: 'open', tears: true }), 4)}
-    ${headCard(960, 520, 1.7, C.tulasi(0, 0, 1, { eyes: 'lowered', pose: 'anjali' }), 5)}
+    ${shadow(250, 896, 90)}${C.tulasi(250, 80, s, { eyes: 'open', mouth: 'smile' })}
+    ${shadow(540, 896, 90)}${C.tulasi(540, 80, s, { pose: 'anjali', eyes: 'lowered', mouth: 'soft' })}
+    ${card(900, 130, { eyes: 'closed', mouth: 'soft', pose: 'anjali' }, 1, 'prayer · eyes closed')}
+    ${card(1180, 130, { eyes: 'lowered', mouth: 'soft', pose: 'anjali' }, 2, 'devotion · eyes lowered')}
+    ${card(1460, 130, { eyes: 'open', mouth: 'smile' }, 3, 'gentle smile')}
+    ${card(1740, 130, { eyes: 'open', mouth: 'soft' }, 4, 'calm')}
+    ${card(1040, 560, { eyes: 'wide', mouth: 'open' }, 5, 'shock · realisation')}
+    ${card(1320, 560, { eyes: 'angry', mouth: 'open', tears: true }, 6, 'anger · the curse')}
+    ${card(1600, 560, { eyes: 'lowered', mouth: 'soft', tears: true, sad: true }, 7, 'grief')}
   `);
 }
 

@@ -2,6 +2,7 @@
 // (references/characters/*.png). Local units: y=0 is the top of the skull, x=0 the centre line.
 // Tulasi is ~900 units tall (7 heads), Vishnu ~960 (8 heads). Head height H = 128.
 const A = require('./art.js');
+const F = require('./faces.js');
 const { P } = A;
 
 const INK = '#3b1c0e';           // softer than mural black-brown; reads as illustration
@@ -144,34 +145,28 @@ const bez = (p0, p1, p2, p3, n) => [...Array(n)].map((_, i) => {
 
 // ---------------------------------------------------------------- TULASI
 function tulasiHead(o = {}) {
-  const S = 'url(#tFace)', SH = '#b9774a';
-  const backHair = `
-    <path d="M0 -8 C -38 -8 -57 12 -58 48 C -59 64 -56 76 -52 86 L 52 86 C 56 76 59 64 58 48 C 57 12 38 -8 0 -8Z" fill="#17100c"/>`;
-  // jasmine on the bun peeks out on both sides behind the ears + strings to the chest
-  const jas = `${jasmineString(bez([-54, 50], [-62, 72], [-60, 100], [-50, 124], 6), 6.5)}${jasmineString(bez([54, 50], [62, 72], [60, 100], [50, 124], 6), 6.5)}`;
-  const frontHair = `
-    <path d="M0 -12 C -34 -12 -54 8 -55 44 C -56 56 -52 64 -47 70 C -47 58 -45 48 -41 40 C -34 26 -20 15 0 13 C 20 15 34 26 41 40 C 45 48 47 58 47 70 C 52 64 56 56 55 44 C 54 8 34 -12 0 -12Z" fill="#17100c" stroke="#080503" stroke-width="1.5"/>
-    <path d="M-30 -4 C -40 4 -46 16 -48 30 M30 -4 C 40 4 46 16 48 30" stroke="#4a3a32" stroke-width="2" fill="none" opacity=".6"/>
-    <path d="M-6 -2 C -26 2 -42 18 -48 40 M6 -2 C 26 2 42 18 48 40 M-14 2 C -30 10 -40 26 -44 46 M14 2 C 30 10 40 26 44 46" stroke="#3a2a22" stroke-width="1.3" fill="none" opacity=".8"/>
-    <path d="M-1.5 -6 L 1.5 -6 L 1.2 12 L -1.2 12Z" fill="#c8201a"/>`;
-  const tikka = `
-    <path d="M0 -6 L 0 16" stroke="url(#gold)" stroke-width="2.2"/>
-    ${[-2, 3, 8].map(y => `<circle cx="0" cy="${y}" r="1.6" fill="#f6d36a"/>`).join('')}
-    <path d="M0 16 C 7 17 10 23 7 28 C 4 31 -4 31 -7 28 C -10 23 -7 17 0 16Z" fill="url(#gold)" stroke="#8a5a12" stroke-width="1"/>
-    <circle cx="0" cy="23" r="2.8" fill="#c8201a"/>
-    ${[-5, 0, 5].map(x => `<circle cx="${x}" cy="32" r="1.6" fill="#fff6e6"/>`).join('')}
-    <path d="M0 -4 C -20 -2 -38 10 -48 30 M0 -4 C 20 -2 38 10 48 30" stroke="url(#gold)" stroke-width="1.6" fill="none"/>`;
-  const bindi = `<circle cx="0" cy="44" r="3.3" fill="#c8201a"/><circle cx="-.8" cy="43" r="1" fill="#ff8a7a" opacity=".7"/>`;
-  const jhumka = (sx) => `<g transform="translate(${sx * 47},84) scale(.78)">
+  // Face = locked option B6 (engine/faces.js TULASI_FACE); expressions via o.eyes / o.mouth / o.tears
+  const p = { ...F.TULASI_FACE, id: 't' + (o.id || '') + (o.eyes || '') + (o.mouth || ''), eyes: o.eyes || 'open', mouth: o.mouth, tears: o.tears, look: o.look, sad: o.sad,
+    smile: o.mouth ? o.mouth === 'smile' : F.TULASI_FACE.smile };
+  const W = p.W;
+  const jas = (sx) => [...Array(7)].map((_, i) => {
+    const t = i / 6, x = sx * (W + 8 + Math.sin(t * 3) * 5), y = 48 + t * 84;
+    return `<g transform="translate(${x},${y}) rotate(${i * 40})">${[0, 72, 144, 216, 288].map(a => `<ellipse transform="rotate(${a})" cx="0" cy="-4" rx="2.8" ry="4.2" fill="#fffaf0" stroke="#cfc3a6" stroke-width=".6"/>`).join('')}<circle r="1.4" fill="#f2e3a0"/></g>`;
+  }).join('');
+  const jhumka = (sx) => `<g transform="translate(${sx * (W + 3)},84) scale(.72)">
     <circle r="4.5" fill="url(#gold)" stroke="#8a5a12" stroke-width=".8"/><circle r="2" fill="#1f8a4a"/>
     <path d="M0 4 L 0 10" stroke="url(#gold)" stroke-width="2"/>
     <path d="M-10 26 C -10 14 -5 10 0 10 C 5 10 10 14 10 26Z" fill="url(#gold)" stroke="#8a5a12" stroke-width="1"/>
-    <path d="M-10 26 Q 0 30 10 26" stroke="#8a5a12" stroke-width="1.2" fill="none"/>
     ${[-8, -4, 0, 4, 8].map(x => `<circle cx="${x}" cy="29" r="1.6" fill="#fff6e6"/>`).join('')}</g>`;
+  const tikka = `<path d="M0 -10 L 0 15" stroke="url(#gold)" stroke-width="2"/>
+    <path d="M0 15 C 5 16 7 20 5 24 C 3 26 -3 26 -5 24 C -7 20 -5 16 0 15Z" fill="url(#gold)" stroke="#8a5a12" stroke-width=".8"/>
+    <circle cx="0" cy="20.5" r="2" fill="#c8201a"/>${[-3.5, 0, 3.5].map(x => `<circle cx="${x}" cy="27.5" r="1.2" fill="#fff6e6"/>`).join('')}
+    <path d="M0 -8 C -20 -6 -36 6 -45 24 M0 -8 C 20 -6 36 6 45 24" stroke="url(#gold)" stroke-width="1.4" fill="none"/>`;
+  const bindi = `<circle cx="0" cy="${p.brow.y - 6}" r="3" fill="#c8201a"/>`;
   return `<g>
-    ${backHair}${jas}
-    ${faceV2({ id: 't' + (o.id || ''), skin: S, shade: SH, eyes: o.eyes, mouth: o.mouth, brows: o.brows, look: o.look, tears: o.tears, lip1: '#b4463e', lip2: '#cf5f52' })}
-    ${frontHair}${tikka}${bindi}${jhumka(-1)}${jhumka(1)}
+    ${F.tulasiHair(p, 'back')}${jas(-1)}${jas(1)}
+    ${F.faceP(p)}
+    ${F.tulasiHair(p, 'front')}${tikka}${bindi}${jhumka(-1)}${jhumka(1)}
   </g>`;
 }
 

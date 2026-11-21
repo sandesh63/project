@@ -13,15 +13,17 @@ function faceP(p) {
   const { ex, ey, ew, eh, tilt, irisK, flick } = p.eye;
   const eye = (sx) => {
     const ix0 = ex - ew / 2, ox = ex + ew / 2, oy = ey - tilt;
-    if (p.eyesClosed) {
+    if (p.eyesClosed || p.eyes === 'closed') {
       return `<g transform="scale(${sx},1)">
         <path d="M${ix0} ${ey + 1} C ${ix0 + ew * .3} ${ey + eh * .55} ${ox - ew * .3} ${ey + eh * .55} ${ox} ${oy}" stroke="${INK}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
         ${[.35, .5, .65, .8].map(t => `<path d="M${ix0 + ew * t} ${ey + eh * .42} l ${t * 2 - .6} ${3.5}" stroke="${INK}" stroke-width="1.2"/>`).join('')}</g>`;
     }
-    const shape = `M${ix0} ${ey + 1} C ${ix0 + ew * .22} ${ey - eh} ${ox - ew * .28} ${ey - eh - 1} ${ox} ${oy} C ${ox - ew * .22} ${ey + eh * .55} ${ix0 + ew * .25} ${ey + eh * .6} ${ix0} ${ey + 1}Z`;
-    const ir = eh * irisK, icx = ex + 1, icy = ey - eh * .12, cid = `fp${p.id}${sx > 0 ? 'r' : 'l'}`;
+    const mode = p.eyes || 'open';
+    const ehT = eh * ({ lowered: .36, wide: 1.22, angry: 1.02, open: 1 }[mode] ?? 1) * (p.mouth === 'smile' && mode === 'open' ? .82 : 1);
+    const shape = `M${ix0} ${ey + 1} C ${ix0 + ew * .22} ${ey - ehT} ${ox - ew * .28} ${ey - ehT - 1} ${ox} ${oy} C ${ox - ew * .22} ${ey + eh * .55} ${ix0 + ew * .25} ${ey + eh * .6} ${ix0} ${ey + 1}Z`;
+    const ir = eh * irisK * (mode === 'wide' ? .82 : 1), icx = ex + 1 + (p.look || 0) * sx, icy = ey - ehT * .12 + (mode === 'lowered' ? eh * .34 : 0), cid = `fp${p.id}${sx > 0 ? 'r' : 'l'}`;
     const lashes = p.lashes ? [.7, .84, .96].map((t, i) => {
-      const lx = ix0 + ew * t, ly = ey - eh * (1 - (t - .5) * 1.2) + 1;
+      const lx = ix0 + ew * t, ly = ey - ehT * (1 - (t - .5) * 1.2) + 1;
       return `<path d="M${lx} ${ly} q ${1 + i * .6} ${-1.6 - i * .3} ${2.2 + i * .8} ${-2.2 - i * .5}" stroke="${INK}" stroke-width="1.2" fill="none" stroke-linecap="round"/>`;
     }).join('') : '';
     return `<g transform="scale(${sx},1)">
@@ -33,18 +35,20 @@ function faceP(p) {
         <circle cx="${icx}" cy="${icy}" r="${ir * .42}" fill="#120804"/>
         <circle cx="${icx + ir * .35}" cy="${icy - ir * .38}" r="${ir * .26}" fill="#fff"/>
         <circle cx="${icx - ir * .35}" cy="${icy + ir * .35}" r="${ir * .12}" fill="#fff" opacity=".8"/>
-        <path d="M${ix0} ${ey - eh - 6} L ${ox + 4} ${ey - eh - 6} L ${ox + 4} ${ey - eh * .55} C ${ex + ew * .2} ${ey - eh * .9} ${ex - ew * .2} ${ey - eh * .9} ${ix0} ${ey - eh * .55}Z" fill="${shade}" opacity=".3"/>
+        <path d="M${ix0} ${ey - ehT - 6} L ${ox + 4} ${ey - ehT - 6} L ${ox + 4} ${ey - ehT * .55} C ${ex + ew * .2} ${ey - ehT * .9} ${ex - ew * .2} ${ey - ehT * .9} ${ix0} ${ey - ehT * .55}Z" fill="${shade}" opacity=".3"/>
       </g>
-      <path d="M${ix0 - .5} ${ey + 1.5} C ${ix0 + ew * .22} ${ey - eh - .5} ${ox - ew * .28} ${ey - eh - 1.5} ${ox} ${oy} l ${flick} ${-flick * .45}" stroke="${INK}" stroke-width="${p.liner || 2.8}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M${ix0 - .5} ${ey + 1.5} C ${ix0 + ew * .22} ${ey - ehT - .5} ${ox - ew * .28} ${ey - ehT - 1.5} ${ox} ${oy} l ${flick} ${-flick * .45}" stroke="${INK}" stroke-width="${p.liner || 2.8}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M${ix0 + 2} ${ey + 2.5} C ${ix0 + ew * .3} ${ey + eh * .65} ${ox - ew * .25} ${ey + eh * .6} ${ox - 1} ${oy + 1.5}" stroke="${INK}" stroke-width="${p.lowerLine || 1}" fill="none" opacity=".75"/>
-      ${p.crease ? `<path d="M${ix0 + 2} ${ey - eh * .7} C ${ix0 + ew * .3} ${ey - eh * 1.55} ${ox - ew * .3} ${ey - eh * 1.6} ${ox + 1} ${oy - eh * .7}" stroke="${shade}" stroke-width="1.4" fill="none" opacity=".75"/>` : ''}
+      ${p.crease ? `<path d="M${ix0 + 2} ${ey - ehT * .7} C ${ix0 + ew * .3} ${ey - ehT * 1.55} ${ox - ew * .3} ${ey - ehT * 1.6} ${ox + 1} ${oy - eh * .7}" stroke="${shade}" stroke-width="1.4" fill="none" opacity=".75"/>` : ''}
       ${lashes}
     </g>`;
   };
 
   // ---- brows
-  const b = p.brow;
-  const brow = (sx) => `<path transform="scale(${sx},1)" d="M${b.x0} ${b.y + 2} C ${b.x0 + 8} ${b.y - b.arch} ${b.x1 - 10} ${b.y - b.arch - 2} ${b.x1} ${b.y + 3} C ${b.x1 - 10} ${b.y - b.arch + b.t} ${b.x0 + 8} ${b.y - b.arch + b.t + 1} ${b.x0} ${b.y + 2 + b.t}Z" fill="#24160e"/>`;
+  const b0 = p.brow, em = p.eyes || 'open';
+  const b = { ...b0, y: b0.y + (em === 'wide' ? -4 : em === 'lowered' || em === 'closed' ? 1 : 0), arch: b0.arch + (em === 'wide' ? 2 : 0) };
+  const angry = em === 'angry', sad = !!p.sad;
+  const brow = (sx) => sad ? `<path transform="scale(${sx},1)" d="M${b.x0} ${b.y - 3} C ${b.x0 + 10} ${b.y - 6} ${b.x1 - 10} ${b.y - 2} ${b.x1} ${b.y + 4} C ${b.x1 - 10} ${b.y + 1} ${b.x0 + 10} ${b.y - 3.6} ${b.x0} ${b.y - 1}Z" fill="#24160e"/>` : angry ? `<path transform="scale(${sx},1)" d="M${b.x0} ${b.y + 7} C ${b.x0 + 10} ${b.y + 1} ${b.x1 - 10} ${b.y - 4} ${b.x1} ${b.y - 1} C ${b.x1 - 10} ${b.y - 4 + b.t} ${b.x0 + 10} ${b.y + 1 + b.t + 1} ${b.x0} ${b.y + 7 + b.t + .5}Z" fill="#24160e"/>` : `<path transform="scale(${sx},1)" d="M${b.x0} ${b.y + 2} C ${b.x0 + 8} ${b.y - b.arch} ${b.x1 - 10} ${b.y - b.arch - 2} ${b.x1} ${b.y + 3} C ${b.x1 - 10} ${b.y - b.arch + b.t} ${b.x0 + 8} ${b.y - b.arch + b.t + 1} ${b.x0} ${b.y + 2 + b.t}Z" fill="#24160e"/>`;
 
   // ---- nose
   const ny = p.noseY;
@@ -64,12 +68,17 @@ function faceP(p) {
   };
 
   // ---- lips
-  const L = p.lips, my = p.mouthY, lw = L.w, up = L.up, lo = L.lo, sm = p.smile ? 2.2 : 0;
-  const lips = `<path d="M${-lw} ${my - sm * .4} C ${-lw * .55} ${my - up} ${-lw * .2} ${my - up * .95} 0 ${my - up * .55} C ${lw * .2} ${my - up * .95} ${lw * .55} ${my - up} ${lw} ${my - sm * .4} C ${lw * .5} ${my + 1.2 + sm * .4} ${-lw * .5} ${my + 1.2 + sm * .4} ${-lw} ${my - sm * .4}Z" fill="${L.c1}"/>
+  const L = p.lips, my = p.mouthY, lw = L.w, up = L.up, lo = L.lo, sm = p.smile && p.mouth !== 'soft' ? 3.6 : 0;
+  const openMouth = `<path d="M${-lw * .9} ${my - 1} C ${-lw * .5} ${my - 4} ${lw * .5} ${my - 4} ${lw * .9} ${my - 1} C ${lw * .7} ${my + 9} ${-lw * .7} ${my + 9} ${-lw * .9} ${my - 1}Z" fill="#5a1410"/>
+    <path d="M${-lw * .6} ${my - 1.6} C ${-lw * .3} ${my - 2.6} ${lw * .3} ${my - 2.6} ${lw * .6} ${my - 1.6} L ${lw * .55} ${my + .6} L ${-lw * .55} ${my + .6}Z" fill="#fff6ee"/>
+    <path d="M${-lw * .9} ${my - 1} C ${-lw * .5} ${my - 4.6} ${-lw * .15} ${my - 3.8} 0 ${my - 3} C ${lw * .15} ${my - 3.8} ${lw * .5} ${my - 4.6} ${lw * .9} ${my - 1}" stroke="${L.c1}" stroke-width="2.6" fill="none"/>
+    <path d="M${-lw * .8} ${my + 1.5} C ${-lw * .5} ${my + 10} ${lw * .5} ${my + 10} ${lw * .8} ${my + 1.5}" stroke="${L.c2}" stroke-width="3" fill="none"/>`;
+  const tears = p.tears ? `<path d="M${ex + 4} ${ey + eh * .7} C ${ex + 2} ${ey + 14} ${ex + 4} ${ey + 22} ${ex + 5} ${ey + 28}" stroke="#dff2ff" stroke-width="2.4" fill="none" opacity=".85"/><circle cx="${ex + 5}" cy="${ey + 29}" r="2.5" fill="#e8f6ff" opacity=".95"/>` : '';
+  const lips = p.mouth === 'open' ? openMouth : `<path d="M${-lw} ${my - sm * .4} C ${-lw * .55} ${my - up} ${-lw * .2} ${my - up * .95} 0 ${my - up * .55} C ${lw * .2} ${my - up * .95} ${lw * .55} ${my - up} ${lw} ${my - sm * .4} C ${lw * .5} ${my + 1.2 + sm * .4} ${-lw * .5} ${my + 1.2 + sm * .4} ${-lw} ${my - sm * .4}Z" fill="${L.c1}"/>
     <path d="M${-lw + 1} ${my} C ${-lw * .55} ${my + lo + sm * .5} ${lw * .55} ${my + lo + sm * .5} ${lw - 1} ${my} C ${lw * .4} ${my + 1.8} ${-lw * .4} ${my + 1.8} ${-lw + 1} ${my}Z" fill="${L.c2}"/>
     <path d="M${-lw} ${my - sm * .4} C ${-lw * .45} ${my + 1.8 + sm * .5} ${lw * .45} ${my + 1.8 + sm * .5} ${lw} ${my - sm * .4}" stroke="${INK}" stroke-width="1.3" fill="none" stroke-linecap="round"/>
     <path d="M${-lw * .35} ${my + lo * .55} Q 0 ${my + lo * .7} ${lw * .35} ${my + lo * .55}" stroke="#fff" stroke-width="1.4" opacity=".35" fill="none"/>
-    ${p.smile ? `<path d="M${-lw - 2.5} ${my - 2} q 1.4 1.6 2.4 1.6 M${lw + 2.5} ${my - 2} q -1.4 1.6 -2.4 1.6" stroke="${shade}" stroke-width="1.2" fill="none"/>` : ''}`;
+    ${sm ? `<path d="M${-lw - 2.5} ${my - 2} q 1.4 1.6 2.4 1.6 M${lw + 2.5} ${my - 2} q -1.4 1.6 -2.4 1.6" stroke="${shade}" stroke-width="1.2" fill="none"/>` : ''}`;
 
   return `<g>
     <path d="M${-W - 1} 54 C ${-W - 11} 48 ${-W - 13} 74 ${-W - 2} 84Z M${W + 1} 54 C ${W + 11} 48 ${W + 13} 74 ${W + 2} 84Z" fill="${skin}" stroke="${INK}" stroke-width="2"/>
@@ -82,6 +91,7 @@ function faceP(p) {
     ${brow(1)}${brow(-1)}${eye(1)}${eye(-1)}
     ${noses[p.nose]}
     ${lips}
+    ${tears}
   </g>`;
 }
 
@@ -100,4 +110,10 @@ function tulasiHair(p, layer) {
     <path d="M-1.4 ${-11 - vol} L 1.4 ${-11 - vol} L 1.1 11 L -1.1 11Z" fill="#c8201a"/>`;
 }
 
-module.exports = { faceP, tulasiHair };
+// LOCKED: Tulasi's face = option B6 "Youthful, innocent" (chosen by the channel owner).
+const TULASI_FACE = { W: 47, chin: 124, cheek: 1.02, jaw: .6, noseY: 91, mouthY: 104, irisCol: '#8a4a20',
+  eye: { ex: 21.5, ey: 66, ew: 28, eh: 13.5, tilt: .5, irisK: .88, flick: 2 }, lashes: true, crease: true, liner: 2.4,
+  brow: { x0: 7, x1: 34, y: 48, arch: 4, t: 2.2 }, nose: 'button', blush: .34, blushY: 90,
+  lips: { w: 8, up: 3.4, lo: 5.4, c1: '#cc4e4a', c2: '#e47068' }, smile: true, hairVol: 6, hairSide: 4, wavy: true };
+
+module.exports = { faceP, tulasiHair, TULASI_FACE };
