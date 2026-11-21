@@ -45,6 +45,9 @@ function defs() {
       <stop offset="0" stop-color="#e0462c"/><stop offset=".5" stop-color="${P.vermilion}"/>
       <stop offset="1" stop-color="${P.vermDark}"/>
     </linearGradient>
+    <linearGradient id="blouseGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2fa36e"/><stop offset=".55" stop-color="#1f8a5a"/><stop offset="1" stop-color="${P.greenDark}"/>
+    </linearGradient>
     <linearGradient id="greenCloth" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#2fa36e"/><stop offset="1" stop-color="${P.greenDark}"/>
     </linearGradient>
@@ -293,32 +296,33 @@ function vrinda(x, y, s = 1, o = {}) {
   const f = face({ id: 'vr' + (o.id || ''), x: 0, y: 0, s: 1, skin: 'url(#skinWarm)', shade: P.skinWarmShade, eyeOpen: o.eyeOpen ?? .85, look: o.look || 0, extra: tilak });
   // Torso with natural shoulders (±172), waist and flared skirt.
   const torso = 'M-38 168 C -86 172 -140 180 -168 206 C -186 240 -184 330 -176 400 C -170 450 -168 470 -172 480 C -190 560 -214 630 -236 700 L 236 700 C 214 630 190 560 172 480 C 168 470 170 450 176 400 C 184 330 186 240 168 206 C 140 180 86 172 38 168Z';
-  // Elbow-length blouse sleeve (screen-left; mirrored for the other side).
-  const sleeve = (sx) => `<g transform="scale(${sx},1)">
-      <path d="M-118 188 C -170 186 -214 206 -232 256 C -246 300 -246 380 -240 440 L -236 474 Q -206 488 -176 474 L -174 420 C -172 360 -170 300 -160 250 C -150 220 -136 200 -118 188Z" fill="url(#greenCloth)" stroke="${P.ink}" stroke-width="3"/>
-      <path d="M-226 270 C -236 320 -236 380 -230 440" stroke="${P.greenDark}" stroke-width="10" fill="none" opacity=".45"/>
-      <path d="M-206 300 C -202 350 -202 400 -206 450" stroke="${P.greenDark}" stroke-width="3" fill="none" opacity=".7"/>
-      <path d="M-150 214 C -176 222 -196 240 -208 268" stroke="#4fc48e" stroke-width="4" fill="none" opacity=".5"/>
+  // One-piece blouse: body + elbow-length sleeves filled WITHOUT strokes, then a single outer outline,
+  // so there is no seam between sleeve and bodice.
+  const sleeveFill = (sx) => `<path transform="scale(${sx},1)" d="M-112 188 C -170 186 -214 206 -232 256 C -246 300 -246 380 -240 440 L -236 474 Q -206 488 -176 474 L -170 300 L -150 200Z" fill="url(#greenCloth)"/>`;
+  const blouseOutline = `M-112 190 C -170 186 -214 206 -232 256 C -246 300 -246 380 -240 440 L -236 474 Q -206 488 -176 474 L -173 458 Q 0 502 173 458 L 176 474 Q 206 488 236 474 L 240 440 C 246 380 246 300 232 256 C 214 206 170 186 112 190 C 86 262 -86 262 -112 190Z`;
+  const sleeveDetail = (sx) => `<g transform="scale(${sx},1)">
+      <path d="M-226 270 C -236 320 -236 380 -230 440" stroke="${P.greenDark}" stroke-width="10" fill="none" opacity=".4"/>
+      <path d="M-208 300 C -204 350 -204 400 -208 450" stroke="${P.greenDark}" stroke-width="2.5" fill="none" opacity=".55"/>
+      <path d="M-176 372 C -174 410 -175 440 -176 470" stroke="${P.greenDark}" stroke-width="3" fill="none" opacity=".8"/>
+      <path d="M-160 212 C -184 220 -200 236 -212 262" stroke="#5fd49e" stroke-width="4" fill="none" opacity=".45"/>
       <path d="M-239 458 Q -206 474 -175 458" stroke="url(#gold)" stroke-width="13" fill="none"/>
       <path d="M-239 458 Q -206 474 -175 458" stroke="${P.vermDark}" stroke-width="3" fill="none" stroke-dasharray="5 5"/>
       <path d="M-237 472 Q -206 486 -176 472" stroke="url(#gold)" stroke-width="4" fill="none"/>
-      <!-- elbow peeking below the sleeve -->
       <path d="M-236 478 Q -206 492 -176 478 C -176 500 -196 512 -210 512 C -226 512 -238 498 -236 478Z" fill="url(#skinWarm)" stroke="${P.ink}" stroke-width="3"/>
     </g>`;
   const body = `
     <path d="${torso}" fill="url(#skinWarm)" stroke="${P.ink}" stroke-width="3"/>
     <path d="M-60 200 Q 0 214 60 200" stroke="${P.skinWarmShade}" stroke-width="3" fill="none" opacity=".6"/>
-    <!-- blouse body: covers shoulders, sweetheart neckline -->
-    <path d="M-168 206 C -150 194 -130 190 -112 190 C -86 262 86 262 112 190 C 130 190 150 194 168 206 C 186 240 184 330 176 400 L 172 456 Q 0 500 -172 456 L -176 400 C -184 330 -186 240 -168 206Z" fill="url(#greenCloth)" stroke="${P.ink}" stroke-width="3"/>
+    <!-- blouse (single garment) -->
+    <path d="${blouseOutline}" fill="url(#blouseGrad)" stroke="${P.ink}" stroke-width="3" stroke-linejoin="round"/>
     <path d="M-112 190 C -86 262 86 262 112 190" fill="none" stroke="url(#gold)" stroke-width="11"/>
     <path d="M-112 190 C -86 262 86 262 112 190" fill="none" stroke="${P.vermDark}" stroke-width="3" stroke-dasharray="6 6"/>
-    <path d="M-172 456 Q 0 500 172 456" fill="none" stroke="url(#gold)" stroke-width="9"/>
-    <path d="M-100 300 C -90 350 -94 400 -108 450 M100 300 C 90 350 94 400 108 450" stroke="${P.greenDark}" stroke-width="3" fill="none" opacity=".7"/>
-    <path d="M-150 260 C -140 320 -140 380 -150 440" stroke="${P.greenDark}" stroke-width="12" fill="none" opacity=".35"/>
+    <path d="M-173 458 Q 0 502 173 458" fill="none" stroke="url(#gold)" stroke-width="9"/>
+    <path d="M-96 300 C -88 350 -92 400 -104 450 M96 300 C 88 350 92 400 104 450" stroke="${P.greenDark}" stroke-width="2.5" fill="none" opacity=".6"/>
     <!-- waist + skirt pleats -->
     <path d="M-174 470 Q 0 515 174 470 L 236 700 L -236 700Z" fill="url(#saree)" stroke="${P.ink}" stroke-width="3"/>
     ${[-150, -90, -30, 30, 90, 150].map(px => `<path d="M${px * .85} ${505} Q ${px} 600 ${px * 1.1} 700" stroke="${P.vermDark}" stroke-width="3" fill="none" opacity=".6"/>`).join('')}
-    ${sleeve(1)}${sleeve(-1)}
+    ${sleeveDetail(1)}${sleeveDetail(-1)}
     <!-- pallu over left shoulder (screen right), covering that sleeve -->
     <path d="M62 188 C 140 190 222 214 246 290 L 256 700 L 10 700 C 30 590 60 480 112 380 C 78 320 56 250 62 188Z" fill="url(#saree)" stroke="${P.ink}" stroke-width="3"/>
     <path d="M62 188 C 140 190 222 214 246 290 L 256 700 L 10 700 C 30 590 60 480 112 380 C 78 320 56 250 62 188Z" fill="url(#sareeMotif)"/>
@@ -469,10 +473,10 @@ function vishnu(x, y, s = 1, o = {}) {
 
   // Joints (screen coords, local units). Shoulders at ±188, y 236.
   const J = {
-    bR: { sh: [-170, 226], el: [-286, 178], wr: [-322, 62] },  // back right (chakra)
-    bL: { sh: [170, 226], el: [286, 178], wr: [322, 62] },     // back left (shankha)
-    fR: { sh: [-180, 246], el: [-236, 444], wr: [-300, 338] }, // front right (abhaya: forearm raised, angled out)
-    fL: { sh: [180, 246], el: [232, 440], wr: [270, 548] },    // front left (varada: forearm lowered, palm out)
+    bR: { sh: [-150, 222], el: [-272, 176], wr: [-310, 62] },  // back right (chakra)
+    bL: { sh: [150, 222], el: [272, 176], wr: [310, 62] },     // back left (shankha)
+    fR: { sh: [-164, 242], el: [-218, 440], wr: [-284, 336] }, // front right (abhaya: forearm raised, angled out)
+    fL: { sh: [164, 242], el: [214, 436], wr: [252, 544] },    // front left (varada: forearm lowered, palm out)
   };
   const backArm = (j, sx) => `
     ${arm(j.sh, j.el, j.wr, SK, SH, [64, 62, 46, 46, 36])}
@@ -492,7 +496,7 @@ function vishnu(x, y, s = 1, o = {}) {
     <path d="M30 -16 Q 50 -34 40 -58" stroke="url(#gold)" stroke-width="8" fill="none"/>
     <path d="M-16 50 Q 0 74 16 50" fill="url(#gold)" stroke="${P.gold4}"/></g>`;
   // Torso: broad shoulders, chest tapering to a narrow waist (classic lion-chest, slim-waist ideal).
-  const torso = 'M-40 170 C -100 174 -160 186 -192 214 C -214 240 -210 300 -190 350 C -170 400 -146 450 -136 520 L -132 600 L 132 600 L 136 520 C 146 450 170 400 190 350 C 210 300 214 240 192 214 C 160 186 100 174 40 170Z';
+  const torso = 'M-40 170 C -94 174 -146 182 -170 204 C -188 230 -186 288 -174 336 C -160 388 -138 440 -128 520 L -126 600 L 126 600 L 128 520 C 138 440 160 388 174 336 C 186 288 188 230 170 204 C 146 182 94 174 40 170Z';
 
   return `<g transform="translate(${x},${y}) scale(${s})">
     <path d="M-150 -40 C -168 60 -176 150 -168 236 L 168 236 C 176 150 168 60 150 -40Z" fill="#120a1a"/>
@@ -505,16 +509,15 @@ function vishnu(x, y, s = 1, o = {}) {
     <g transform="translate(${J.bL.wr[0]},${J.bL.wr[1]})">${holdingHand(SK, SH, 1, false)}</g>
     <!-- torso -->
     <path d="${torso}" fill="${SK}" stroke="${P.ink}" stroke-width="3"/>
-    <path d="M-192 214 C -214 240 -210 300 -190 350 C -170 400 -146 450 -136 520 C -150 450 -176 380 -184 320 C -190 280 -190 240 -180 222Z" fill="${SH}" opacity=".5"/>
-    <path d="M-150 290 Q -80 336 -8 306 M150 290 Q 80 336 8 306" stroke="${SH}" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M-120 300 Q -80 320 -40 312" stroke="#9cc0ff" stroke-width="3" fill="none" opacity=".35"/>
-    <path d="M0 330 L 0 500" stroke="${SH}" stroke-width="2.5" opacity=".55"/>
-    <path d="M-70 400 Q 0 414 70 400 M-60 448 Q 0 460 60 448" stroke="${SH}" stroke-width="2.5" fill="none" opacity=".5"/>
-    <path d="M0 482 Q 7 494 0 506" stroke="${SH}" stroke-width="4" fill="none"/>
-    <path d="M-60 210 Q 0 222 60 210" stroke="${SH}" stroke-width="3" fill="none" opacity=".6"/>
+    <path d="M-170 204 C -188 230 -186 288 -174 336 C -160 388 -138 440 -128 520 C -142 450 -160 390 -166 330 C -170 290 -170 240 -160 216Z" fill="${SH}" opacity=".45"/>
+    <path d="M-110 316 Q -66 334 -22 320 M110 316 Q 66 334 22 320" stroke="${SH}" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".55"/>
+    <ellipse cx="-70" cy="270" rx="46" ry="30" fill="#9cc0ff" opacity=".18"/>
+    <ellipse cx="70" cy="270" rx="46" ry="30" fill="#9cc0ff" opacity=".12"/>
+    <path d="M0 470 Q 6 480 0 490" stroke="${SH}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M-60 210 Q 0 222 60 210" stroke="${SH}" stroke-width="3" fill="none" opacity=".5"/>
     <!-- sacred thread from his left shoulder to right hip -->
-    <path d="M150 200 C 80 300 -20 420 -110 590" stroke="#fff6e0" stroke-width="5" fill="none"/>
-    <path d="M150 200 C 80 300 -20 420 -110 590" stroke="#d8c8a8" stroke-width="5" fill="none" stroke-dasharray="2 10"/>
+    <path d="M136 200 C 70 300 -20 420 -104 590" stroke="#fff6e0" stroke-width="5" fill="none"/>
+    <path d="M136 200 C 70 300 -20 420 -104 590" stroke="#d8c8a8" stroke-width="5" fill="none" stroke-dasharray="2 10"/>
     <!-- pitambara + waist belt -->
     <path d="M-136 540 Q 0 566 136 540 L 150 700 L -150 700Z" fill="url(#pitambara)" stroke="${P.ink}" stroke-width="3"/>
     ${[-90, -30, 30, 90].map(px => `<path d="M${px} 560 Q ${px * 1.05} 630 ${px * 1.12} 700" stroke="#a8640a" stroke-width="3" fill="none" opacity=".6"/>`).join('')}
@@ -522,8 +525,8 @@ function vishnu(x, y, s = 1, o = {}) {
     <path d="M0 548 l 18 20 -18 26 -18 -26z" fill="url(#gold)" stroke="${P.gold4}" stroke-width="2"/><circle cx="0" cy="572" r="7" fill="${P.vermilion}"/>
     ${necklaces(0, 192, 1.15, 1.0)}
     <!-- vanamala: forest garland -->
-    <path d="M-150 206 C -150 380 -80 540 0 610 C 80 540 150 380 150 206" fill="none" stroke="${P.green}" stroke-width="16" stroke-dasharray="14 6"/>
-    <path d="M-150 206 C -150 380 -80 540 0 610 C 80 540 150 380 150 206" fill="none" stroke="#f0d26a" stroke-width="5" stroke-dasharray="4 16"/>
+    <path d="M-136 204 C -136 380 -74 540 0 610 C 74 540 136 380 136 204" fill="none" stroke="${P.green}" stroke-width="16" stroke-dasharray="14 6"/>
+    <path d="M-136 204 C -136 380 -74 540 0 610 C 74 540 136 380 136 204" fill="none" stroke="#f0d26a" stroke-width="5" stroke-dasharray="4 16"/>
     <!-- front arms -->
     ${arm(J.fR.sh, J.fR.el, J.fR.wr, SK, SH)}
     ${bandOn(J.fR.sh, J.fR.el, .3, 72)}

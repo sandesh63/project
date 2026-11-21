@@ -40,7 +40,7 @@ function frameVishnu() {
     <ellipse cx="960" cy="420" rx="760" ry="620" fill="url(#blueGlow)" opacity=".7"/>
     ${A.mandalaGlow(960, 330, 560, '#bcd6ff', .45)}
     ${A.prabhavali(960, 860, 570, { flames: 29, thick: 30, pillar: 300 })}
-    ${A.vishnu(960, 456, .8)}
+    ${A.vishnu(960, 420, .8)}
     ${A.petals(31, 26, W, H, { op: .8 })}
     ${A.captionBand(W, H)}
     ${caption(W, 1010, [['But the one who came to her door… was ', 0], ['Vishnu', 1]])}
