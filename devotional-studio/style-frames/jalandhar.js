@@ -55,19 +55,27 @@ function upper(o = {}) {
     ${o.armsBack || ''}
     <path d="${torso}" fill="${SK}" stroke="${INK}" stroke-width="2.2"/>
     <path d="M-98 216 C -96 232 -90 242 -82 246 C -86 236 -90 224 -90 210Z" fill="${SH}" opacity=".4"/>
-    <!-- gold breastplate over the chest, leather straps -->
-    <path d="M-62 186 C -40 200 40 200 62 186 C 70 220 66 262 52 296 C 30 312 -30 312 -52 296 C -66 262 -70 220 -62 186Z" fill="url(#darkGold)" stroke="#3a2406" stroke-width="2"/>
-    <path d="M-50 210 C -30 222 30 222 50 210 M-52 250 C -30 262 30 262 52 250" stroke="#5a3a0a" stroke-width="2.2" fill="none"/>
-    <path d="M0 196 L 0 304" stroke="#5a3a0a" stroke-width="2" opacity=".6"/>
-    <circle cx="0" cy="232" r="13" fill="#d1261c" stroke="#3a2406" stroke-width="2"/><circle cx="-3" cy="228" r="4" fill="#ff8a7a" opacity=".6"/>
-    ${[-1, 1].map(sx => `<path transform="scale(${sx},1)" d="M-58 170 C -84 166 -104 180 -108 206 C -110 222 -104 234 -96 240 C -92 222 -80 204 -60 196Z" fill="url(#darkGold)" stroke="#3a2406" stroke-width="2"/>
-      <path transform="scale(${sx},1)" d="M-70 182 C -92 184 -102 200 -102 222" stroke="#d1261c" stroke-width="3" fill="none"/>`).join('')}
-    <!-- abdomen skin visible, belt -->
-    <path d="M-48 320 Q 0 332 48 320" stroke="${SH}" stroke-width="1.6" fill="none" opacity=".5"/>
-    <path d="M0 356 Q 4 363 0 370" stroke="${SH}" stroke-width="2.2" fill="none"/>
-    <path d="M-68 392 Q 0 408 68 392 L 72 428 Q 0 444 -72 428Z" fill="url(#darkGold)" stroke="#3a2406" stroke-width="2"/>
-    <path d="M-68 402 Q 0 418 68 402" stroke="#5a3a0a" stroke-width="1.6" fill="none" stroke-dasharray="6 4"/>
-    <circle cx="0" cy="414" r="11" fill="#d1261c" stroke="#3a2406" stroke-width="2"/>
+    <!-- full gold cuirass: covers the whole torso from the collar to the waist -->
+    <path d="M -21.8 151 C -44 155 -66 160 -80 168 C -94 176 -100 196 -98 216 C -96 232 -90 242 -82 246 C -76 250 -74 258 -73 268 C -70 300 -65 334 -64.4 376 L -66.7 430 L 66.7 430 L 64.4 376 C 65 334 70 300 73 268 C 74 258 76 250 82 246 C 90 242 96 232 98 216 C 100 196 94 176 80 168 C 66 160 44 155 21.8 151 Q 0 166 -21.8 151 Z" fill="url(#darkGold)" stroke="#3a2406" stroke-width="2.2"/>
+    <path d="M-20 154 Q 0 170 20 154 L 24 170 Q 0 188 -24 170Z" fill="#5a0810" stroke="#3a2406" stroke-width="1.6"/>
+    <!-- chest plates -->
+    <path d="M-62 196 C -44 214 -10 220 0 216 C 10 220 44 214 62 196 C 66 230 60 256 50 270 C 30 280 10 278 0 272 C -10 278 -30 280 -50 270 C -60 256 -66 230 -62 196Z" fill="none" stroke="#5a3a0a" stroke-width="2.4"/>
+    <path d="M0 216 L 0 272" stroke="#5a3a0a" stroke-width="2"/>
+    <!-- lower plates (segmented) -->
+    ${[292, 318, 344, 370].map((y, i) => `<path d="M${-60 + i * 1.2} ${y} Q 0 ${y + 12} ${60 - i * 1.2} ${y}" stroke="#5a3a0a" stroke-width="2.2" fill="none"/><path d="M${-58 + i * 1.2} ${y + 3} Q 0 ${y + 15} ${58 - i * 1.2} ${y + 3}" stroke="#fff1b8" stroke-width="1.2" fill="none" opacity=".45"/>`).join('')}
+    <!-- central emblem: face of glory with ruby -->
+    <g transform="translate(0,244) scale(.42)">${A.kirtimukha(0, 0, 1)}</g>
+    <circle cx="0" cy="244" r="7" fill="#d1261c" stroke="#3a2406" stroke-width="1.4"/>
+    ${[-1, 1].map(sx => `<g transform="scale(${sx},1)">${[210, 250, 300, 350].map(y => `<circle cx="-48" cy="${y}" r="3" fill="#d1261c" stroke="#3a2406" stroke-width=".8"/>`).join('')}</g>`).join('')}
+    <!-- full layered pauldrons covering each shoulder -->
+    ${[-1, 1].map(sx => `<g transform="scale(${sx},1)">
+      ${[0, 1, 2].map(k => `<path d="M${-40 - k * 4} ${162 + k * 22} C ${-70 - k * 4} ${156 + k * 22} ${-104 - k * 2} ${170 + k * 22} ${-110 - k * 2} ${198 + k * 22} C ${-112} ${210 + k * 22} ${-108} ${218 + k * 22} ${-100} ${222 + k * 22} C ${-90 - k * 2} ${206 + k * 22} ${-70 - k * 4} ${196 + k * 22} ${-44 - k * 4} ${196 + k * 22}Z" fill="url(#darkGold)" stroke="#3a2406" stroke-width="2"/>
+        <path d="M${-50 - k * 4} ${172 + k * 22} C ${-76 - k * 4} ${170 + k * 22} ${-98 - k * 2} ${182 + k * 22} ${-104 - k * 2} ${204 + k * 22}" stroke="#d1261c" stroke-width="2.4" fill="none"/>`).join('')}
+      <circle cx="-74" cy="180" r="5" fill="#d1261c" stroke="#3a2406"/></g>`).join('')}
+    <!-- belt -->
+    <path d="M-68 392 Q 0 408 68 392 L 72 428 Q 0 444 -72 428Z" fill="#5a0810" stroke="#3a2406" stroke-width="2"/>
+    <path d="M-68 396 Q 0 412 68 396 M-70 424 Q 0 440 70 424" stroke="url(#darkGold)" stroke-width="4" fill="none"/>
+    <circle cx="0" cy="414" r="11" fill="url(#darkGold)" stroke="#3a2406" stroke-width="2"/><circle cx="0" cy="414" r="5" fill="#d1261c"/>
     <!-- neck + necklace -->
     <path d="M-22 156 Q 0 172 22 156" stroke="url(#darkGold)" stroke-width="8" fill="none"/>
     ${[-12, 0, 12].map(x => `<path d="M${x} ${164 - Math.abs(x) * .2} l 4 9 -4 7 -4 -7z" fill="#efe6d6" stroke="#5a3a0a" stroke-width=".8"/>`).join('')}
