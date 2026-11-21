@@ -21,18 +21,18 @@ k = 0; x = .4
 while x < DUR - 1:
     g = .55
     if 21 <= x < 32.5: g = .38            # suspense at the door
-    if 44.8 <= x < 47.0: g = .15          # silence around the curse hit
+    if 43.0 <= x < 45.4: g = .15          # silence around the curse hit
     add(pluck(pat[k % 4]), x, g, -.3 if k % 2 else .3); x += .9; k += 1
 pad = (np.sin(2 * np.pi * SA * t) + .6 * np.sin(2 * np.pi * SA * 1.5 * t) + .4 * np.sin(2 * np.pi * SA * 2 * t)) * (.5 + .5 * np.sin(2 * np.pi * .12 * t))
 env = np.clip(t / 2, 0, 1) * np.clip((DUR - t) / 1.5, 0, 1)
 out[:, 0] += pad * env * .04; out[:, 1] += pad * env * .04
-add(bell(523.25), .1, .5, -.2); add(bell(392.0), 12.7, .4, .3); add(bell(659.25), 50.0, .45); add(bell(783.99, 5), 51.85, .4, .2); add(bell(1046.5, 5), 52.0, .2, -.3)
+add(bell(523.25), .1, .5, -.2); add(bell(392.0), 12.7, .4, .3); add(bell(659.25), 49.7, .45); add(bell(783.99, 5), 51.85, .4, .2); add(bell(1046.5, 5), 52.0, .2, -.3)
 for tb in [28.6, 28.9, 29.7, 30.0, 30.7, 31.0]:
     L = int(.35 * SR); tt = np.arange(L) / SR; add(np.sin(2 * np.pi * (60 - 25 * tt) * tt) * np.exp(-tt / .09), tb, .9)
-L = int(1.6 * SR); tt = np.arange(L) / SR; hit = np.sin(2 * np.pi * (70 * np.exp(-tt * 2) + 40) * tt) * np.exp(-tt / .6); add(hit, 31.25, .8)
-L = int(1.5 * SR); tt = np.arange(L) / SR; sw = np.convolve(rng.normal(0, 1, L), np.ones(40) / 40, 'same') * (tt / 1.5) ** 2.2; add(sw, 44.15, .8)
-L = int(2.6 * SR); tt = np.arange(L) / SR; boom = np.sin(2 * np.pi * (85 * np.exp(-tt * 1.5) + 32) * tt) * np.exp(-tt / .9) + rng.normal(0, 1, L) * np.exp(-tt / .12) * .5; add(boom, 45.65, 1.0)
-for i in range(24): add(bell(1200 + rng.random() * 2400, 2.2), 48.3 + rng.random() * 1.2, .06, rng.random() * 2 - 1)
+L = int(1.6 * SR); tt = np.arange(L) / SR; hit = np.sin(2 * np.pi * (70 * np.exp(-tt * 2) + 40) * tt) * np.exp(-tt / .6); add(hit, 31.30, .8)
+L = int(1.5 * SR); tt = np.arange(L) / SR; sw = np.convolve(rng.normal(0, 1, L), np.ones(40) / 40, 'same') * (tt / 1.5) ** 2.2; add(sw, 42.35, .8)
+L = int(2.6 * SR); tt = np.arange(L) / SR; boom = np.sin(2 * np.pi * (85 * np.exp(-tt * 1.5) + 32) * tt) * np.exp(-tt / .9) + rng.normal(0, 1, L) * np.exp(-tt / .12) * .5; add(boom, 43.84, 1.0)
+for i in range(24): add(bell(1200 + rng.random() * 2400, 2.2), 47.6 + rng.random() * 1.3, .06, rng.random() * 2 - 1)
 irL = int(1.8 * SR); ir = rng.normal(0, 1, irL) * np.exp(-np.arange(irL) / SR / .55); ir[0] = 0
 def conv(a, h):
     N = 1 << int(np.ceil(np.log2(len(a) + len(h)))); return np.fft.irfft(np.fft.rfft(a, N) * np.fft.rfft(h, N), N)[:len(a)]

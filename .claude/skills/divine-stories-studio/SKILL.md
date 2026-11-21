@@ -111,7 +111,8 @@ logo sting:       3.0 s (brand/divine_stories_studio_logo_9x16.mp4 or _16x9.mp4)
 | position | centre y 1440, line height 92, max 22 chars/line | baseline y = H − 78 |
 | stroke | 10 px #120604 | 8 px #140804 |
 | highlight | 1–2 key words per line, #ffd66b (`★word★`) | same |
-| timing | appear 0.08 s before the word, pop .9 → 1 in 0.2 s, fade 0.2 s after the phrase | fade .35 s |
+| timing | phrase appears 0.08 s before its first word, pop .9 → 1 in 0.2 s, fade 0.2 s after the phrase | fade .35 s |
+| karaoke | each word goes from 50 % → 100 % opacity 0.03 s before it is spoken (times from words.json) | optional |
 | hook title | 84 px gold, y 210, 0.25–5.5 s, dark top band 330 px | — |
 | emphasis | reveal words at 1.15–1.35× size | — |
 
@@ -124,7 +125,10 @@ music bed:    tanpura drone (Pa-Sa-Sa-Sa, pluck every 0.85–0.9 s) + pad, −18
 SFX:          bell on scene opens (−6 dB), heartbeat 6 thumps before a reveal, swell 1.5 s into a hit, boom on the curse,
               shimmer (24 bells 1.2–3.6 kHz, −24 dB) on transformations; 0.8–1.2 s of near-silence before the biggest line
 reverb:       1.8 s exponential tail, wet 25 %
-sync:         time every visual beat to the voice: measure pauses with ffmpeg silencedetect (−38 dB, 0.28 s; −34 dB, 0.12 s inside long phrases)
+sync:         time every visual beat to the voice with WORD timestamps:
+              python3 -I engine/transcribe.py voice.mp3 words.json medium hi   (Whisper medium, int8, ≈ 1 min per minute of audio)
+              Whisper spells Hindi loosely — use its TIMES, keep the SCRIPT's text for captions
+              fallback only if the model is unavailable: ffmpeg silencedetect (−38 dB, 0.28 s; −34 dB, 0.12 s)
 ```
 
 ## 10. Script formula
@@ -150,7 +154,7 @@ No emojis in the voice text. Give the hero's quoted line a separate voice when p
 
 1. Script → `scripts/<story>/short.md` + `long_video.md` (both languages + ElevenLabs version).
 2. New characters → face options sheet → user picks → lock in `engine/faces.js`.
-3. Get the voice file → measure pauses → write the caption table `[start, end, text]`.
+3. Get the voice file → `engine/transcribe.py` → write the caption table `[start, end, text]` from the word times.
 4. Write `videos/<story>-short/short.js` (scenes keyed to caption times) and `make_music.py`.
 5. Check frames: render 10 stills (`--from t --to t+0.034`), contact sheet, fix, repeat.
 6. Full render: `node engine/render-video.js videos/<story>-short/short.js <framesDir>` (≈ 3.5 frames/s on 4 workers).

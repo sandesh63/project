@@ -122,32 +122,32 @@ function vGrief(t) {                      // 32.7 – 39.7 : truth, tears, the c
   return cam(inner, { s: 1.04 + (t - 32.7) * .015, fx: 960, fy: 440 });
 }
 
-function vCurse(t) {                      // 39.7 – 45.9 : the curse; flash on "पत्थर" (45.65)
-  const lt = t - 39.7, shake = prog(lt, 1.0, 5.9) * 9;
+function vCurse(t) {                      // 39.7 – 44.0 : the curse; flash on "पत्थर" (43.84)
+  const lt = t - 39.7, shake = prog(lt, .6, 4.1) * 9;
   const inner = `${BG('url(#redEnergy)')}
     <g transform="rotate(${lt * 40} 960 420)">${A.mandalaGlow(960, 420, 900, '#ffb04a', .5)}</g>
     <g transform="rotate(${-lt * 25} 960 420)">${A.mandalaGlow(960, 420, 650, '#ff6a2a', .35)}</g>
-    ${C.tulasi(960, 120, 3.2, { eyes: 'angry', mouth: (Math.floor(t * 7) % 3 === 0 && t < 45.6) ? 'soft' : 'open', tears: true, id: 'c' })}
+    ${C.tulasi(960, 120, 3.2, { eyes: 'angry', mouth: (Math.floor(t * 7) % 3 === 0 && t < 44.5) ? 'soft' : 'open', tears: true, id: 'c' })}
     ${N.embersAnim(17, 90, 1920, 1080, t, { color: '#ffcf6a', speed: 160 })}`;
-  return cam(inner, { s: lerp(1.08, 1.3, prog(lt, 0, 6.1, ease.in)), fx: 960, fy: 380, px: noise(t * 6, 1) * shake, py: noise(t * 6, 4) * shake });
+  return cam(inner, { s: lerp(1.08, 1.3, prog(lt, 0, 4.3, ease.in)), fx: 960, fy: 380, px: noise(t * 6, 1) * shake, py: noise(t * 6, 4) * shake });
 }
 
-function vStone(t) {                      // 45.7 – 50.2 : Vishnu accepts silently, becomes the Shaligram
-  const toStone = prog(t, 48.0, 49.2), vis = 1 - prog(t, 48.7, 49.6), stone = prog(t, 48.6, 49.8, ease.out);
+function vStone(t) {                      // 43.8 – 50.0 : Vishnu accepts silently (45.6–49.3), becomes the Shaligram
+  const toStone = prog(t, 47.4, 48.6), vis = 1 - prog(t, 48.1, 49.0), stone = prog(t, 48.0, 49.2, ease.out);
   const sat = lerp(1, 0, toStone), dark = lerp(1, .45, toStone);
   const inner = `${BG('#050a22')}
     <ellipse cx="960" cy="520" rx="${700 + stone * 200}" ry="${600 + stone * 150}" fill="url(#blueGlow)" opacity="${.7 + stone * .3}"/>
     <g transform="rotate(${t * 10} 960 520)">${A.mandalaGlow(960, 520, 600, '#bcd6ff', .4)}</g>
     <filter id="stoneF"><feColorMatrix type="saturate" values="${sat}"/><feComponentTransfer><feFuncR type="linear" slope="${dark}"/><feFuncG type="linear" slope="${dark}"/><feFuncB type="linear" slope="${dark * 1.05}"/></feComponentTransfer></filter>
-    <g opacity="${vis}" filter="url(#stoneF)" transform="translate(960,560) scale(${lerp(1, .55, prog(t, 48.4, 49.4, ease.in))}) translate(-960,-560)">
+    <g opacity="${vis}" filter="url(#stoneF)" transform="translate(960,560) scale(${lerp(1, .55, prog(t, 47.9, 48.9, ease.in))}) translate(-960,-560)">
       ${C.vishnu(960, 150, .78, { pose: 'accept', eyes: 'closed', mouth: 'soft', id: 'v' })}</g>
     <g opacity="${stone}">${A.shaligram(960, 600, lerp(.4, 1.25, stone), 1)}</g>
     ${N.embersAnim(21, 80, 1920, 1080, t, { color: '#cfe2ff', speed: 50 })}`;
-  return cam(inner, { s: lerp(1.0, 1.12, prog(t, 45.7, 50.2)), fx: 960, fy: lerp(470, 560, prog(t, 47.5, 49.8)) });
+  return cam(inner, { s: lerp(1.0, 1.12, prog(t, 43.8, 50.0)), fx: 960, fy: lerp(470, 560, prog(t, 47.0, 49.2)) });
 }
 
-function vDawn(t) {                       // 50.0 – 55.8 : Tulasi plant grows, title on "तुलसी" (51.9), CTA (53.2)
-  const lt = t - 50;
+function vDawn(t) {                       // 49.7 – 55.8 : Tulasi plant grows, title on "तुलसी" (51.82), CTA on "लिंक" (54.66)
+  const lt = t - 49.7;
   const grow = lerp(.12, 1, prog(lt, .1, 2.0, ease.out));
   const rays = [...Array(24)].map((_, i) => `<path transform="rotate(${i * 15 + lt * 4})" d="M0 -60 L 14 -900 L -14 -900Z" fill="#fff2c0" opacity="${i % 2 ? .08 : .16}"/>`).join('');
   const rangoli = [...Array(4)].map((_, k) => `<ellipse cx="960" cy="1010" rx="${260 - k * 55}" ry="${60 - k * 13}" fill="none" stroke="${['#e8344e', '#f39a1e', '#fff6e0', '#1f8a52'][k]}" stroke-width="6" stroke-dasharray="${8 + k * 2} ${6 + k}"/>`).join('');
@@ -165,32 +165,40 @@ function vDawn(t) {                       // 50.0 – 55.8 : Tulasi plant grows,
 // ------------------------------------------------------------ timeline
 const SCENES = [
   { fn: vPrayer, a: 0, b: 12.85 }, { fn: vTemple, a: 12.55, b: 21.25 }, { fn: vDoor, a: 20.95, b: 32.85 },
-  { fn: vGrief, a: 32.55, b: 39.85 }, { fn: vCurse, a: 39.55, b: 45.9, fo: .05 }, { fn: vStone, a: 45.65, b: 50.3, fi: .05 },
-  { fn: vDawn, a: 50.0, b: 55.8, fo: .25 },
+  { fn: vGrief, a: 32.55, b: 39.85 }, { fn: vCurse, a: 39.55, b: 44.0, fo: .05 }, { fn: vStone, a: 43.84, b: 50.0, fi: .05 },
+  { fn: vDawn, a: 49.7, b: 55.8, fo: .25 },
 ];
 // captions timed to the voice (pauses measured from voice.mp3); ★word★ = gold highlight
 const CAPS = [
-  [0.0, 1.11, 'क्या आप जानते हैं…'],
-  [1.69, 5.46, 'भगवान विष्णु को ★पत्थर★ बनने का श्राप… किसने दिया था?'],
-  [6.07, 8.50, 'न किसी ऋषि ने… न किसी देवता ने।'],
-  [9.07, 12.17, 'एक पतिव्रता स्त्री ने — ★वृंदा★ ने।'],
-  [12.84, 15.39, 'वृंदा की ★भक्ति★ इतनी शक्तिशाली थी…'],
-  [15.76, 19.16, 'कि उसके पति जलंधर को स्वयं ★महादेव★ भी…'],
-  [19.41, 20.77, 'पराजित नहीं कर पा रहे थे।'],
-  [21.41, 24.95, 'फिर एक रात… वृंदा के द्वार पर उसका पति आया।'],
-  [25.52, 27.83, 'वही चेहरा… वही आवाज़…'],
-  [28.35, 30.88, 'लेकिन दीवार पर पड़ती उसकी परछाईं के…'],
-  [31.25, 32.29, '★चार हाथ★ थे।', 1.35],
-  [32.90, 34.70, 'जब वृंदा को सच पता चला…'],
-  [35.86, 36.94, 'आँखों में ★आँसू★ थे…'],
-  [37.41, 39.39, 'और होंठों पर… एक ★श्राप★।'],
-  [39.82, 43.61, '"जैसे तुमने मेरा हृदय पत्थर कर दिया…"'],
-  [43.92, 46.50, '"वैसे ही तुम भी… ★पत्थर★ बन जाओगे!"', 1.15],
-  [46.87, 49.23, 'और भगवान ने… वह श्राप चुपचाप स्वीकार कर लिया।'],
-  [49.84, 50.52, 'लेकिन ★क्यों?★', 1.25],
-  [50.88, 52.74, 'और वृंदा… ★तुलसी★ कैसे बनीं?'],
-  [53.23, 55.72, 'पूरी कथा देखिए — ★लिंक नीचे★ है'],
+  [0.0, 1.2, 'क्या आप जानते हैं…'],
+  [1.72, 5.6, 'भगवान विष्णु को ★पत्थर★ बनने का श्राप… किसने दिया था?'],
+  [6.08, 8.75, 'न किसी ऋषि ने… न किसी देवता ने।'],
+  [9.08, 12.4, 'एक पतिव्रता स्त्री ने — ★वृंदा★ ने।'],
+  [12.90, 15.45, 'वृंदा की ★भक्ति★ इतनी शक्तिशाली थी…'],
+  [15.56, 19.2, 'कि उसके पति जलंधर को स्वयं ★महादेव★ भी…'],
+  [19.34, 20.95, 'पराजित नहीं कर पा रहे थे।'],
+  [21.36, 25.0, 'फिर एक रात… वृंदा के द्वार पर उसका पति आया।'],
+  [25.48, 27.8, 'वही चेहरा… वही आवाज़…'],
+  [28.36, 30.95, 'लेकिन दीवार पर पड़ती उसकी परछाईं के…'],
+  [31.30, 32.35, '★चार हाथ★ थे।', 1.35],
+  [32.78, 34.7, 'जब वृंदा को सच पता चला…'],
+  [35.86, 36.95, 'आँखों में ★आँसू★ थे…'],
+  [36.98, 39.3, 'और होंठों पर… एक ★श्राप★।'],
+  [39.92, 42.4, '"जैसे तुमने मेरा हृदय पत्थर कर दिया…"'],
+  [42.60, 45.2, '"वैसे ही तुम भी… ★पत्थर★ बन जाओगे!"', 1.15],
+  [45.60, 49.3, 'और भगवान ने… वह श्राप चुपचाप स्वीकार कर लिया।'],
+  [49.38, 50.7, 'लेकिन ★क्यों?★', 1.25],
+  [50.90, 52.95, 'और वृंदा… ★तुलसी★ कैसे बनीं?'],
+  [53.18, 55.72, 'पूरी कथा देखिए — ★लिंक नीचे★ है'],
 ];
+// word timings from Whisper (words.json) → per-token start times for karaoke highlighting
+const WORDS = JSON.parse(fs.readFileSync(path.join(__dirname, 'words.json'), 'utf8'));
+function tokenTimes(a, b, tokens) {
+  const ws = WORDS.filter(([s]) => s >= a - .08 && s <= b + .05).map(([s]) => s);
+  const n = tokens.length;
+  if (!ws.length) return tokens.map((_, i) => a + (b - a) * i / n);
+  return tokens.map((_, i) => ws[Math.round(i * (ws.length - 1) / Math.max(1, n - 1))]);
+}
 
 function wrap(text, max) {
   const words = text.split(' '); const lines = []; let cur = '';
@@ -205,11 +213,20 @@ function captionSVG(t) {
     const pop = lerp(.9, 1, prog(t, a - .08, a + .12, ease.out));
     const size = SPEC.caption.size * big;
     const lines = wrap(text, Math.round(SPEC.caption.maxChars / big));
+    const allTok = lines.join(' ').split(' ').filter(w => w.replace(/[★—…।"!?,.]/g, '').length);
+    const times = tokenTimes(a, b, allTok);
+    let ti = 0;
     const y0 = SPEC.caption.y - (lines.length - 1) * SPEC.caption.lineH * big / 2;
-    const ls = lines.map((ln, i) => {
+    const ls = lines.map((ln, li) => {
       let hl = false;
-      const spans = ln.split(/(★)/).filter(Boolean).map(p => { if (p === '★') { hl = !hl; return ''; } return `<tspan fill="${hl ? '#ffd66b' : '#fff8ec'}">${p}</tspan>`; }).join('');
-      return `<text x="${W / 2}" y="${y0 + i * SPEC.caption.lineH * big}" text-anchor="middle" font-family="'Noto Serif Devanagari', serif" font-weight="800" font-size="${size}"
+      const spans = ln.split(' ').map((word, wi) => {
+        const isTok = word.replace(/[★—…।"!?,.]/g, '').length > 0;
+        const st = isTok ? times[ti++] : -1;
+        const spoken = !isTok || t >= st - .03;
+        const parts = word.split(/(★)/).filter(Boolean).map(p => { if (p === '★') { hl = !hl; return ''; } return `<tspan fill="${hl ? '#ffd66b' : '#fff8ec'}" fill-opacity="${spoken ? 1 : .5}">${p}</tspan>`; }).join('');
+        return (wi ? '<tspan> </tspan>' : '') + parts;
+      }).join('');
+      return `<text x="${W / 2}" y="${y0 + li * SPEC.caption.lineH * big}" text-anchor="middle" font-family="'Noto Serif Devanagari', serif" font-weight="800" font-size="${size}"
         style="paint-order:stroke" stroke="#120604" stroke-width="10" stroke-linejoin="round">${spans}</text>`;
     }).join('');
     out += `<g opacity="${op}" transform="translate(${W / 2},${SPEC.caption.y}) scale(${pop}) translate(${-W / 2},${-SPEC.caption.y})">${ls}</g>`;
@@ -225,12 +242,12 @@ function frame(t) {
     const op = clamp(Math.min(s.a === 0 ? 1 : (t - s.a) / fi, (s.b - t) / fo));
     if (op > 0) body += `<g opacity="${op.toFixed(3)}">${s.fn(t)}</g>`;
   }
-  const flash = Math.max(clamp(1 - Math.abs(t - 45.68) / .22), .6 * clamp(1 - Math.abs(t - 49.0) / .3), .35 * clamp(1 - Math.abs(t - 31.28) / .15));
+  const flash = Math.max(clamp(1 - Math.abs(t - 43.88) / .22), .6 * clamp(1 - Math.abs(t - 48.5) / .3), .35 * clamp(1 - Math.abs(t - 31.33) / .15));
   if (flash > 0) body += `<rect width="${W}" height="${H}" fill="#fff8ea" opacity="${flash.toFixed(3)}"/>`;
   // hook title (0.2–5.5 s) and the Tulasi title + CTA arrow in the last scene
   const hook = fade(t, .25, 5.5, .3, .3);
-  const title = prog(t, 51.6, 52.4, ease.out) * fade(t, 51.6, 55.8, .1, .25);
-  const arrow = fade(t, 53.2, 55.8, .2, .2);
+  const title = prog(t, 51.55, 52.3, ease.out) * fade(t, 51.55, 55.8, .1, .25);
+  const arrow = fade(t, 54.6, 55.8, .15, .2);
   const gx = Math.floor((t * 977) % 512), gy = Math.floor((t * 613) % 512);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
     ${A.defs()}${C.defs2()}${defs}
