@@ -1,5 +1,6 @@
 // Parts 2, 3 and 4 of the long video. Each exported as its own film module (timed to its voice part).
 const K = require('./common.js');
+const BM = require('../../style-frames/brahma.js');
 const { A, C, MV, JL, RI, SB, KD, cam, BG, breathe, sway, blink, lampDiya, burst, shieldDome, stars, kailash, ocean, clamp, lerp, ease, prog, noise, makeFrame } = K;
 
 // simple Brahma (Tridev shot only): rishi body recoloured golden, gold crown, Vedas, standing on a lotus
@@ -137,7 +138,7 @@ const P4 = [
       ${w === 0 ? `${K.clouds(860, 3)}${RI.indra(960, 200, .75, { id: 'p4i', eyes: 'wide', mouth: 'open' })}` : ''}
       ${w === 1 ? `${KD.kalanemi(960, 230, .75, { id: 'p4k2', eyes: 'wide', mouth: 'open' })}` : ''}
       ${w === 2 ? `<ellipse cx="960" cy="480" rx="800" ry="500" fill="url(#blueGlow)" opacity=".7"/>${C.vishnu(560, 300, .5, { id: 'p4t1', eyes: 'lowered' })}${MV.mahadevFull(1360, 300, .5, { id: 'p4t2', eyes: 'lowered', t })}
-        ${brahma(960, 300, .5, t)}` : ''}`, { s: 1.04, fy: 520 }); },
+        ${BM.defs}${BM.brahma(960, 330, .5, { id: 'tri' })}` : ''}`, { s: 1.04, fy: 520 }); },
     title: [29.1, 31.2, 'TRIDEV', 150, 90] },
   // 31.25–35.9 before every battle she lit a lamp and prayed
   { a: 31.25, b: 35.9, f: (t) => cam(`${BG('url(#bgTemple)')}<g transform="rotate(${t * 4} 960 330)">${A.mandalaGlow(960, 330, 520, '#ffcf6a', .55)}</g>
