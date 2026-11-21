@@ -1,1 +1,1 @@
-[{"t": 0, "type": "bell", "f": 523.25, "gain": 0.4}, {"t": 5.8, "type": "shimmer", "dur": 3, "gain": 0.4}, {"t": 9.4, "type": "bell", "f": 659.25, "gain": 0.5}, {"t": 9.6, "type": "chime", "f": 1318, "gain": 0.3}, {"t": 14.8, "type": "shimmer", "gain": 0.35}, {"t": 21.6, "type": "shimmer", "gain": 0.35}, {"t": 28.7, "type": "bell", "f": 783.99, "gain": 0.45}, {"t": 29.2, "type": "bell", "f": 783.99, "gain": 0.35}, {"t": 33.6, "type": "bell", "f": 523.25, "dur": 4, "gain": 0.45}]
+[]

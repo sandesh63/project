@@ -1,1 +1,1 @@
-[{"t": 0, "type": "bell", "f": 523.25, "gain": 0.55}, {"t": 2.9, "type": "whoosh", "gain": 0.35}, {"t": 3.0, "type": "bell", "f": 783.99, "dur": 5, "gain": 0.45}]
+[{"t": 2.9, "type": "whoosh", "gain": 0.35}]
