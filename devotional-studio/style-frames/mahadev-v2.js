@@ -92,8 +92,8 @@ function mahadevUpper(o = {}) {
     <!-- one snake: 3 coils around the neck, hood rising on his right shoulder (screen left) beside the jaw -->
     ${[0, 1, 2].map(k => `<path d="M${-26 - k * 3} ${146 + k * 9} C ${-40 - k * 4} ${160 + k * 9} ${-30 - k * 3} ${176 + k * 9} 0 ${178 + k * 9} C ${30 + k * 3} ${176 + k * 9} ${40 + k * 4} ${160 + k * 9} ${26 + k * 3} ${146 + k * 9}" fill="none" stroke="#24603a" stroke-width="10" stroke-linecap="round"/>
       <path d="M${-26 - k * 3} ${146 + k * 9} C ${-40 - k * 4} ${160 + k * 9} ${-30 - k * 3} ${176 + k * 9} 0 ${178 + k * 9} C ${30 + k * 3} ${176 + k * 9} ${40 + k * 4} ${160 + k * 9} ${26 + k * 3} ${146 + k * 9}" fill="none" stroke="#7fb86a" stroke-width="1.6" stroke-dasharray="3 5"/>`).join('')}
-    <path d="M-36 174 C -54 174 -68 170 -72 162" stroke="#24603a" stroke-width="10" fill="none" stroke-linecap="round"/>
-    ${cobra(-72, 126, .8, false)}
+    <path d="M-36 174 C -54 176 -68 176 -72 172" stroke="#24603a" stroke-width="10" fill="none" stroke-linecap="round"/>
+    ${cobra(-72, 146, .74, false)}
     ${F.faceP(face)}
     <path d="M-48 28 C -44 12 -28 4 0 4 C 28 4 44 12 48 28 L 49 40 C 40 24 24 18 0 18 C -24 18 -40 24 -49 40Z" fill="#16183a"/>
     <!-- top bun, rudraksha band, crescent, Ganga arc -->
