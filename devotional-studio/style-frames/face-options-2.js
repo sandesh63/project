@@ -175,4 +175,4 @@ function sheet(title, opts, bustFn, cyBase, sc) {
 const jalandharOptions = () => sheet('JALANDHAR · FACE OPTIONS', J_OPTIONS, jalandharBust, 360, 1.85);
 const mahadevOptions = () => sheet('MAHADEV · FACE OPTIONS', M_OPTIONS, mahadevBust, 380, 1.75);
 
-module.exports = { jalandharOptions, mahadevOptions, J_OPTIONS, M_OPTIONS, jalandharBust, mahadevBust, SKINS, skinDefs };
+module.exports = { jalandharOptions, mahadevOptions, J_OPTIONS, M_OPTIONS, jalandharBust, mahadevBust, SKINS, skinDefs, jCrown, mustache, fangs };
