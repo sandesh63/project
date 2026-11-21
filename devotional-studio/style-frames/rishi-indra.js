@@ -116,6 +116,7 @@ function indra(x, y, s, o = {}) {
   const clouds = [...Array(7)].map((_, i) => `<ellipse cx="${-180 + i * 60}" cy="${930 + (i % 2) * 14}" rx="${70 + (i % 3) * 14}" ry="${40 + (i % 2) * 10}" fill="url(#cloud)" opacity=".96"/>`).join('');
   return `<g transform="translate(${x},${y}) scale(${s})">
     <circle cx="0" cy="60" r="150" fill="url(#lampGlow)" opacity=".6"/>
+    <g transform="scale(1.15,1)">
     ${legs(SK, SH)}
     <!-- white silk dhoti with gold border -->
     <path d="M-70 420 C -90 500 -100 620 -96 760 L -46 790 L -12 740 L 12 740 L 46 790 L 96 760 C 100 620 90 500 70 420Z" fill="url(#silkW)" stroke="#8a7a5a" stroke-width="2"/>
@@ -136,14 +137,15 @@ function indra(x, y, s, o = {}) {
     <path d="M86 196 C 40 270 -20 340 -60 410" stroke="#fffaf0" stroke-width="2.6" fill="none"/>
     <path d="M-66 392 Q 0 408 66 392 L 70 428 Q 0 444 -70 428Z" fill="url(#gold)" stroke="#7a4a10" stroke-width="1.6"/>
     <ellipse cx="0" cy="414" rx="12" ry="10" fill="#2a8ad8" stroke="#7a4a10"/>
+    </g>
     ${F.faceP(face)}
     <path d="M-48 32 C -44 18 -28 12 0 12 C 28 12 44 18 48 32 L 49 42 C 40 30 24 24 0 24 C -24 24 -40 30 -49 42Z" fill="#1a1008"/>
     <path d="M-2 ${by - 4} L 0 ${by - 22} L 2 ${by - 4}Z" fill="#d1261c"/>
     ${crown}
     ${[-1, 1].map(sx => `<g transform="translate(${sx * 52},90)"><circle r="8" fill="url(#gold)" stroke="#7a4a10"/><circle cy="12" r="4" fill="#2a8ad8"/></g>`).join('')}
-    ${vajra(-124, 180, .95)}
-    <g transform="translate(-124,214) scale(.66)">${A.holdingHand(SK, SH, -1, false)}</g>
-    <g transform="translate(96,414) rotate(176) scale(.66)">${A.openPalm(SK, SH, 1)}</g>
+    ${vajra(-143, 180, .95)}
+    <g transform="translate(-143,214) scale(.7)">${A.holdingHand(SK, SH, -1, false)}</g>
+    <g transform="translate(110,414) rotate(176) scale(.7)">${A.openPalm(SK, SH, 1)}</g>
     ${clouds}
   </g>`;
 }
