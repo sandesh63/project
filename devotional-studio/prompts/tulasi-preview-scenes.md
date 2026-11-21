@@ -1,5 +1,14 @@
 # Tulasi Devi — 20-second preview: scene image prompts
 
+## Using Gemini (Nano Banana 2) instead of ChatGPT
+- Attach the character sheet (and the hero image) to EVERY prompt and start with:
+  "Use the attached character sheet as the exact reference for this character's face, costume and jewellery."
+- Pick aspect ratio **16:9** for landscape images (no crop needed) and **9:16** for portrait/cutout images.
+- Gemini does not output real transparency. For every [CUTOUT] image, replace the "TRANSPARENT background" line with:
+  "Isolated on a plain flat solid chroma-green background (#00FF00), evenly lit, no shadow, no green on the character."
+- For S1_face_open: attach S1_face_closed and say "Edit this image: keep everything identical, only open her eyes."
+- Free-tier images may have a small sparkle mark in the bottom-right corner. Keep important content away from that corner.
+
 ## Rules for every image
 - Generate in the SAME ChatGPT chats where you made the character sheets (Tulasi chat / Vishnu chat),
   or attach the sheet image and start with: "Use the attached character sheet as the exact reference."
