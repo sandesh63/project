@@ -87,7 +87,7 @@ function faceP(p) {
     ${p.cheekbone ? `<path d="M${-W * .92} 78 C ${-W * .7} 86 ${-W * .5} 90 ${-W * .35} 92" stroke="${shade}" stroke-width="5" opacity=".18" fill="none" filter="url(#sBlur)"/>` : ''}
     <ellipse cx="${-W * .58}" cy="${p.blushY || 88}" rx="${W * .22}" ry="${W * .13}" fill="#ec7f6a" opacity="${p.blush ?? .22}" filter="url(#sBlur)"/>
     <ellipse cx="${W * .58}" cy="${p.blushY || 88}" rx="${W * .22}" ry="${W * .13}" fill="#ec7f6a" opacity="${p.blush ?? .22}" filter="url(#sBlur)"/>
-    <path d="M${W * .2} 6 C ${W * .7} 12 ${W * .98} 34 ${W * .98} 58" fill="none" stroke="#ffe2bd" stroke-width="3" opacity=".45" filter="url(#sBlur)"/>
+    <path d="M${W * .2} 6 C ${W * .7} 12 ${W * .98} 34 ${W * .98} 58" fill="none" stroke="${p.rim || '#ffe2bd'}" stroke-width="3" opacity=".45" filter="url(#sBlur)"/>
     ${brow(1)}${brow(-1)}${eye(1)}${eye(-1)}
     ${noses[p.nose]}
     ${lips}

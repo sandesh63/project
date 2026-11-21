@@ -116,4 +116,55 @@ function variantsB() {
     ${cards}</svg>`;
 }
 
-module.exports = { faceOptions, variantsB, OPTIONS, B_VARIANTS, bust };
+// ---------------- Vishnu face options
+const VL = { c1: '#a84452', c2: '#c25a66' };
+const V_OPTIONS = {
+  V1: { name: 'Serene Classic', W: 48, chin: 134, cheek: .97, jaw: .52, noseY: 96, mouthY: 113,
+    eye: { ex: 21, ey: 66, ew: 27, eh: 9, tilt: 2, irisK: .86, flick: 4 }, crease: true, liner: 2.6,
+    brow: { x0: 6, x1: 37, y: 51, arch: 4.5, t: 3.2 }, nose: 'soft', lips: { w: 12, up: 4.2, lo: 6, ...VL }, smile: true },
+  V2: { name: 'Animated (matches Tulasi B6)', W: 49, chin: 128, cheek: 1.02, jaw: .6, noseY: 93, mouthY: 108, irisCol: '#6a3a1a',
+    eye: { ex: 22, ey: 67, ew: 28, eh: 12.5, tilt: .8, irisK: .88, flick: 2.5 }, crease: true, liner: 2.5, lashes: false,
+    brow: { x0: 7, x1: 36, y: 49, arch: 4, t: 3 }, nose: 'button', lips: { w: 9.5, up: 3.6, lo: 5.6, ...VL }, smile: true },
+  V3: { name: 'Kerala Mural (traditional)', W: 46, chin: 138, cheek: .95, jaw: .46, noseY: 99, mouthY: 116,
+    eye: { ex: 21, ey: 65, ew: 31, eh: 8, tilt: 4.5, irisK: .9, flick: 9 }, liner: 3.2, lowerLine: 1.6,
+    brow: { x0: 5, x1: 40, y: 49, arch: 7, t: 2.6 }, nose: 'mural', lips: { w: 10, up: 4, lo: 5.4, ...VL }, smile: false },
+  V4: { name: 'Majestic Realistic', W: 47, chin: 138, cheek: .96, jaw: .46, noseY: 98, mouthY: 116,
+    eye: { ex: 20.5, ey: 66, ew: 26, eh: 8.5, tilt: 2.5, irisK: .84, flick: 3 }, crease: true, liner: 2.3, lowerLine: 1.2,
+    brow: { x0: 6, x1: 37, y: 52, arch: 4, t: 3.8 }, nose: 'defined', cheekbone: true, lips: { w: 12.5, up: 4.6, lo: 6.8, ...VL }, smile: false },
+  V5: { name: 'Compassionate (half-closed eyes)', W: 48, chin: 132, cheek: 1.0, jaw: .55, noseY: 95, mouthY: 111, defaultEyes: 'lowered',
+    eye: { ex: 21, ey: 66, ew: 28, eh: 11, tilt: 1.5, irisK: .9, flick: 4 }, crease: true, liner: 2.6,
+    brow: { x0: 6, x1: 36, y: 51, arch: 4, t: 3 }, nose: 'soft', lips: { w: 11, up: 4, lo: 6, ...VL }, smile: true },
+};
+
+function vishnuBust(face, id) {
+  return `<g>
+    <path d="M-20 120 L -22 156 C -50 164 -90 170 -118 186 C -130 196 -136 214 -136 240 L 136 240 C 136 214 130 196 118 186 C 90 170 50 164 22 156 L 20 120Z" fill="url(#vTorso)" stroke="#3b1c0e" stroke-width="2"/>
+    <path d="M-20 138 Q 0 150 20 138 L 20 124 L -20 124Z" fill="#4c5bab" opacity=".35"/>
+    ${[-1, 1].map(sx => `<path transform="scale(${sx},1)" d="M-24 160 C -60 168 -100 176 -122 192 C -132 202 -136 220 -136 240 L -104 240 C -100 218 -70 196 -30 180Z" fill="url(#vShawl)" stroke="#3b1c0e" stroke-width="2"/>
+      <g transform="scale(${sx},1)">${C.borderStroke('M-30 180 C -70 196 -100 218 -104 240', 5, '#1f6a3c')}</g>`).join('')}
+    <path d="M-22 158 Q 0 174 22 158" stroke="url(#gold)" stroke-width="8" fill="none"/>
+    ${[-14, -5, 5, 14].map(x => `<circle cx="${x}" cy="${165 - Math.abs(x) * .3}" r="2.6" fill="${Math.abs(x) < 8 ? '#d1261c' : '#1f8a4a'}"/>`).join('')}
+    <path d="M-40 166 C -34 200 -14 218 0 224 C 14 218 34 200 40 166" stroke="url(#gold)" stroke-width="6" fill="none"/>
+    <path d="M0 222 l 9 10 -9 14 -9 -14z" fill="url(#gold)" stroke="#8a5a12" stroke-width="1"/><circle cx="0" cy="234" r="3.2" fill="#d1261c"/>
+    ${C.vishnuHead({ face, id })}
+  </g>`;
+}
+
+function vishnuFaceOptions() {
+  const W = 1920, H = 1080;
+  let cards = '';
+  Object.keys(V_OPTIONS).forEach((k, i) => {
+    const cx = 192 + i * 384, cy = 352;
+    cards += `<clipPath id="vfc${k}"><rect x="${cx - 176}" y="80" width="352" height="740" rx="18"/></clipPath>
+      <rect x="${cx - 176}" y="80" width="352" height="840" rx="18" fill="#fbf1dc" stroke="#d8c39a" stroke-width="2"/>
+      <g clip-path="url(#vfc${k})"><g transform="translate(${cx},${cy}) scale(1.85)">${vishnuBust(V_OPTIONS[k], k)}</g></g>
+      <text x="${cx}" y="870" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="50" fill="#8a3a14">${k}</text>
+      <text x="${cx}" y="904" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="23" fill="#5a3a20">${V_OPTIONS[k].name}</text>`;
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${A.defs()}${C.defs2()}
+    <rect width="${W}" height="${H}" fill="#f1e2c2"/>
+    <text x="${W / 2}" y="54" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="34" fill="#6a2a10">LORD VISHNU · FACE OPTIONS</text>
+    ${cards}</svg>`;
+}
+
+module.exports = { faceOptions, variantsB, vishnuFaceOptions, OPTIONS, B_VARIANTS, V_OPTIONS, bust, vishnuBust };

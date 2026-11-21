@@ -280,9 +280,9 @@ function tulasi(x, y, s = 1, o = {}) {
 function vishnuHead(o = {}) {
   const S = 'url(#vFace)', SH = '#4c5bab';
   const backHair = `<path d="M0 -4 C -40 -4 -60 18 -62 56 C -64 90 -60 112 -54 126 L 54 126 C 60 112 64 90 62 56 C 60 18 40 -4 0 -4Z" fill="#140d0a"/>`;
-  const namam = `<path d="M-8 52 C -9 36 -7 24 -5 14 M8 52 C 9 36 7 24 5 14" stroke="#fffaf0" stroke-width="4.2" stroke-linecap="round" fill="none"/>
+  const namam = `<path d="M-8 52 C -9 40 -7 32 -5 24 M8 52 C 9 40 7 32 5 24" stroke="#fffaf0" stroke-width="4.2" stroke-linecap="round" fill="none"/>
     <path d="M-8 52 Q 0 60 8 52" stroke="#fffaf0" stroke-width="4.2" fill="none" stroke-linecap="round"/>
-    <path d="M0 54 L 0 16" stroke="#d1261c" stroke-width="3.4" stroke-linecap="round"/>`;
+    <path d="M0 54 L 0 26" stroke="#d1261c" stroke-width="3.4" stroke-linecap="round"/>`;
   const flowerEar = (sx) => `<g transform="translate(${sx * 54},88)">
     ${[...Array(8)].map((_, i) => `<ellipse transform="rotate(${i * 45})" cx="0" cy="-7" rx="3.6" ry="6.4" fill="#f7c22c" stroke="#a8700c" stroke-width=".8"/>`).join('')}
     <circle r="4" fill="#d1261c" stroke="#8a5a12" stroke-width=".8"/>
@@ -316,9 +316,11 @@ function vishnuHead(o = {}) {
   </g>`;
   return `<g>
     ${backHair}
-    ${faceV2({ id: 'v' + (o.id || ''), male: true, skin: S, shade: SH, eyes: o.eyes || 'lowered', mouth: o.mouth || 'soft', brows: o.brows, look: o.look, rim: '#d8e4ff', lip1: '#a84452', lip2: '#c25a66' })}
-    <path d="M-50 40 C -46 30 -30 24 0 24 C 30 24 46 30 50 40 L 50 46 C 40 38 24 34 0 34 C -24 34 -40 38 -50 46Z" fill="#140d0a"/>
-    ${namam}${crown}${flowerEar(-1)}${flowerEar(1)}
+    ${o.face
+      ? F.faceP({ skin: S, shade: SH, rim: '#d8e4ff', blush: 0, ...o.face, id: 'v' + (o.id || '') + (o.eyes || ''), eyes: o.eyes || o.face.defaultEyes || 'open', mouth: o.mouth, smile: o.mouth ? o.mouth === 'smile' : o.face.smile, tears: o.tears, sad: o.sad, look: o.look })
+      : faceV2({ id: 'v' + (o.id || ''), male: true, skin: S, shade: SH, eyes: o.eyes || 'lowered', mouth: o.mouth || 'soft', brows: o.brows, look: o.look, rim: '#d8e4ff', lip1: '#a84452', lip2: '#c25a66' })}
+    <path d="M-50 30 C -46 18 -30 12 0 12 C 30 12 46 18 50 30 L 51 40 C 40 30 24 25 0 25 C -24 25 -40 30 -51 40Z" fill="#140d0a"/>
+    ${namam}<g transform="translate(0,-14)">${crown}</g>${flowerEar(-1)}${flowerEar(1)}
   </g>`;
 }
 
