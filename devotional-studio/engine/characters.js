@@ -178,10 +178,13 @@ function tulasi(x, y, s = 1, o = {}) {
     ? { r: { sh: [-92, 184], el: [-104, 318], wr: [-20, 262] }, l: { sh: [92, 184], el: [104, 318], wr: [20, 262] } }
     : { r: { sh: [-94, 184], el: [-118, 320], wr: [-126, 442] }, l: { sh: [94, 184], el: [118, 320], wr: [126, 442] } };
   const armW = [50, 47, 35, 35, 27];
+  // relaxed hanging hand, side view: palm + four separate fingers + thumb in front (verified at close-up)
   const relaxedHand = (sx) => `<g transform="translate(${sx * 126},442) rotate(${sx * -4}) scale(${sx},1)">
-      <path d="M-12 -2 C -15 18 -15 40 -11 60 C -8 72 -1 82 6 83 C 12 81 14 70 14 57 C 15 38 14 18 12 -2Z" fill="${SK}" stroke="${INK}" stroke-width="${LW}"/>
-      <path d="M-9 34 C -16 40 -16 52 -11 58 C -8 61 -5 58 -5 54" fill="${SK}" stroke="${INK}" stroke-width="1.8"/>
-      <path d="M-2 46 L -1 76 M4 44 L 6 76" stroke="${SH}" stroke-width="1.3" opacity=".8"/>
+      ${[[10, 30, 5.6], [4.5, 36, 6], [-1, 38, 6.2], [-6.5, 35, 6]].map(([fx, len, w]) => `<path d="M${fx - w / 2} 34 C ${fx - w / 2 - .6} ${34 + len * .5} ${fx - w / 2} ${34 + len * .8} ${fx - w / 2 + .6} ${34 + len - w / 2} A ${w / 2} ${w / 2} 0 0 0 ${fx + w / 2 + .6} ${34 + len - w / 2} C ${fx + w / 2 + .6} ${34 + len * .8} ${fx + w / 2 + .4} ${34 + len * .5} ${fx + w / 2} 34Z" fill="${SK}" stroke="${INK}" stroke-width="1.6"/>
+        <path d="M${fx - w / 2 + 1} ${34 + len * .45} L ${fx + w / 2 - 1} ${34 + len * .45}" stroke="${SH}" stroke-width="1" opacity=".8"/>`).join('')}
+      <path d="M-12 -2 C -14 12 -14 26 -11 38 C -4 42 6 42 13 38 C 14 26 14 12 12 -2Z" fill="${SK}" stroke="${INK}" stroke-width="${LW}"/>
+      <path d="M-11 36 C -4 39 6 39 13 36" stroke="${SH}" stroke-width="1.2" fill="none" opacity=".7"/>
+      <path d="M-11.5 6 C -14 10 -17.5 20 -17 32 C -16.8 38 -16 41 -15 43 A 4.6 4.6 0 0 0 -6 44 C -8 37 -8.5 26 -7 18 C -8 12 -9.5 8 -11.5 6Z" stroke-linejoin="round" fill="${SK}" stroke="${INK}" stroke-width="1.8"/>
       <path d="M-11 -4 Q 0 2 11 -4" stroke="url(#gold)" stroke-width="5" fill="none"/>
       <path d="M-11 -10 Q 0 -4 11 -10" stroke="#b8201a" stroke-width="4" fill="none"/>
       <path d="M-11 -16 Q 0 -10 11 -16" stroke="url(#gold)" stroke-width="4" fill="none"/>

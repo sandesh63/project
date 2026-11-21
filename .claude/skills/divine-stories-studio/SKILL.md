@@ -167,5 +167,10 @@ No emojis in the voice text. Give the hero's quoted line a separate voice when p
 - [ ] no text in the safe zones; captions never cover the face's eyes
 - [ ] no black edges when the camera moves (backgrounds drawn oversized: x −800 … 2720, y −800 … 1880)
 - [ ] character matches the locked face + costume; expressions read at phone size
+- [ ] HANDS (mandatory, every new character, pose or shot): render a 2× close-up crop of every hand and check —
+      each hand connects to its forearm (no floating or cut-off hands; forearms that cross the body are drawn IN FRONT of the torso),
+      shoulders show no seam (upper arm behind the torso, forearm in front via a clip),
+      5 digits with rounded tips (no claws, no mittens), a held object passes through/against the fingers (staff, veena, lotus stem, chakra on fingertip),
+      and the hand stays inside the frame for the whole shot (check first, middle and last frame)
 - [ ] max 3 white flashes; no flicker under 0.1 s
 - [ ] audio −14 LUFS, voice clearly above music, no clipping

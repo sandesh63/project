@@ -50,7 +50,9 @@ function narada(x, y, s, o = {}) {
     ${[-46, -30, -14].map((yy, i) => `<path d="M${-17 + i * 2} ${yy} Q 0 ${yy - 7} ${17 - i * 2} ${yy}" stroke="#3a2a22" stroke-width="1.8" fill="none"/>`).join('')}
     ${[...Array(9)].map((_, i) => { const a = Math.PI * (1.05 + i * .11); return `<g transform="translate(${Math.cos(a) * 26},${4 + Math.sin(a) * 9})">${[0, 72, 144, 216, 288].map(r => `<ellipse transform="rotate(${r})" cx="0" cy="-3.6" rx="2.4" ry="3.8" fill="#fffaf0" stroke="#cfc3a6" stroke-width=".5"/>`).join('')}<circle r="1.4" fill="#f2a01e"/></g>`; }).join('')}
     <circle cx="0" cy="-62" r="5" fill="#f2a01e" stroke="#a8520e"/>`;
-  const J1 = { sh: [-80, 206], el: [-112, 300], wr: [4, 296] }, J2 = { sh: [80, 206], el: [116, 304], wr: [60, 402] };
+  // wrists sit just beside the veena neck (neck line: x = 110 + (y - 520) * .4286); fingers wrap across it
+  const J1 = { sh: [-80, 206], el: [-112, 318], wr: [-5, 309] }, J2 = { sh: [80, 206], el: [122, 322], wr: [79, 393] };
+  const armsSvg = A.arm(J1.sh, J1.el, J1.wr, SK, SH, [44, 42, 31, 32, 25]) + A.arm(J2.sh, J2.el, J2.wr, SK, SH, [44, 42, 31, 32, 25]);
   const mala = (w, d, y0) => `<path d="M${-w} ${y0} C ${-w * .9} ${y0 + d * .7} ${-w * .4} ${y0 + d} 0 ${y0 + d + 8} C ${w * .4} ${y0 + d} ${w * .9} ${y0 + d * .7} ${w} ${y0}" fill="none" stroke="#2e7a3a" stroke-width="6" stroke-dasharray="1 6" stroke-linecap="round"/>`;
   const legs = A.arm([-34, 470], [-38, 700], [-32, 898], SK, SH, [70, 66, 46, 48, 30]) + A.arm([34, 470], [38, 700], [32, 898], SK, SH, [70, 66, 46, 48, 30])
     + [-1, 1].map(sx => `<g transform="scale(${sx},1)"><path d="M-50 898 C -60 914 -58 930 -40 934 L -12 934 C -4 928 -8 912 -16 898Z" fill="${SK}" stroke="${INK}" stroke-width="2"/></g>`).join('');
@@ -61,16 +63,18 @@ function narada(x, y, s, o = {}) {
     <path d="M-90 720 L -40 740 L -10 700 L 10 700 L 40 740 L 90 720" stroke="url(#nSaff)" stroke-width="9" fill="none"/>
     ${[-50, -24, 24, 50].map(xx => `<path d="M${xx * .8} 440 C ${xx} 560 ${xx * 1.1} 650 ${xx * 1.2} 720" stroke="#cfc4ac" stroke-width="2" fill="none"/>`).join('')}
     <path d="M-50 60 C -56 100 -52 130 -58 156 L 58 156 C 52 130 56 100 50 60Z" fill="#16100c"/>
-    ${A.arm(J1.sh, J1.el, J1.wr, SK, SH, [44, 42, 31, 32, 25])}${A.arm(J2.sh, J2.el, J2.wr, SK, SH, [44, 42, 31, 32, 25])}
+    ${armsSvg}
     <path d="${TORSO}" fill="${SK}" stroke="${INK}" stroke-width="2.2"/>
     <path d="M-44 232 Q -24 242 -6 238 M44 232 Q 24 242 6 238" stroke="${SH}" stroke-width="1.6" fill="none" opacity=".5"/>
     <!-- saffron sash over the left shoulder -->
     <path d="M30 152 C 60 156 84 168 90 196 L 82 230 C 40 300 -10 360 -50 430 L -70 430 C -40 360 0 290 38 220 C 34 196 30 172 30 152Z" fill="url(#nSaff)" stroke="#7a3a08" stroke-width="2"/>
     <path d="M-66 394 Q 0 410 66 394 L 70 428 Q 0 444 -70 428Z" fill="url(#nSaff)" stroke="#7a3a08" stroke-width="1.6"/>
     ${mala(36, 120, 158)}${mala(26, 84, 156)}
+    <clipPath id="naFore${o.id || ''}"><rect x="-300" y="244" width="600" height="400"/></clipPath>
+    <g clip-path="url(#naFore${o.id || ''})">${armsSvg}</g>
     ${veena(o.t || 0)}
-    <g transform="translate(4,296) rotate(-30) scale(.62)">${A.holdingHand(SK, SH, 1, true)}</g>
-    <g transform="translate(60,402) rotate(-24) scale(.62)">${A.holdingHand(SK, SH, 1, false)}</g>
+    <g transform="translate(${J1.wr[0]},${J1.wr[1]}) rotate(67) scale(.62)">${A.holdingHand(SK, SH, -1, false)}</g>
+    <g transform="translate(${J2.wr[0]},${J2.wr[1]}) rotate(-113) scale(.62)">${A.holdingHand(SK, SH, 1, false)}</g>
     ${F.faceP(face)}
     <path d="M-47 32 C -43 18 -27 12 0 12 C 27 12 43 18 47 32 L 48 42 C 39 30 23 24 0 24 C -23 24 -39 30 -48 42Z" fill="#16100c"/>
     ${topKnot}${namam}
@@ -116,7 +120,10 @@ function parvati(x, y, s, o = {}) {
   let body = C.tulasi(x, y, s, { ...o, pose: o.pose || 'neutral', headSvg: parvatiHead(o) });
   body = body.replace(/url\(#tBlouse\)/g, 'url(#pBlouse)').replace(/url\(#tSaree\)/g, 'url(#pSaree)').replace(/url\(#tButta\)/g, 'url(#pButta)').replace(/url\(#tSkin\)/g, 'url(#pSkin)');
   // lotus in her left hand (screen right)
-  const lotus = o.lotus === false ? '' : `<g transform="translate(${x + 111 * s},${y + 470 * s}) scale(${.42 * s})">${A.lotus(0, 0, 1, '#f6b6c6', '#c64f73')}</g>`;
+  // lotus held between the fingers: stem leaves the outer edge of the hand and rises beside the forearm
+  const hx = x + 122 * s, hy = y + 486 * s;
+  const lotus = o.lotus === false ? '' : `<path d="M${hx} ${hy} C ${hx + 14 * s} ${hy - 8 * s} ${hx + 30 * s} ${hy - 30 * s} ${hx + 32 * s} ${hy - 52 * s}" stroke="#2e7a3a" stroke-width="${4 * s}" fill="none" stroke-linecap="round"/>
+    <g transform="translate(${hx + 32 * s},${hy - 52 * s}) scale(${.36 * s})">${A.lotus(0, 0, 1, '#f6b6c6', '#c64f73')}</g>`;
   return `<g><circle cx="${x}" cy="${y + 60 * s}" r="${150 * s}" fill="url(#lampGlow)" opacity=".5"/>${body}${lotus}</g>`;
 }
 
