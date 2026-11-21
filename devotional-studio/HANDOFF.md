@@ -33,4 +33,4 @@ Sheets: `style-frames/v2/*.png`. Logo sting: `brand/`.
 - Code: `videos/tulasi-short-v2/short.js` (27 shots, English captions). Stills: `node engine/shot-stills.js <outDir> [t1,t2,...]`.
 - Mobile preview (private Artifact): https://claude.ai/artifact/RSnPNWgFcAA8VL5xVSxJA9 — page source in `videos/tulasi-short-v2/preview/`.
   Rebuild: `node engine/bundle-preview.js videos/tulasi-short-v2/short.js <dir>/film.js`, mix voice+music to `<dir>/audio.mp3`, republish.
-- RENDERED: `videos/tulasi-short-v2/tulasi_short_english_v2.mp4` (58.9 s with logo, -14 LUFS).
+- RENDERED (latest): `videos/tulasi-short-v2/tulasi_short_english_v3_voice_only.mp4` — stone-Vishnu hook, voice only, silent logo.
