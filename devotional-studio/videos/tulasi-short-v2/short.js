@@ -286,8 +286,9 @@ const defs = `<defs>
 function frame(t) {
   let body = '', title = null, arrow = null;
   for (const s of S) {
-    if (t < s.a - .001 || t > s.b) continue;
-    const op = clamp(Math.min(s.a === 0 ? 1 : (t - s.a) / SPEC.cut, (s.b - t) / SPEC.cut + (s === S[S.length - 1] ? 9 : 0)));
+    // no dip to black at cuts: the outgoing shot stays fully opaque until the incoming one has faded in on top of it
+    if (t < s.a - .001 || t > s.b + SPEC.cut) continue;
+    const op = s.a === 0 ? 1 : clamp((t - s.a) / SPEC.cut);
     if (op > 0) body += `<g opacity="${op.toFixed(3)}">${s.f(t)}</g>`;
     if (s.title && t >= s.title[0] && t <= s.title[1]) title = s.title;
     if (s.arrow && t >= s.arrow[0]) arrow = s.arrow;

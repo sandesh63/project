@@ -9,10 +9,10 @@ function add(file) {
   order.push([path.relative(path.dirname(entry), file), src]);
 }
 add(entry);
-const embed = { 'grain.png': fs.readFileSync(path.resolve(path.dirname(entry), '../tulasi-preview/grain.png')).toString('base64'),
+const embed = {
   'words.json': fs.readFileSync(path.resolve(path.dirname(entry), '../tulasi-short/words.json'), 'utf8') };
 let js = `(function(){const __E=${JSON.stringify(embed)};
-const __fs={existsSync:()=>true,readFileSync:(p,enc)=>{const k=p.split('/').pop();const v=__E[k];return enc?v:{toString:()=>v};}};
+const __fs={existsSync:(p)=>p.split('/').pop() in __E,readFileSync:(p,enc)=>{const k=p.split('/').pop();const v=__E[k];return enc?v:{toString:()=>v};}};
 const __path={join:(...a)=>a.join('/')};
 const __M={},__F={};function __req(k){if(k==='fs')return __fs;if(k==='path')return __path;if(__M[k])return __M[k].exports;const m={exports:{}};__M[k]=m;__F[k](m,m.exports,(x)=>__req(x));return m.exports;}\n`;
 for (const [k, src] of order) js += `__F[${JSON.stringify(k)}]=function(module,exports,require){const __dirname='.';${src.replace(/require\(['"](fs|path)['"]\)/g, "__req('$1')").replace(/require\(['"]playwright['"]\)/g, '{}')}\n};\n`;
