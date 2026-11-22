@@ -156,7 +156,6 @@ const long = {
       <clipPath id="c7"><circle cx="1010" cy="300" r="230"/></clipPath>
       <circle cx="1010" cy="300" r="246" fill="url(#tGreen)" stroke="#fff" stroke-width="8"/>
       <g clip-path="url(#c7)">${C(420, [600, 300, 720, 720], [780, 70, 460, 460])}</g>
-      <path transform="translate(60,170)" d="M690 250 c -20 -40 30 -60 45 -25 c 15 -35 65 -15 45 25 l -45 45Z" fill="#ff2a6a" stroke="#fff" stroke-width="5"/>
       <rect y="470" width="1280" height="250" fill="url(#tBotFade)"/>
       ${T('WHY VISHNU', 640, 600, 112, '#fff', { rot: -2 })}
       ${T('LOVES TULASI', 640, 700, 104, 'url(#tGreen)', { rot: -2, glow: '#17a84a' })}
