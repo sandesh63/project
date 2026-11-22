@@ -12,7 +12,7 @@ for p in $PARTS; do
   node engine/render-video.js videos/tulasi-long/part$p.js "$WORK/f$p" | tail -1
   D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 videos/tulasi-long/voice/part$p.mp3)
   ffmpeg -v error -y -framerate 30 -i "$WORK/f$p/f%05d.jpg" -i videos/tulasi-long/voice/part$p.mp3 -i videos/tulasi-long/sfx/part$p.wav \
-    -filter_complex "[1:a]aresample=44100,aformat=channel_layouts=stereo,apad[v];[2:a]volume=0.32[s];[v][s]amix=inputs=2:duration=longest:normalize=0,atrim=0:$D,apad=pad_dur=0.5[a];[0:v]tpad=stop_mode=clone:stop_duration=0.5,format=yuv420p[vv]" \
+    -filter_complex "[1:a]aresample=44100,aformat=channel_layouts=stereo,apad[v];[2:a]volume=0.16[s];[v][s]amix=inputs=2:duration=longest:normalize=0,atrim=0:$D,apad=pad_dur=0.5[a];[0:v]tpad=stop_mode=clone:stop_duration=0.5,format=yuv420p[vv]" \
     -map "[vv]" -map "[a]" -t $(python3 -c "print($D+0.5)") -c:v libx264 -preset medium -crf 19 -c:a pcm_s16le -ar 44100 "$WORK/part$p.mkv"
 done
 # silent logo, 16:9

@@ -7,7 +7,7 @@ WORK=${1:?workdir}
 for p in 01 02 03 04 05 06 07 08 09 10 11 12; do
   D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 videos/tulasi-long/voice/part$p.mp3)
   ffmpeg -v error -y -i "$WORK/part$p.mkv" -i videos/tulasi-long/voice/part$p.mp3 -i videos/tulasi-long/sfx/part$p.wav \
-    -filter_complex "[1:a]aresample=44100,aformat=channel_layouts=stereo,apad[v];[2:a]volume=0.32[s];[v][s]amix=inputs=2:duration=longest:normalize=0,atrim=0:$D,apad=pad_dur=0.5[a]" \
+    -filter_complex "[1:a]aresample=44100,aformat=channel_layouts=stereo,apad[v];[2:a]volume=0.16[s];[v][s]amix=inputs=2:duration=longest:normalize=0,atrim=0:$D,apad=pad_dur=0.5[a]" \
     -map 0:v -map "[a]" -t $(python3 -c "print($D+0.5)") -c:v copy -c:a pcm_s16le -ar 44100 "$WORK/remix$p.mkv"
 done
 LIST="$WORK/list_remix.txt"; : > "$LIST"
