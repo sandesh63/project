@@ -14,5 +14,5 @@ LIST="$WORK/list_remix.txt"; : > "$LIST"
 for p in 01 logo 02 03 04 05 06 07 08 09 10 11 12; do
   if [ "$p" = logo ]; then echo "file '$WORK/logo.mkv'" >> "$LIST"; else echo "file '$WORK/remix$p.mkv'" >> "$LIST"; fi
 done
-ffmpeg -v error -y -f concat -safe 0 -i "$LIST" -af loudnorm=I=-14:TP=-1:LRA=11 -c:v copy -c:a aac -b:a 192k -movflags +faststart videos/tulasi-long/tulasi_devi_long_video.mp4
+ffmpeg -v error -y -f concat -safe 0 -i "$LIST" -af loudnorm=I=-14:TP=-1:LRA=11 -c:v copy -c:a aac -b:a 192k -ar 48000 -movflags +faststart videos/tulasi-long/tulasi_devi_long_video.mp4
 ffprobe -v error -show_entries format=duration,size -of compact videos/tulasi-long/tulasi_devi_long_video.mp4
