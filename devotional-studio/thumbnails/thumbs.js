@@ -124,7 +124,7 @@ const long = {
       <circle cx="640" cy="380" r="300" fill="#fff4b0" opacity=".45" filter="url(#tSoft)"/>
       <clipPath id="a5l"><path d="M40 760 L40 380.0 A 180.0 180.0 0 0 1 400 380.0 L400 760Z"/></clipPath><clipPath id="a5c"><path d="M450 760 L450 360.0 A 190.0 190.0 0 0 1 830 360.0 L830 760Z"/></clipPath><clipPath id="a5r"><path d="M880 760 L880 380.0 A 180.0 180.0 0 0 1 1240 380.0 L1240 760Z"/></clipPath>
       <g clip-path="url(#a5l)"><rect x="40" y="200" width="360" height="560" fill="#7a1030"/>${C(120, [560, 40, 800, 1000], [-20, 200, 480, 600])}</g>
-      <g clip-path="url(#a5c)">${C(420, [640, 280, 640, 800], [450, 170, 380, 590])}</g>
+      <g clip-path="url(#a5c)">${C(420, [516, 260, 600, 932], [450, 170, 380, 590])}</g>
       <g clip-path="url(#a5r)"><rect x="880" y="200" width="360" height="560" fill="#0a1a5a"/>${C(365, [540, 0, 840, 1000], [840, 200, 440, 600])}</g>
       <path d="M40 760 L40 380.0 A 180.0 180.0 0 0 1 400 380.0 L400 760Z" fill="none" stroke="url(#tGold)" stroke-width="9"/><path d="M450 760 L450 360.0 A 190.0 190.0 0 0 1 830 360.0 L830 760Z" fill="none" stroke="url(#tGold)" stroke-width="11"/><path d="M880 760 L880 380.0 A 180.0 180.0 0 0 1 1240 380.0 L1240 760Z" fill="none" stroke="url(#tGold)" stroke-width="9"/>
       <rect y="0" width="1280" height="200" fill="url(#tTopFade)" opacity=".6"/>
